@@ -1,6 +1,6 @@
 # درس ۲ — Deploy روی TySia
 
-> **این درس عملی است.** تمام دستورات را خودت از Kali روی سرور اجرا می‌کنی.
+> **این درس عملی است.** همه‌ی دستورات **روی سرور** اجرا می‌شوند. از iPad با **Termius** وصل شو؛ Kali هم کار می‌کند ولی لازم نیست.
 > هر بخش را کامل انجام بده، خروجی را چک کن و بعد برو بخش بعد.
 > اگر جایی خطا گرفتی، **خروجی کامل خطا** را برایم بفرست. حدس نزن.
 
@@ -54,7 +54,7 @@ sudo ufw status         # 22, 80, 443 باید ALLOW باشند
 
 **چرا خاکستری؟** وقتی ابر نارنجی باشد، Cloudflare وسط مسیر قرار می‌گیرد و گرفتن اولین گواهی Let's Encrypt پیچیده‌تر می‌شود. اول ساده شروع می‌کنیم و بعداً نارنجی را با حالت Full (strict) فعال می‌کنیم.
 
-تست از Kali (ممکن است چند دقیقه طول بکشد):
+تست روی سرور (ممکن است چند دقیقه طول بکشد؛ اگر `dig` نبود: `sudo apt install -y dnsutils`):
 
 ```bash
 dig +short portfolio.siavashizadi.com
@@ -103,19 +103,16 @@ sudo install -d -o deployer -g deployer -m 750 /opt/portfolio
 
 ## بخش ۴ — فایل‌ها روی سرور
 
-از Kali، در پوشه‌ای که repo را clone کرده‌ای:
+repo را مستقیم روی سرور clone کن (public است، رمز نمی‌خواهد):
 
 ```bash
-scp deploy/compose.yaml deploy/deploy.sh deploy@<IP>:/tmp/
-scp deploy/nginx/portfolio.siavashizadi.com.conf deploy@<IP>:/tmp/
+git clone https://github.com/TySia-fr/Portfolio.git ~/Portfolio
+cd ~/Portfolio
+sudo install -o deployer -g deployer -m 640 deploy/compose.yaml /opt/portfolio/compose.yaml
+sudo install -o root -g root -m 755 deploy/deploy.sh /usr/local/bin/portfolio-deploy
 ```
 
-روی سرور:
-
-```bash
-sudo install -o deployer -g deployer -m 640 /tmp/compose.yaml /opt/portfolio/compose.yaml
-sudo install -o root -g root -m 755 /tmp/deploy.sh /usr/local/bin/portfolio-deploy
-```
+اگر بعداً این فایل‌ها در repo عوض شدند: `cd ~/Portfolio && git pull` و همین دو خط `install` را دوباره بزن.
 
 **سؤال برای فکر کردن:** چرا `portfolio-deploy` مال root است، نه مال deployer؟
 (راهنما: اگر deployer می‌توانست اسکریپت را ویرایش کند، قفل بخش ۵ چه ارزشی داشت؟)
@@ -124,11 +121,11 @@ sudo install -o root -g root -m 755 /tmp/deploy.sh /usr/local/bin/portfolio-depl
 
 ## بخش ۵ — کلید SSH محدود برای GitHub
 
-روی **Kali** یک کلید جدید فقط برای CI بساز:
+روی **سرور** (با کاربر `deploy` خودت) یک کلید جدید فقط برای CI بساز:
 
 ```bash
-ssh-keygen -t ed25519 -C "github-actions-portfolio" -f ~/.ssh/portfolio_deploy -N ""
-cat ~/.ssh/portfolio_deploy.pub
+ssh-keygen -t ed25519 -C "github-actions-portfolio" -f ~/portfolio_deploy -N ""
+cat ~/portfolio_deploy.pub
 ```
 
 روی **سرور**:
@@ -152,10 +149,10 @@ sudo chmod 600 /home/deployer/.ssh/authorized_keys
 **این خط چه می‌کند؟** گزینه‌ی `command=` یک **forced command** است. یعنی هر کسی با این کلید وصل شود، هر دستوری هم که بفرستد، **فقط** `portfolio-deploy` اجرا می‌شود. متنی که فرستاده هم به‌عنوان `$SSH_ORIGINAL_COMMAND` به اسکریپت داده می‌شود و اسکریپت فقط یک SHA چهل‌کاراکتری را قبول می‌کند.
 در نتیجه اگر این کلید از GitHub دزدیده شود، مهاجم فقط می‌تواند نسخه‌ی دیگری از سایت **خودت** را deploy کند.
 
-تست از Kali (این خطا را **باید** بگیری):
+تست روی همان سرور (این خطا را **باید** بگیری):
 
 ```bash
-ssh -i ~/.ssh/portfolio_deploy deployer@<IP> "rm -rf /"
+ssh -i ~/portfolio_deploy deployer@localhost "rm -rf /"
 # [deploy] refused: expected a 40-character commit SHA
 ```
 
@@ -197,11 +194,11 @@ repo → **Settings** → **Secrets and variables** → **Actions**
 
 **Secrets** (تب Secrets):
 
-| نام                  | مقدار          | از کجا                                 |
-| -------------------- | -------------- | -------------------------------------- |
-| `DEPLOY_SSH_KEY`     | کلید **خصوصی** | `cat ~/.ssh/portfolio_deploy` روی Kali |
-| `DEPLOY_HOST`        | IP سرور        |                                        |
-| `DEPLOY_KNOWN_HOSTS` | اثرانگشت سرور  | `ssh-keyscan -t ed25519 <IP>` روی Kali |
+| نام                  | مقدار          | از کجا                                            |
+| -------------------- | -------------- | ------------------------------------------------- |
+| `DEPLOY_SSH_KEY`     | کلید **خصوصی** | `cat ~/portfolio_deploy` روی سرور، کپی از Termius |
+| `DEPLOY_HOST`        | IP سرور        |                                                   |
+| `DEPLOY_KNOWN_HOSTS` | اثرانگشت سرور  | `ssh-keyscan -t ed25519 <IP>` روی سرور            |
 
 **Variables** (تب Variables):
 
@@ -212,6 +209,12 @@ repo → **Settings** → **Secrets and variables** → **Actions**
 **چرا `DEPLOY_KNOWN_HOSTS`؟** بدون آن، اگر کسی بین GitHub و سرورت قرار بگیرد (حمله‌ی MITM)، CI بدون هیچ هشداری به سرور جعلی وصل می‌شود.
 
 ⚠️ کلید خصوصی را **هرگز** در چت، فایل یا commit نگذار. فقط در GitHub Secrets.
+
+بعد از ذخیره در GitHub، کلید خصوصی را **از سرور پاک کن**. GitHub تنها جایی است که باید باشد:
+
+```bash
+shred -u ~/portfolio_deploy && rm ~/portfolio_deploy.pub
+```
 
 ---
 
