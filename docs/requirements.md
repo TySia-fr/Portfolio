@@ -22,18 +22,18 @@ Primary audiences, in order:
 
 ## MVP scope
 
-| Area | In v1 | Notes |
-|---|---|---|
-| Home | ✅ | Hero, selected projects, skills by category, about preview, contact CTA |
-| Projets (list) | ✅ | Data-driven grid, tech tags, empty / "en cours" state |
-| Projet (detail) | ✅ | One dynamic route rendered from typed content |
-| À propos | ✅ | Factual journey, learning focus, goals |
-| Contact | ✅ | Validated form, server-side Zod, honeypot, rate limit, email provider |
-| Mentions légales / Confidentialité | ✅ | Legally expected in France; privacy notice for the form |
-| SEO basics | ✅ | Metadata, OG, sitemap, robots |
-| Database | ❌ | Not justified — see ADR-0001 |
-| Auth / admin | ❌ | No privileged operations exist yet |
-| English version | ❌ | Prepared for, not built |
+| Area                               | In v1 | Notes                                                                   |
+| ---------------------------------- | ----- | ----------------------------------------------------------------------- |
+| Home                               | ✅    | Hero, selected projects, skills by category, about preview, contact CTA |
+| Projets (list)                     | ✅    | Data-driven grid, tech tags, empty / "en cours" state                   |
+| Projet (detail)                    | ✅    | One dynamic route rendered from typed content                           |
+| À propos                           | ✅    | Factual journey, learning focus, goals                                  |
+| Contact                            | ✅    | Validated form, server-side Zod, honeypot, rate limit, email provider   |
+| Mentions légales / Confidentialité | ✅    | Legally expected in France; privacy notice for the form                 |
+| SEO basics                         | ✅    | Metadata, OG, sitemap, robots                                           |
+| Database                           | ❌    | Not justified — see ADR-0001                                            |
+| Auth / admin                       | ❌    | No privileged operations exist yet                                      |
+| English version                    | ❌    | Prepared for, not built                                                 |
 
 ## Non-functional requirements
 
