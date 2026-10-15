@@ -46,8 +46,26 @@ pnpm dev            # http://localhost:3000
 | `pnpm build`  | Production build (`.next/standalone`)                 |
 | `pnpm format` | Format all files with Prettier                        |
 
+## Deployment
+
+```
+git push → CI: lint · format · types · build
+         → Docker image → smoke test with the production compose file
+         → publish to GHCR (tag = commit SHA)
+         → SSH forced command on the VPS → deploy.sh <SHA>
+         → pull · start · wait for health · roll back if unhealthy
+```
+
+- **Runtime hardening** ([`deploy/compose.yaml`](deploy/compose.yaml)): non-root user,
+  read-only root filesystem, all Linux capabilities dropped, `no-new-privileges`,
+  memory/CPU/PID limits, port bound to `127.0.0.1` only.
+- **Least-privilege deploy key**: the CI key can only run [`deploy.sh`](deploy/deploy.sh),
+  which accepts nothing but a 40-character commit SHA.
+- **Edge**: Nginx terminates TLS (Let's Encrypt) and enforces a request-size limit
+  ([`deploy/nginx`](deploy/nginx)).
+
 ## Known limitations
 
 - No Content-Security-Policy yet (needs nonce support; planned for the security phase).
 - No automated tests yet (added with the contact form).
-- Not deployed yet.
+- Single VPS, single region, no CDN: a server outage takes the site down.
