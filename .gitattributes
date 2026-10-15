@@ -1,0 +1,4 @@
+# Always check out text files with LF line endings, even on Windows.
+# Prettier and the CI expect LF; CRLF would make `pnpm check` fail.
+* text=auto eol=lf
+*.sh text eol=lf
