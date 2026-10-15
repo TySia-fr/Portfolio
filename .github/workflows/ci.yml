@@ -69,6 +69,8 @@ jobs:
           context: .
           load: true # keep it in the runner's Docker for the smoke test
           tags: ${{ env.IMAGE }}:${{ github.sha }}
+          build-args: |
+            BUILD_COMMIT=${{ github.sha }}
           labels: |
             org.opencontainers.image.source=${{ github.server_url }}/${{ github.repository }}
             org.opencontainers.image.revision=${{ github.sha }}
@@ -95,6 +97,8 @@ jobs:
           echo "$headers" | grep -qi '^x-content-type-options: nosniff'
           ! echo "$headers" | grep -qi '^x-powered-by'
           grep -q '<html lang="fr"' /tmp/body.html
+          # The spec sheet must show the commit this image was built from.
+          grep -q "${GITHUB_SHA:0:7}" /tmp/body.html
           echo "user: $(docker exec portfolio id -u) (must not be 0)"
           [ "$(docker exec portfolio id -u)" != "0" ]
           docker compose -f deploy/compose.yaml down

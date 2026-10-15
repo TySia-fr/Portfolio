@@ -34,6 +34,13 @@ const nextConfig: NextConfig = {
   cacheComponents: true,
   partialPrefetching: true,
 
+  // Build metadata, inlined at build time and shown on the site's spec sheet.
+  // GITHUB_SHA is set by GitHub Actions; BUILD_COMMIT is passed into Docker builds.
+  env: {
+    BUILD_COMMIT: process.env.BUILD_COMMIT || process.env.GITHUB_SHA || "local",
+    BUILD_TIME: new Date().toISOString(),
+  },
+
   turbopack: {
     rules: {
       "*.css": {

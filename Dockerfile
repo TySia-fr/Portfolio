@@ -23,6 +23,9 @@ COPY . .
 # NEXT_PUBLIC_* values are inlined into the bundle at build time.
 ARG NEXT_PUBLIC_SITE_URL=https://portfolio.siavashizadi.com
 ENV NEXT_PUBLIC_SITE_URL=${NEXT_PUBLIC_SITE_URL}
+# Commit shown on the site's spec sheet (.git is not in the build context).
+ARG BUILD_COMMIT=""
+ENV BUILD_COMMIT=${BUILD_COMMIT}
 RUN pnpm build
 
 # ---------- runner: the only stage that ships ----------

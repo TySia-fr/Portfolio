@@ -1,11 +1,34 @@
-// Temporary placeholder until the design system and real pages exist (Phases 3–4).
+import { SpecSheet } from "@/components/home/spec-sheet";
+import { Container } from "@/components/layout/container";
+import { ButtonLink } from "@/components/ui/button-link";
+import { home } from "@/content/home";
+
 export default function HomePage() {
   return (
-    <main className="mx-auto flex w-full max-w-3xl flex-1 flex-col justify-center gap-4 px-6 py-24">
-      <h1 className="text-4xl font-semibold tracking-tight">Siavash Izadi</h1>
-      <p className="text-lg text-neutral-600 dark:text-neutral-400">
-        Développeur full-stack JavaScript. Site en construction.
+    <Container className="py-16 sm:py-24 lg:py-28">
+      <p className="font-mono text-xs tracking-[0.14em] text-muted uppercase">
+        {home.eyebrow}
       </p>
-    </main>
+
+      {/* The headline gets the full width: a condensed mono face reads best in
+          long lines, not squeezed next to the spec sheet. */}
+      <h1 className="mt-6 max-w-[28ch] font-mono text-display font-medium text-balance [font-stretch:76%]">
+        {home.title}
+      </h1>
+
+      <div className="mt-12 grid gap-12 border-t border-line pt-12 lg:mt-16 lg:grid-cols-[1fr_26rem] lg:gap-16">
+        <div>
+          <p className="max-w-[52ch] text-lg leading-relaxed text-muted">{home.lead}</p>
+          <div className="mt-10 flex flex-wrap gap-3">
+            <ButtonLink href={home.primaryCta.href}>{home.primaryCta.label}</ButtonLink>
+            <ButtonLink href={home.secondaryCta.href} variant="secondary">
+              {home.secondaryCta.label}
+            </ButtonLink>
+          </div>
+        </div>
+
+        <SpecSheet />
+      </div>
+    </Container>
   );
 }
