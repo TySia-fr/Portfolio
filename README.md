@@ -1,36 +1,53 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# portfolio.siavashizadi.com
 
-## Getting Started
+Personal portfolio of **Siavash Izadi**, full-stack JavaScript developer based in France.
+French-language site, built as a production-grade project rather than a template.
 
-First, run the development server:
+> Status: **work in progress** — foundation in place, pages under construction.
+> See [`docs/requirements.md`](docs/requirements.md) for the v1 scope.
+
+## Stack
+
+| Layer     | Choice                                                       |
+| --------- | ------------------------------------------------------------ |
+| Framework | Next.js 16 (App Router, Server Components, Cache Components) |
+| Language  | TypeScript (`strict` + `noUncheckedIndexedAccess`)           |
+| Styling   | Tailwind CSS v4                                              |
+| Tooling   | pnpm, ESLint (zero warnings), Prettier                       |
+| CI        | GitHub Actions — lint, format, types, production build       |
+| Hosting   | Docker on a self-managed VPS behind Nginx (planned)          |
+
+## Architecture decisions
+
+Every non-obvious choice is recorded with its trade-offs:
+
+- [ADR-0001](docs/adr/0001-typed-content-no-database.md) — typed content, no database
+- [ADR-0002](docs/adr/0002-self-host-on-vps-with-docker.md) — self-host with Docker instead of Vercel
+- [ADR-0003](docs/adr/0003-french-first-i18n-ready.md) — French-first, ready for English
+- [ADR-0004](docs/adr/0004-pnpm-and-pinned-toolchain.md) — pnpm and pinned toolchain
+
+## Getting started
+
+Requirements: Node.js 22 and Corepack.
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+corepack enable
+pnpm install
+cp .env.example .env.local
+pnpm dev            # http://localhost:3000
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Scripts
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+| Command       | What it does                                          |
+| ------------- | ----------------------------------------------------- |
+| `pnpm dev`    | Development server                                    |
+| `pnpm check`  | Lint + format check + type check (run before pushing) |
+| `pnpm build`  | Production build (`.next/standalone`)                 |
+| `pnpm format` | Format all files with Prettier                        |
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Known limitations
 
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- No Content-Security-Policy yet (needs nonce support; planned for the security phase).
+- No automated tests yet (added with the contact form).
+- Not deployed yet.
