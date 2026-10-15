@@ -1,27 +1,66 @@
 @import "tailwindcss";
 
-/* Placeholder tokens — the real design system arrives in Phase 3. */
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/*
+ * Design tokens — single source of truth for colour and type.
+ * Components use the Tailwind utilities generated from these
+ * (bg-ink, text-muted, border-line, font-mono…), never raw hex values.
+ *
+ * Contrast on ink (WCAG): text 14.8:1 · muted 7.0:1 · signal 9.8:1 · live 8.9:1
+ */
+@theme {
+  --color-ink: #111416; /* page background */
+  --color-surface: #171b1e; /* raised panels */
+  --color-line: #2a3034; /* hairlines and borders, never text */
+  --color-text: #e8e6e0; /* primary text */
+  --color-muted: #9aa0a4; /* secondary text */
+  --color-signal: #e9b44c; /* the only accent: actions, focus, links */
+  --color-live: #7bc492; /* status "ok" only */
+
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-martian), ui-monospace, monospace;
+
+  --text-display: clamp(2.1rem, 5.2vw, 4rem);
+  --text-display--line-height: 1.08;
+  --text-display--letter-spacing: -0.03em;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
+@layer base {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    /* Dark only (ADR-0005): tells the browser to draw scrollbars and
+       form controls dark as well. */
+    color-scheme: dark;
+  }
+
+  html {
+    -webkit-text-size-adjust: 100%;
+    scroll-padding-top: 5rem;
+  }
+
+  body {
+    @apply bg-ink font-sans text-text antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  ::selection {
+    @apply bg-signal text-ink;
+  }
+
+  /* One focus style for every interactive element, keyboard only. */
+  :focus-visible {
+    outline: 2px solid var(--color-signal);
+    outline-offset: 3px;
+    border-radius: 2px;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: var(--font-sans), system-ui, sans-serif;
+/* Users who ask for less motion get none. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
