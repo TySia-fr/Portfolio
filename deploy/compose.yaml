@@ -1,0 +1,37 @@
+# Production runtime for portfolio.siavashizadi.com on the VPS.
+# Lives at /opt/portfolio/compose.yaml. Started by deploy.sh, never by hand
+# unless you set IMAGE_TAG yourself.
+
+name: portfolio
+
+services:
+  web:
+    image: ghcr.io/tysia-fr/portfolio:${IMAGE_TAG:?IMAGE_TAG must be set to a commit SHA}
+    container_name: portfolio
+    restart: unless-stopped
+
+    # Only Nginx on the same machine can reach the app. Never exposed publicly.
+    ports:
+      - "127.0.0.1:3001:3000"
+
+    # --- Hardening ---
+    read_only: true # the container filesystem cannot be modified...
+    tmpfs:
+      # ...except Next.js' cache and /tmp, kept in RAM and size-limited.
+      - /app/.next/cache:uid=1001,gid=1001,mode=0700,size=64m
+      - /tmp:size=16m
+    cap_drop: [ALL] # no Linux capabilities at all
+    security_opt:
+      - no-new-privileges:true # setuid binaries cannot escalate
+
+    # --- Resource limits: one app must not starve the others on the VPS ---
+    mem_limit: 384m
+    cpus: 1.0
+    pids_limit: 200
+
+    # --- Logs rotate instead of filling the disk ---
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
