@@ -3,9 +3,14 @@ export const home = {
   eyebrow: "Développeur full-stack JavaScript · France",
   title:
     "Je construis des applications web, de la base de données à la mise en production.",
-  lead: "Next.js, Node.js et TypeScript. Chaque projet est testé, déployé et documenté : le code est public, les décisions aussi.",
+  lead: "Next.js, Node.js et TypeScript. Chaque projet est vérifié en intégration continue et documenté : le code est public, les décisions aussi.",
   primaryCta: { href: "/projets", label: "Voir les projets" },
   secondaryCta: { href: "/contact", label: "Me contacter" },
+
+  selectedProjects: {
+    title: "Projets sélectionnés",
+    all: "Tous les projets",
+  },
 
   specSheet: {
     title: "Fiche technique",

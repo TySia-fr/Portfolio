@@ -68,4 +68,7 @@ git push → CI: lint · format · types · build
 
 - No Content-Security-Policy yet (needs nonce support; planned for the security phase).
 - No automated tests yet (added with the contact form).
+- Unknown project URLs (`/projets/<slug>`) render the 404 page with HTTP 200 + `noindex`:
+  with Cache Components the static shell streams before params resolve. Fixing it would
+  need a Proxy duplicating the project list; not worth the drift risk for now.
 - Single VPS, single region, no CDN: a server outage takes the site down.
