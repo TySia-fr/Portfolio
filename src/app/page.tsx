@@ -38,6 +38,28 @@ export default function HomePage() {
         </div>
       </Container>
 
+      <section aria-labelledby="about-preview" className="border-t border-line">
+        <Container className="grid gap-6 py-16 sm:py-20 lg:grid-cols-[16rem_1fr] lg:gap-20">
+          <h2
+            id="about-preview"
+            className="font-mono text-xs font-medium tracking-[0.14em] text-muted uppercase"
+          >
+            {home.about.title}
+          </h2>
+          <div className="max-w-[62ch]">
+            <p className="text-lg leading-relaxed text-pretty text-text">
+              {home.about.text}
+            </p>
+            <Link
+              href="/a-propos"
+              className="mt-6 inline-block font-mono text-[0.8125rem] text-signal underline decoration-signal/40 underline-offset-4 hover:decoration-signal"
+            >
+              {home.about.link} →
+            </Link>
+          </div>
+        </Container>
+      </section>
+
       {featured.length > 0 ? (
         <section aria-labelledby="selected-projects" className="border-t border-line">
           <Container className="py-16 sm:py-20">

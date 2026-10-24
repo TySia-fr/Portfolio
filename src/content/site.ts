@@ -14,6 +14,8 @@ export const site = {
   location: "France",
   url: process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000",
 
+  /** Forwarded to a private inbox by Cloudflare Email Routing (see deploy runbook). */
+  email: "contact@siavashizadi.com",
   githubUrl: "https://github.com/TySia-fr",
   repositoryUrl: "https://github.com/TySia-fr/Portfolio",
 

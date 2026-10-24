@@ -7,6 +7,12 @@ export const home = {
   primaryCta: { href: "/projets", label: "Voir les projets" },
   secondaryCta: { href: "/contact", label: "Me contacter" },
 
+  about: {
+    title: "En bref",
+    text: "Titulaire d’un Bachelor en génie informatique, j’étudie l’informatique à l’Université de Montpellier. Après plus de deux ans à créer et gérer des sites WordPress, je me consacre au développement full-stack JavaScript, avec un intérêt fort pour l’infrastructure et la sécurité.",
+    link: "En savoir plus",
+  },
+
   selectedProjects: {
     title: "Projets sélectionnés",
     all: "Tous les projets",
