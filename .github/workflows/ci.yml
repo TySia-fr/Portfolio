@@ -167,9 +167,14 @@ jobs:
           KNOWN_HOSTS: ${{ secrets.DEPLOY_KNOWN_HOSTS }}
         run: |
           install -m 700 -d ~/.ssh
-          # Secrets pasted from Windows can carry CRLF line endings, which
-          # OpenSSH rejects as an "invalid format" key. Strip them.
-          printf '%s\n' "$SSH_KEY" | tr -d '\r' > ~/.ssh/deploy_key
+          # Accept the key either as the raw multi-line PEM or as a single
+          # base64 line (`base64 -w0 key`), which survives copy/paste intact.
+          # CR characters from Windows clipboards are stripped in both cases.
+          if printf '%s' "$SSH_KEY" | grep -q "BEGIN OPENSSH PRIVATE KEY"; then
+            printf '%s\n' "$SSH_KEY" | tr -d '\r' > ~/.ssh/deploy_key
+          else
+            printf '%s' "$SSH_KEY" | tr -d '\r\n ' | base64 -d > ~/.ssh/deploy_key
+          fi
           chmod 600 ~/.ssh/deploy_key
           # Pinned host key: refuse to talk to an impostor server.
           printf '%s\n' "$KNOWN_HOSTS" | tr -d '\r' > ~/.ssh/known_hosts
