@@ -8,8 +8,8 @@ export const portfolio = {
   slug: "portfolio",
   title: "Ce portfolio",
   summary:
-    "Un site personnel traité comme un produit : typé, vérifié en intégration continue et conteneurisé pour être hébergé sur mon propre serveur.",
-  status: "in-progress",
+    "Un site personnel traité comme un produit : typé, testé à chaque modification et déployé automatiquement sur mon propre serveur.",
+  status: "live",
   year: 2026,
   featured: true,
   stack: [
@@ -22,6 +22,7 @@ export const portfolio = {
   ],
 
   links: {
+    live: "https://siavashizadi.com",
     repository: "https://github.com/TySia-fr/Portfolio",
   },
 
@@ -36,7 +37,7 @@ export const portfolio = {
       "Pages générées statiquement au build avec le App Router de Next.js ; JavaScript côté client limité au menu mobile.",
       "Contenu typé dans le dépôt et validé avec Zod au build, sans base de données.",
       "Image Docker multi-étapes, exécutée sans privilèges root et en lecture seule.",
-      "Configuration Nginx (reverse proxy, HTTPS via Let’s Encrypt) prête pour un serveur Hetzner que j’administre ; mise en ligne en cours.",
+      "Nginx en reverse proxy avec HTTPS (Let’s Encrypt, renouvellement automatique) sur un serveur Hetzner que j’administre.",
       "Chaque push déclenche lint, vérification des types, build, puis des tests de bout en bout (Playwright, ordinateur et mobile, accessibilité avec axe) exécutés contre l’image Docker qui sera déployée.",
     ],
 
@@ -72,7 +73,6 @@ export const portfolio = {
 
     nextSteps: [
       "Formulaire de contact avec validation côté serveur et protection anti-spam.",
-      "Mise en ligne sur siavashizadi.com avec déploiement automatique.",
       "Politique de sécurité du contenu (CSP) avec nonces.",
     ],
   },

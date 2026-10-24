@@ -3,7 +3,7 @@
 Personal portfolio of **Siavash Izadi**, full-stack JavaScript developer based in France.
 French-language site, built as a production-grade project rather than a template.
 
-> Status: **v1 feature-complete** — public pages, SEO and end-to-end tests in place; deployment in progress.
+> **Live at [siavashizadi.com](https://siavashizadi.com)** — deployed automatically on every push to `main`.
 > See [`docs/requirements.md`](docs/requirements.md) for the v1 scope.
 
 ## Stack
@@ -16,7 +16,7 @@ French-language site, built as a production-grade project rather than a template
 | Tooling   | pnpm, ESLint (zero warnings), Prettier                        |
 | Testing   | Playwright end-to-end (desktop + mobile) + axe accessibility  |
 | CI        | GitHub Actions — lint, format, types, build, E2E on the image |
-| Hosting   | Docker on a self-managed VPS behind Nginx (planned)           |
+| Hosting   | Docker on a self-managed Hetzner VPS, Nginx, Let's Encrypt    |
 
 ## Architecture decisions
 
