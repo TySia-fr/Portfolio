@@ -95,6 +95,35 @@ test("security headers are sent", async ({ request }) => {
   expect(headers["referrer-policy"]).toBe("strict-origin-when-cross-origin");
   expect(headers["strict-transport-security"]).toContain("max-age=");
   expect(headers["x-powered-by"]).toBeUndefined();
+  expect(headers["cross-origin-opener-policy"]).toBe("same-origin");
+
+  const csp = headers["content-security-policy"] ?? "";
+  expect(csp).toContain("default-src 'self'");
+  expect(csp).toContain("frame-ancestors 'none'");
+  expect(csp).toContain("object-src 'none'");
+  expect(csp).not.toContain("unsafe-eval");
+  expect(csp).toMatch(/style-src 'self'(;|$)/);
+});
+
+test("the content security policy blocks nothing the site needs", async ({ page }) => {
+  await page.addInitScript(() => {
+    const store = window as unknown as { __cspViolations: string[] };
+    store.__cspViolations = [];
+    document.addEventListener("securitypolicyviolation", (event) => {
+      store.__cspViolations.push(`${event.violatedDirective} ${event.blockedURI}`);
+    });
+  });
+  const violations: string[] = [];
+  for (const path of [...PAGES, "/projets/inexistant"]) {
+    await page.goto(path);
+    await page.waitForLoadState("networkidle");
+    violations.push(
+      ...(await page.evaluate(
+        () => (window as unknown as { __cspViolations: string[] }).__cspViolations,
+      )),
+    );
+  }
+  expect(violations).toEqual([]);
 });
 
 test.describe("not found", () => {

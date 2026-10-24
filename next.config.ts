@@ -1,12 +1,40 @@
 import type { NextConfig } from "next";
 
+const isDev = process.env.NODE_ENV === "development";
+
 /**
- * Baseline security headers applied to every route.
- * A Content-Security-Policy is intentionally NOT set yet: with Next.js it needs
- * per-request nonces to stay strict, and is planned for the security phase.
+ * Content-Security-Policy (ADR-0006).
+ *
+ * Everything is limited to this origin. The one compromise is
+ * script-src 'unsafe-inline': the App Router inlines the page's RSC payload in
+ * <script> tags, and the strict alternatives do not fit a prerendered site:
+ * nonces force every page to render per request (incompatible with partial
+ * prerendering), and experimental SRI only covers external files.
+ * The site renders no user-supplied content, so there is no injection point
+ * for that inline allowance to protect against today.
+ *
+ * Styles are strict: no inline <style> or style="" attributes anywhere.
  */
+const contentSecurityPolicy = [
+  "default-src 'self'",
+  `script-src 'self' 'unsafe-inline'${isDev ? " 'unsafe-eval'" : ""}`,
+  // The dev overlay injects styles; production does not.
+  `style-src 'self'${isDev ? " 'unsafe-inline'" : ""}`,
+  "img-src 'self' data:",
+  "font-src 'self'",
+  "connect-src 'self'",
+  "object-src 'none'",
+  "base-uri 'none'",
+  "form-action 'self'",
+  "frame-ancestors 'none'",
+].join("; ");
+
+/** Security headers applied to every route. Nginx adds none of its own. */
 const securityHeaders = [
-  // Forbid other sites from embedding us in an <iframe> (clickjacking).
+  { key: "Content-Security-Policy", value: contentSecurityPolicy },
+  // Isolate the browsing context from cross-origin windows it opens or is opened by.
+  { key: "Cross-Origin-Opener-Policy", value: "same-origin" },
+  // Legacy twin of frame-ancestors 'none' for old browsers (clickjacking).
   { key: "X-Frame-Options", value: "DENY" },
   // Stop browsers from guessing content types (MIME sniffing).
   { key: "X-Content-Type-Options", value: "nosniff" },

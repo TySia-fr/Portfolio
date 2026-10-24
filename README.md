@@ -26,6 +26,8 @@ Every non-obvious choice is recorded with its trade-offs:
 - [ADR-0002](docs/adr/0002-self-host-on-vps-with-docker.md) — self-host with Docker instead of Vercel
 - [ADR-0003](docs/adr/0003-french-first-i18n-ready.md) — French-first, ready for English
 - [ADR-0004](docs/adr/0004-pnpm-and-pinned-toolchain.md) — pnpm and pinned toolchain
+- [ADR-0005](docs/adr/0005-dark-only-visual-identity.md) — dark-only visual identity
+- [ADR-0006](docs/adr/0006-content-security-policy.md) — static CSP, inline scripts allowed
 
 ## Getting started
 
@@ -69,7 +71,8 @@ git push → CI: lint · format · types · build
 
 ## Known limitations
 
-- No Content-Security-Policy yet (needs nonce support; planned for the security phase).
+- The Content-Security-Policy allows inline scripts: nonces would force per-request
+  rendering of every page ([ADR-0006](docs/adr/0006-content-security-policy.md)).
 - No contact form yet: the contact page links to e-mail and GitHub; a server-validated
   form (Zod, rate limit, honeypot) is planned.
 - Single VPS, single region, no CDN: a server outage takes the site down.
