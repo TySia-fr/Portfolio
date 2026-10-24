@@ -17,7 +17,7 @@ export const site = {
   /** Forwarded to a private inbox by Cloudflare Email Routing (see deploy runbook). */
   email: "contact@siavashizadi.com",
   githubUrl: "https://github.com/TySia-fr",
-  linkedinUrl: "https://www.linkedin.com/in/siavash-izadi-00a16b439/",
+  linkedinUrl: "https://www.linkedin.com/in/siavash-izadi/",
   repositoryUrl: "https://github.com/TySia-fr/Portfolio",
 
   nav: [
