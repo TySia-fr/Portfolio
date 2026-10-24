@@ -167,10 +167,23 @@ jobs:
           KNOWN_HOSTS: ${{ secrets.DEPLOY_KNOWN_HOSTS }}
         run: |
           install -m 700 -d ~/.ssh
-          printf '%s\n' "$SSH_KEY" > ~/.ssh/deploy_key
+          # Secrets pasted from Windows can carry CRLF line endings, which
+          # OpenSSH rejects as an "invalid format" key. Strip them.
+          printf '%s\n' "$SSH_KEY" | tr -d '\r' > ~/.ssh/deploy_key
           chmod 600 ~/.ssh/deploy_key
           # Pinned host key: refuse to talk to an impostor server.
-          printf '%s\n' "$KNOWN_HOSTS" > ~/.ssh/known_hosts
+          printf '%s\n' "$KNOWN_HOSTS" | tr -d '\r' > ~/.ssh/known_hosts
+
+          # Fail early with a clear message instead of an opaque exit 255.
+          # The fingerprint is public information: compare it with
+          # `ssh-keygen -lf /home/deployer/.ssh/authorized_keys` on the server.
+          if ! ssh-keygen -y -f ~/.ssh/deploy_key > /dev/null; then
+            echo "::error::DEPLOY_SSH_KEY is not a valid private key (copy it again, including the BEGIN and END lines)"
+            exit 1
+          fi
+          echo "deploy key fingerprint: $(ssh-keygen -lf ~/.ssh/deploy_key)"
+          grep -q "ssh-ed25519" ~/.ssh/known_hosts \
+            || { echo "::error::DEPLOY_KNOWN_HOSTS has no ssh-ed25519 host key"; exit 1; }
 
       # The server ignores the command text except as the tag argument:
       # the key is locked to deploy.sh by a forced command.
@@ -179,6 +192,7 @@ jobs:
           DEPLOY_HOST: ${{ secrets.DEPLOY_HOST }}
         run: |
           ssh -i ~/.ssh/deploy_key -o IdentitiesOnly=yes -o StrictHostKeyChecking=yes \
+            -o ConnectTimeout=20 -o BatchMode=yes \
             "deployer@${DEPLOY_HOST}" "${{ github.sha }}"
 
       # Proves the public site serves THIS commit, over HTTPS, with www redirected.
