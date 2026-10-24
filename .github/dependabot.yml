@@ -8,6 +8,11 @@ updates:
       interval: weekly
       day: monday
     open-pull-requests-limit: 5
+    ignore:
+      # Types must match the runtime (Node 22: .nvmrc, Docker image). Bump the
+      # major together with a deliberate runtime upgrade, never on its own.
+      - dependency-name: "@types/node"
+        update-types: ["version-update:semver-major"]
     groups:
       # One PR for all non-breaking updates instead of one per package.
       minor-and-patch:
