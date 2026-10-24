@@ -1,0 +1,33 @@
+name: Uptime
+
+# A free external check: GitHub's runners are outside the server, so they see
+# what visitors see. A failed run e-mails the repository owner.
+# Note: GitHub pauses scheduled workflows after 60 days without repository
+# activity; re-enable it from the Actions tab if that happens.
+on:
+  schedule:
+    - cron: "*/30 * * * *"
+  workflow_dispatch:
+
+permissions: {}
+
+jobs:
+  check:
+    name: Site and certificate
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Site answers 200 over HTTPS
+        run: |
+          code=$(curl -sS -o /dev/null -w '%{http_code}' --max-time 15 \
+            --retry 2 --retry-delay 20 --retry-all-errors https://siavashizadi.com/)
+          echo "HTTP $code"
+          [ "$code" = "200" ]
+
+      - name: TLS certificate valid for at least 14 more days
+        run: |
+          end=$(echo | openssl s_client -connect siavashizadi.com:443 \
+            -servername siavashizadi.com 2>/dev/null | openssl x509 -noout -enddate | cut -d= -f2)
+          days=$(( ($(date -d "$end" +%s) - $(date +%s)) / 86400 ))
+          echo "certificate expires on $end ($days days)"
+          [ "$days" -ge 14 ]

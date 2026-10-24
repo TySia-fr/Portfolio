@@ -42,14 +42,15 @@ pnpm dev            # http://localhost:3000
 
 ## Scripts
 
-| Command         | What it does                                               |
-| --------------- | ---------------------------------------------------------- |
-| `pnpm dev`      | Development server                                         |
-| `pnpm check`    | Lint + format check + type check (run before pushing)      |
-| `pnpm build`    | Production build (`.next/standalone`)                      |
-| `pnpm start`    | Run the production build locally                           |
-| `pnpm test:e2e` | End-to-end tests against a running server (`E2E_BASE_URL`) |
-| `pnpm format`   | Format all files with Prettier                             |
+| Command            | What it does                                               |
+| ------------------ | ---------------------------------------------------------- |
+| `pnpm dev`         | Development server                                         |
+| `pnpm check`       | Lint + format check + type check (run before pushing)      |
+| `pnpm build`       | Production build (`.next/standalone`)                      |
+| `pnpm start`       | Run the production build locally                           |
+| `pnpm test:e2e`    | End-to-end tests against a running server (`E2E_BASE_URL`) |
+| `pnpm format`      | Format all files with Prettier                             |
+| `pnpm screenshots` | Capture the case-study screenshots from a running build    |
 
 ## Deployment
 
@@ -69,10 +70,25 @@ git push → CI: lint · format · types · build
 - **Edge**: Nginx terminates TLS (Let's Encrypt) and enforces a request-size limit
   ([`deploy/nginx`](deploy/nginx)).
 
+## Contact form
+
+`POST /api/contact` validates with Zod, limits size and rate, drops honeypot submissions and
+sends a plain-text e-mail through [Resend](https://resend.com). It needs three server-side
+variables (see [`.env.example`](.env.example)): `RESEND_API_KEY`, `CONTACT_TO_EMAIL`,
+`CONTACT_FROM_EMAIL`. Without them the form answers "unavailable" and never claims a message
+was sent. Server setup: [`docs/learning/05-contact-form.fa.md`](docs/learning/05-contact-form.fa.md).
+
+## Operations
+
+What is verified, what is not, and what is missing (backups, restore, monitoring):
+[`docs/operations.md`](docs/operations.md).
+
 ## Known limitations
 
 - The Content-Security-Policy allows inline scripts: nonces would force per-request
   rendering of every page ([ADR-0006](docs/adr/0006-content-security-policy.md)).
-- No contact form yet: the contact page links to e-mail and GitHub; a server-validated
-  form (Zod, rate limit, honeypot) is planned.
+- `compose.yaml`, `deploy.sh` and the Nginx file are copied to the server by hand: changing
+  them in the repository does not update the server.
+- The contact form's rate limit lives in memory: it resets on restart and assumes one instance.
+- No server backups yet; monitoring is a 30-minute external check (`uptime.yml`).
 - Single VPS, single region, no CDN: a server outage takes the site down.

@@ -23,6 +23,14 @@ if [[ ! "${requested}" =~ ^[0-9a-f]{40}$ ]]; then
 fi
 
 cd "${APP_DIR}"
+
+# One deploy at a time: a manual run and a CI run must never interleave.
+exec 9>"${APP_DIR}/.deploy.lock"
+if ! flock -n 9; then
+  log "refused: another deploy is in progress" >&2
+  exit 3
+fi
+
 previous="$(cat "${STATE_FILE}" 2>/dev/null || true)"
 
 start() {
@@ -51,8 +59,12 @@ start "${requested}"
 if wait_healthy; then
   echo "${requested}" > "${STATE_FILE}"
   log "healthy — deployed ${requested}"
-  # Remove images older than a week that no container uses.
-  docker image prune -af --filter "until=168h" >/dev/null || true
+  # Remove this project's unused images older than a week. The label filter
+  # matters: other projects on the same server must keep their images.
+  docker image prune -af \
+    --filter "until=168h" \
+    --filter "label=org.opencontainers.image.source=https://github.com/TySia-fr/Portfolio" \
+    >/dev/null || true
   exit 0
 fi
 
