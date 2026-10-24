@@ -10,6 +10,10 @@ export type NavItem = {
 
 export const site = {
   name: "Siavash Izadi",
+  /** The same name in Persian script, so the site can be found by it (SEO). */
+  nameFa: "سیاوش ایزدی",
+  givenName: "Siavash",
+  familyName: "Izadi",
   role: "Développeur full-stack JavaScript",
   location: "France",
   url: process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000",

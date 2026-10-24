@@ -5,7 +5,7 @@
 export const about = {
   title: "À propos",
   description:
-    "Siavash Izadi, développeur full-stack JavaScript : parcours, formation, domaines d’intérêt et façon de travailler.",
+    "Siavash Izadi (سیاوش ایزدی), développeur full-stack JavaScript basé en France : parcours, formation, domaines d’intérêt et façon de travailler.",
   eyebrow: "Développeur full-stack JavaScript · Informatique & cybersécurité",
   heading: "Transformer des idées en applications web concrètes.",
   intro:

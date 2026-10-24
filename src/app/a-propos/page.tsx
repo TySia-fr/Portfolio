@@ -1,21 +1,39 @@
 import type { Metadata } from "next";
 
+import { JsonLd } from "@/components/json-ld";
 import { Container } from "@/components/layout/container";
 import { Fact, ProseSection } from "@/components/prose";
 import { ButtonLink } from "@/components/ui/button-link";
 import { about } from "@/content/about";
+import { site } from "@/content/site";
+import { pageMetadata } from "@/lib/metadata";
+import { profilePageData } from "@/lib/structured-data";
 
-export const metadata: Metadata = {
-  title: about.title,
+// The profile page carries the name in both scripts, so it can be found by
+// "Siavash Izadi" and by "سیاوش ایزدی".
+export const metadata: Metadata = pageMetadata({
+  title: `${site.name} (${site.nameFa}) — ${about.title}`,
   description: about.description,
-  alternates: { canonical: "/a-propos" },
-};
+  path: "/a-propos",
+  absoluteTitle: true,
+});
 
 export default function AboutPage() {
   return (
     <Container className="py-16 sm:py-24">
+      <JsonLd data={profilePageData()} />
       <header className="border-b border-line pb-12">
-        <p className="font-mono text-xs tracking-[0.14em] text-muted uppercase">
+        <p className="flex flex-wrap items-baseline gap-x-3 gap-y-1 text-text">
+          <span className="font-mono text-sm font-medium">{site.name}</span>
+          <span aria-hidden="true" className="text-line">
+            /
+          </span>
+          {/* Persian script: its own language and direction for screen readers and search engines. */}
+          <span lang="fa" dir="rtl" className="text-base text-muted">
+            {site.nameFa}
+          </span>
+        </p>
+        <p className="mt-3 font-mono text-xs tracking-[0.14em] text-muted uppercase">
           {about.eyebrow}
         </p>
         <h1 className="mt-6 max-w-[24ch] font-mono text-display font-medium text-balance [font-stretch:76%]">
