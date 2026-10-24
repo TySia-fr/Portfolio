@@ -10,6 +10,7 @@ export const contact = {
     title: "Me joindre",
     email: "E-mail",
     github: "GitHub",
+    linkedin: "LinkedIn",
   },
   privacy:
     "Votre message est uniquement utilisé pour vous répondre. Aucune donnée n’est revendue ni utilisée à des fins publicitaires.",

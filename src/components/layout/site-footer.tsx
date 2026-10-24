@@ -22,6 +22,11 @@ export function SiteFooter() {
             </a>
           </li>
           <li>
+            <a href={site.linkedinUrl} className="hover:text-text" rel="me">
+              LinkedIn
+            </a>
+          </li>
+          <li>
             <a href={site.repositoryUrl} className="hover:text-text">
               {site.footer.sourceCode}
             </a>

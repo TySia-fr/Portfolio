@@ -23,6 +23,11 @@ export default function ContactPage() {
       href: `mailto:${site.email}`,
     },
     {
+      label: contact.channels.linkedin,
+      value: "linkedin.com/in/siavash-izadi",
+      href: site.linkedinUrl,
+    },
+    {
       label: contact.channels.github,
       value: site.githubUrl.replace("https://", ""),
       href: site.githubUrl,
