@@ -1,10 +1,9 @@
 import "server-only";
 
-import { portfolio } from "@/content/projects/portfolio";
+import { projectSources } from "@/content/projects";
 import { type Project, projectSchema } from "@/content/projects/schema";
 
-/** Registry of every project. Add a file in src/content/projects and list it here. */
-const sources: unknown[] = [portfolio];
+const sources: readonly unknown[] = projectSources;
 
 /**
  * Parsed once when the module loads, i.e. during the build.

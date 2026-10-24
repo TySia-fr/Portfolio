@@ -104,12 +104,31 @@ test.describe("not found", () => {
     await expect(page.locator("h1")).toHaveText("Cette page n’existe pas.");
   });
 
-  test("unknown project is not indexable", async ({ page }) => {
-    await page.goto("/projets/projet-inexistant");
-    await expect(page.locator("h1")).toHaveText("Cette page n’existe pas.");
-    // Known limitation (README): status 200, but search engines are told to skip it.
-    const noindex = page.locator('meta[name="robots"][content*="noindex"]');
-    expect(await noindex.count()).toBeGreaterThan(0);
+  // A slug never requested before is the case that used to return 200: the
+  // partially prerendered shell streamed before notFound() could run.
+  test("unknown project returns 404 on the very first request", async ({ request }) => {
+    const slug = `inexistant-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
+    const first = await request.get(`/projets/${slug}`);
+    expect(first.status()).toBe(404);
+    expect(await first.text()).toContain("Cette page n’existe pas.");
+    const second = await request.get(`/projets/${slug}`);
+    expect(second.status()).toBe(404);
+  });
+
+  test("unknown project shows the French 404 page", async ({ page }) => {
+    const response = await page.goto("/projets/projet-inexistant");
+    expect(response?.status()).toBe(404);
+    await expect(page.getByRole("heading", { level: 1 })).toHaveText(
+      "Cette page n’existe pas.",
+    );
+  });
+
+  test("slugs are case-sensitive and extra segments are rejected", async ({
+    request,
+  }) => {
+    expect((await request.get("/projets/PORTFOLIO")).status()).toBe(404);
+    expect((await request.get("/projets/portfolio/extra")).status()).toBe(404);
+    expect((await request.get("/projets/portfolio")).status()).toBe(200);
   });
 });
 

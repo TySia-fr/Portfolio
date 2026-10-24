@@ -35,8 +35,8 @@ export default async function ProjectPage({ params }: PageProps<"/projets/[slug]
   const { slug } = await params;
   const project = getProjectBySlug(slug);
 
-  // Unknown slugs render the French 404 page (not-found.tsx). With Cache
-  // Components the status stays 200 but Next.js adds `noindex` (see README).
+  // Normally unreachable: src/proxy.ts answers unknown slugs with a real 404
+  // before rendering starts. Kept as a second line of defence.
   if (!project) notFound();
 
   const { caseStudy } = project;

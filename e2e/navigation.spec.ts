@@ -79,3 +79,22 @@ test.describe("mobile menu", () => {
     }
   });
 });
+
+test("client-side navigation to an unknown project shows the 404 page", async ({
+  page,
+}) => {
+  await page.goto("/projets");
+  // Same code path as a <Link> click: the App Router fetches the RSC payload.
+  const rsc = page.waitForResponse((response) =>
+    response.url().includes("/projets/projet-fantome"),
+  );
+  await page.evaluate(() => {
+    (
+      window as unknown as { next: { router: { push: (href: string) => void } } }
+    ).next.router.push("/projets/projet-fantome");
+  });
+  expect((await rsc).status()).toBe(404);
+  await expect(page.getByRole("heading", { level: 1 })).toHaveText(
+    "Cette page n’existe pas.",
+  );
+});
