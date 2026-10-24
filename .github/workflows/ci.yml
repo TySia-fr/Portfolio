@@ -101,7 +101,38 @@ jobs:
           grep -q "${GITHUB_SHA:0:7}" /tmp/body.html
           echo "user: $(docker exec portfolio id -u) (must not be 0)"
           [ "$(docker exec portfolio id -u)" != "0" ]
-          docker compose -f deploy/compose.yaml down
+
+      # End-to-end tests against the exact image that will be deployed.
+      - uses: pnpm/action-setup@v6
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+
+      - name: Install test dependencies
+        run: |
+          pnpm install --frozen-lockfile
+          pnpm exec playwright install --with-deps chromium
+
+      - name: End-to-end tests (desktop + mobile)
+        env:
+          E2E_BASE_URL: http://127.0.0.1:3001
+        run: pnpm test:e2e
+
+      - name: Upload Playwright traces
+        if: failure()
+        uses: actions/upload-artifact@v7
+        with:
+          name: playwright-traces
+          path: test-results/
+          retention-days: 7
+
+      - name: Stop container
+        if: always()
+        run: docker compose -f deploy/compose.yaml down
+        env:
+          IMAGE_TAG: ${{ github.sha }}
 
       - name: Log in to GHCR
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
@@ -128,7 +159,7 @@ jobs:
     timeout-minutes: 10
     environment:
       name: production
-      url: https://portfolio.siavashizadi.com
+      url: https://siavashizadi.com
     steps:
       - name: Configure SSH
         env:
@@ -150,7 +181,12 @@ jobs:
           ssh -i ~/.ssh/deploy_key -o IdentitiesOnly=yes -o StrictHostKeyChecking=yes \
             "deployer@${DEPLOY_HOST}" "${{ github.sha }}"
 
+      # Proves the public site serves THIS commit, over HTTPS, with www redirected.
       - name: Verify public URL
         run: |
           sleep 3
-          curl -fsS -o /dev/null -w "HTTP %{http_code}\n" https://portfolio.siavashizadi.com/
+          curl -fsS https://siavashizadi.com/ -o /tmp/live.html
+          grep -q "${GITHUB_SHA:0:7}" /tmp/live.html
+          echo "live site serves ${GITHUB_SHA:0:7}"
+          curl -sS -o /dev/null -w "http -> %{http_code} %{redirect_url}\n" http://siavashizadi.com/
+          curl -sS -o /dev/null -w "www  -> %{http_code} %{redirect_url}\n" https://www.siavashizadi.com/

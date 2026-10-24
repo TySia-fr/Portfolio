@@ -37,7 +37,7 @@ export const portfolio = {
       "Contenu typé dans le dépôt et validé avec Zod au build, sans base de données.",
       "Image Docker multi-étapes, exécutée sans privilèges root et en lecture seule.",
       "Configuration Nginx (reverse proxy, HTTPS via Let’s Encrypt) prête pour un serveur Hetzner que j’administre ; mise en ligne en cours.",
-      "Chaque push déclenche lint, vérification des types, build, test de fumée du conteneur et publication de l’image.",
+      "Chaque push déclenche lint, vérification des types, build, puis des tests de bout en bout (Playwright, ordinateur et mobile, accessibilité avec axe) exécutés contre l’image Docker qui sera déployée.",
     ],
 
     decisions: [
@@ -72,7 +72,7 @@ export const portfolio = {
 
     nextSteps: [
       "Formulaire de contact avec validation côté serveur et protection anti-spam.",
-      "Tests automatisés de bout en bout avec Playwright.",
+      "Mise en ligne sur siavashizadi.com avec déploiement automatique.",
       "Politique de sécurité du contenu (CSP) avec nonces.",
     ],
   },

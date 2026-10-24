@@ -1,21 +1,22 @@
-# portfolio.siavashizadi.com
+# siavashizadi.com
 
 Personal portfolio of **Siavash Izadi**, full-stack JavaScript developer based in France.
 French-language site, built as a production-grade project rather than a template.
 
-> Status: **work in progress** — foundation in place, pages under construction.
+> Status: **v1 feature-complete** — public pages, SEO and end-to-end tests in place; deployment in progress.
 > See [`docs/requirements.md`](docs/requirements.md) for the v1 scope.
 
 ## Stack
 
-| Layer     | Choice                                                       |
-| --------- | ------------------------------------------------------------ |
-| Framework | Next.js 16 (App Router, Server Components, Cache Components) |
-| Language  | TypeScript (`strict` + `noUncheckedIndexedAccess`)           |
-| Styling   | Tailwind CSS v4                                              |
-| Tooling   | pnpm, ESLint (zero warnings), Prettier                       |
-| CI        | GitHub Actions — lint, format, types, production build       |
-| Hosting   | Docker on a self-managed VPS behind Nginx (planned)          |
+| Layer     | Choice                                                        |
+| --------- | ------------------------------------------------------------- |
+| Framework | Next.js 16 (App Router, Server Components, Cache Components)  |
+| Language  | TypeScript (`strict` + `noUncheckedIndexedAccess`)            |
+| Styling   | Tailwind CSS v4                                               |
+| Tooling   | pnpm, ESLint (zero warnings), Prettier                        |
+| Testing   | Playwright end-to-end (desktop + mobile) + axe accessibility  |
+| CI        | GitHub Actions — lint, format, types, build, E2E on the image |
+| Hosting   | Docker on a self-managed VPS behind Nginx (planned)           |
 
 ## Architecture decisions
 
@@ -39,12 +40,14 @@ pnpm dev            # http://localhost:3000
 
 ## Scripts
 
-| Command       | What it does                                          |
-| ------------- | ----------------------------------------------------- |
-| `pnpm dev`    | Development server                                    |
-| `pnpm check`  | Lint + format check + type check (run before pushing) |
-| `pnpm build`  | Production build (`.next/standalone`)                 |
-| `pnpm format` | Format all files with Prettier                        |
+| Command         | What it does                                               |
+| --------------- | ---------------------------------------------------------- |
+| `pnpm dev`      | Development server                                         |
+| `pnpm check`    | Lint + format check + type check (run before pushing)      |
+| `pnpm build`    | Production build (`.next/standalone`)                      |
+| `pnpm start`    | Run the production build locally                           |
+| `pnpm test:e2e` | End-to-end tests against a running server (`E2E_BASE_URL`) |
+| `pnpm format`   | Format all files with Prettier                             |
 
 ## Deployment
 
@@ -67,7 +70,8 @@ git push → CI: lint · format · types · build
 ## Known limitations
 
 - No Content-Security-Policy yet (needs nonce support; planned for the security phase).
-- No automated tests yet (added with the contact form).
+- No contact form yet: the contact page links to e-mail and GitHub; a server-validated
+  form (Zod, rate limit, honeypot) is planned.
 - Unknown project URLs (`/projets/<slug>`) render the 404 page with HTTP 200 + `noindex`:
   with Cache Components the static shell streams before params resolve. Fixing it would
   need a Proxy duplicating the project list; not worth the drift risk for now.
