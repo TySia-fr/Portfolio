@@ -4,13 +4,14 @@ import { Container } from "@/components/layout/container";
 import { FeaturedProject } from "@/components/projects/featured-project";
 import { ProjectCard } from "@/components/projects/project-card";
 import { projectsPage } from "@/content/projects-page";
+import { pageMetadata } from "@/lib/metadata";
 import { getAllProjects } from "@/lib/projects";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: projectsPage.title,
   description: projectsPage.description,
-  alternates: { canonical: "/projets" },
-};
+  path: "/projets",
+});
 
 export default function ProjectsPage() {
   const projects = getAllProjects();

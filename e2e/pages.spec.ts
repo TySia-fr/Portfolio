@@ -207,3 +207,54 @@ test.describe("reduced motion", () => {
     }
   });
 });
+
+test.describe("search engines", () => {
+  for (const path of PAGES) {
+    test(`${path} has a canonical URL matching og:url, and the site's structured data`, async ({
+      page,
+    }) => {
+      await page.goto(path);
+      const canonical = await page.locator('link[rel="canonical"]').getAttribute("href");
+      const ogUrl = await page.locator('meta[property="og:url"]').getAttribute("content");
+      expect(canonical).toBeTruthy();
+      expect(ogUrl).toBe(canonical);
+      expect(new URL(canonical!).pathname.replace(/\/$/, "")).toBe(
+        path === "/" ? "" : path,
+      );
+
+      const blocks = await page
+        .locator('script[type="application/ld+json"]')
+        .evaluateAll((scripts) =>
+          scripts.map((script) => JSON.parse(script.textContent ?? "")),
+        );
+      const graph = blocks.flatMap((block) => block["@graph"] ?? [block]);
+      const person = graph.find((node) => node["@type"] === "Person");
+      expect(person.name).toBe("Siavash Izadi");
+      expect(person.alternateName).toContain("سیاوش ایزدی");
+      expect(person.sameAs).toEqual(
+        expect.arrayContaining([
+          expect.stringContaining("github.com"),
+          expect.stringContaining("linkedin.com"),
+        ]),
+      );
+    });
+  }
+
+  test("the name is visible in both scripts on the profile page", async ({ page }) => {
+    await page.goto("/a-propos");
+    await expect(page).toHaveTitle(/Siavash Izadi \(سیاوش ایزدی\)/);
+    const persian = page.locator('[lang="fa"]', { hasText: "سیاوش ایزدی" });
+    await expect(persian).toBeVisible();
+    await expect(persian).toHaveAttribute("dir", "rtl");
+    const types = await page
+      .locator('script[type="application/ld+json"]')
+      .evaluateAll((scripts) =>
+        scripts.map((script) => JSON.parse(script.textContent ?? "")["@type"]),
+      );
+    expect(types).toContain("ProfilePage");
+  });
+
+  test("robots.txt keeps the API out of search results", async ({ request }) => {
+    expect(await (await request.get("/robots.txt")).text()).toContain("Disallow: /api/");
+  });
+});

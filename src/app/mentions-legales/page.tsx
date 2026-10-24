@@ -3,13 +3,14 @@ import type { Metadata } from "next";
 import { Container } from "@/components/layout/container";
 import { ProseSection, TextLink } from "@/components/prose";
 import { legal } from "@/content/legal";
+import { pageMetadata } from "@/lib/metadata";
 import { site } from "@/content/site";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: legal.title,
   description: legal.description,
-  alternates: { canonical: "/mentions-legales" },
-};
+  path: "/mentions-legales",
+});
 
 const dateFormat = new Intl.DateTimeFormat("fr-FR", { dateStyle: "long" });
 

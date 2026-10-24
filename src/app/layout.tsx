@@ -1,25 +1,29 @@
 import type { Metadata, Viewport } from "next";
 
+import { JsonLd } from "@/components/json-ld";
 import { SiteFooter } from "@/components/layout/site-footer";
 import { SiteHeader } from "@/components/layout/site-header";
 import { site } from "@/content/site";
 import { geistSans, martianMono } from "@/fonts";
+import { siteGraph } from "@/lib/structured-data";
 
 import "./globals.css";
 
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
   title: {
-    default: `${site.name} — ${site.role}`,
+    // Both scripts in the home title: people search the name in Latin and in Persian.
+    default: `${site.name} (${site.nameFa}) — ${site.role}`,
     template: `%s — ${site.name}`,
   },
   description:
-    "Portfolio de Siavash Izadi, développeur full-stack JavaScript basé en France : projets, méthode et contact.",
+    "Siavash Izadi (سیاوش ایزدی), développeur full-stack JavaScript basé en France : projets, méthode et contact.",
   alternates: { canonical: "/" },
   openGraph: {
     type: "website",
     locale: "fr_FR",
     siteName: site.name,
+    url: "/",
   },
 };
 
@@ -44,6 +48,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           {children}
         </main>
         <SiteFooter />
+        <JsonLd data={siteGraph()} />
       </body>
     </html>
   );

@@ -7,6 +7,7 @@ import { FeaturedProject } from "@/components/projects/featured-project";
 import { ButtonLink } from "@/components/ui/button-link";
 import { home } from "@/content/home";
 import { pipeline } from "@/content/pipeline";
+import { site } from "@/content/site";
 import { getFeaturedProjects } from "@/lib/projects";
 
 const sectionLabel =
@@ -20,7 +21,9 @@ export default function HomePage() {
       <div className="relative overflow-hidden">
         <div aria-hidden="true" className="bg-grid absolute inset-0 -top-16" />
         <Container className="relative py-16 sm:py-24 lg:py-28">
-          <p className={`motion-enter ${sectionLabel} font-normal`}>{home.eyebrow}</p>
+          <p className={`motion-enter ${sectionLabel} font-normal`}>
+            <span className="text-text">{site.name}</span> · {home.eyebrow}
+          </p>
 
           {/* The headline is the largest element on the page (LCP): it is never
               hidden or delayed by an animation. */}

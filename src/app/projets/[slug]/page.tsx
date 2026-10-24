@@ -13,6 +13,7 @@ import { TechList } from "@/components/projects/tech-list";
 import type { Project } from "@/content/projects/schema";
 import { projectsPage } from "@/content/projects-page";
 import { site } from "@/content/site";
+import { pageMetadata } from "@/lib/metadata";
 import { getAllProjects, getProjectBySlug } from "@/lib/projects";
 import { readExcerpt } from "@/lib/source-excerpt";
 
@@ -30,12 +31,11 @@ export async function generateMetadata({
   const project = getProjectBySlug(slug);
   if (!project) return {};
 
-  return {
+  return pageMetadata({
     title: project.title,
     description: project.summary,
-    alternates: { canonical: `/projets/${project.slug}` },
-    openGraph: { title: project.title, description: project.summary },
-  };
+    path: `/projets/${project.slug}`,
+  });
 }
 
 type Section = { id: string; title: string; content: ReactNode };

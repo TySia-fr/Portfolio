@@ -5,12 +5,13 @@ import { ContactForm } from "@/components/contact/contact-form";
 import { Container } from "@/components/layout/container";
 import { contact } from "@/content/contact";
 import { site } from "@/content/site";
+import { pageMetadata } from "@/lib/metadata";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: contact.title,
   description: contact.description,
-  alternates: { canonical: "/contact" },
-};
+  path: "/contact",
+});
 
 /**
  * The form posts to /api/contact (server-validated, rate-limited, honeypot).
