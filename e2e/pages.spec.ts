@@ -95,6 +95,35 @@ test("security headers are sent", async ({ request }) => {
   expect(headers["referrer-policy"]).toBe("strict-origin-when-cross-origin");
   expect(headers["strict-transport-security"]).toContain("max-age=");
   expect(headers["x-powered-by"]).toBeUndefined();
+  expect(headers["cross-origin-opener-policy"]).toBe("same-origin");
+
+  const csp = headers["content-security-policy"] ?? "";
+  expect(csp).toContain("default-src 'self'");
+  expect(csp).toContain("frame-ancestors 'none'");
+  expect(csp).toContain("object-src 'none'");
+  expect(csp).not.toContain("unsafe-eval");
+  expect(csp).toMatch(/style-src 'self'(;|$)/);
+});
+
+test("the content security policy blocks nothing the site needs", async ({ page }) => {
+  await page.addInitScript(() => {
+    const store = window as unknown as { __cspViolations: string[] };
+    store.__cspViolations = [];
+    document.addEventListener("securitypolicyviolation", (event) => {
+      store.__cspViolations.push(`${event.violatedDirective} ${event.blockedURI}`);
+    });
+  });
+  const violations: string[] = [];
+  for (const path of [...PAGES, "/projets/inexistant"]) {
+    await page.goto(path);
+    await page.waitForLoadState("networkidle");
+    violations.push(
+      ...(await page.evaluate(
+        () => (window as unknown as { __cspViolations: string[] }).__cspViolations,
+      )),
+    );
+  }
+  expect(violations).toEqual([]);
 });
 
 test.describe("not found", () => {
@@ -104,12 +133,31 @@ test.describe("not found", () => {
     await expect(page.locator("h1")).toHaveText("Cette page n’existe pas.");
   });
 
-  test("unknown project is not indexable", async ({ page }) => {
-    await page.goto("/projets/projet-inexistant");
-    await expect(page.locator("h1")).toHaveText("Cette page n’existe pas.");
-    // Known limitation (README): status 200, but search engines are told to skip it.
-    const noindex = page.locator('meta[name="robots"][content*="noindex"]');
-    expect(await noindex.count()).toBeGreaterThan(0);
+  // A slug never requested before is the case that used to return 200: the
+  // partially prerendered shell streamed before notFound() could run.
+  test("unknown project returns 404 on the very first request", async ({ request }) => {
+    const slug = `inexistant-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
+    const first = await request.get(`/projets/${slug}`);
+    expect(first.status()).toBe(404);
+    expect(await first.text()).toContain("Cette page n’existe pas.");
+    const second = await request.get(`/projets/${slug}`);
+    expect(second.status()).toBe(404);
+  });
+
+  test("unknown project shows the French 404 page", async ({ page }) => {
+    const response = await page.goto("/projets/projet-inexistant");
+    expect(response?.status()).toBe(404);
+    await expect(page.getByRole("heading", { level: 1 })).toHaveText(
+      "Cette page n’existe pas.",
+    );
+  });
+
+  test("slugs are case-sensitive and extra segments are rejected", async ({
+    request,
+  }) => {
+    expect((await request.get("/projets/PORTFOLIO")).status()).toBe(404);
+    expect((await request.get("/projets/portfolio/extra")).status()).toBe(404);
+    expect((await request.get("/projets/portfolio")).status()).toBe(200);
   });
 });
 
@@ -119,4 +167,43 @@ test("contact page offers a working e-mail link", async ({ page }) => {
     "href",
     /^mailto:[^@\s]+@[^@\s]+\.[a-z]+$/,
   );
+});
+
+test("every image has alt text, reserved dimensions and actually loads", async ({
+  page,
+}) => {
+  for (const path of PAGES) {
+    await page.goto(path);
+    // Visible ones only: e.g. the phone mock-up is display:none on small screens.
+    const images = page.locator("main img:visible");
+    for (const image of await images.all()) {
+      await image.scrollIntoViewIfNeeded(); // triggers loading="lazy"
+      await expect(image).toHaveAttribute("alt", /.{10,}/);
+      await expect(image).toHaveAttribute("width", /^\d+$/);
+      await expect(image).toHaveAttribute("height", /^\d+$/);
+      await expect
+        .poll(() =>
+          image.evaluate((img: HTMLImageElement) => img.complete && img.naturalWidth),
+        )
+        .toBeGreaterThan(0);
+    }
+  }
+});
+
+test.describe("reduced motion", () => {
+  test.use({ reducedMotion: "reduce" });
+
+  test("nothing animates and all content is visible", async ({ page }) => {
+    for (const path of ["/", "/projets/portfolio", "/a-propos"]) {
+      await page.goto(path);
+      const animated = await page.evaluate(
+        () =>
+          [...document.querySelectorAll(".reveal, .motion-enter, .logo-mark-stroke")]
+            .map((element) => getComputedStyle(element))
+            .filter((style) => style.animationName !== "none" || style.opacity !== "1")
+            .length,
+      );
+      expect(animated, `${path}: animated elements`).toBe(0);
+    }
+  });
 });

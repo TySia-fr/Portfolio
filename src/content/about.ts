@@ -14,7 +14,7 @@ export const about = {
   facts: {
     title: "En bref",
     items: [
-      { label: "Formation", value: "Bachelor en génie informatique (Iran)" },
+      { label: "Formation", value: "Bachelor en génie informatique (Iran, 2024)" },
       { label: "Études", value: "Informatique, Université de Montpellier" },
       { label: "Expérience", value: "Sites WordPress, 2021 – 2023" },
       { label: "Basé en", value: "France" },
@@ -32,6 +32,29 @@ export const about = {
       ],
     },
   ],
+
+  /** Dated facts only, as Siavash stated them. */
+  timeline: {
+    title: "Repères",
+    items: [
+      {
+        period: "Sept. 2020 – juil. 2024",
+        title: "Bachelor en génie informatique",
+        body: "Université Mehralborz, Téhéran. Formation à temps plein : programmation, structures de données, systèmes d’exploitation, réseaux, bases de données.",
+      },
+      {
+        period: "Janv. 2021 – août 2023",
+        title: "Création et gestion de sites WordPress",
+        body: "Conception web, UI/UX, référencement naturel, publicité avec Google Ads, et coordination d’une équipe.",
+      },
+      {
+        period: "Aujourd’hui",
+        title: "Études d’informatique à l’Université de Montpellier",
+        body: "En parallèle, développement full-stack JavaScript, avec un intérêt pour l’infrastructure et la sécurité des applications.",
+        current: true,
+      },
+    ],
+  },
 
   interests: {
     title: "Domaines d’intérêt",

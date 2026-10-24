@@ -1,6 +1,7 @@
 import Link from "next/link";
 
 import { Container } from "@/components/layout/container";
+import { LogoMark } from "@/components/brand/logo-mark";
 import { MobileNav } from "@/components/layout/mobile-nav";
 import { NavLinks } from "@/components/layout/nav-links";
 import { site } from "@/content/site";
@@ -13,8 +14,9 @@ export function SiteHeader() {
             (WCAG 2.5.3). The hidden suffix tells screen readers where it goes. */}
         <Link
           href="/"
-          className="font-mono text-sm font-medium tracking-tight [font-stretch:87.5%]"
+          className="group -ml-1 flex items-center gap-2.5 py-2 pl-1 font-mono text-sm font-medium tracking-tight [font-stretch:87.5%]"
         >
+          <LogoMark className="size-6 text-text transition-colors group-hover:text-signal" />
           siavash izadi
           <span className="hidden text-muted sm:inline"> / full-stack</span>
           <span className="sr-only"> ({site.ui.home})</span>
@@ -24,7 +26,7 @@ export function SiteHeader() {
           <NavLinks
             items={site.nav}
             className="flex items-center gap-8 font-mono text-[0.8125rem]"
-            linkClassName="text-muted"
+            linkClassName="nav-link py-2 text-muted"
           />
         </nav>
 

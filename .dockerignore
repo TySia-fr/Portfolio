@@ -5,7 +5,8 @@
 node_modules
 coverage
 docs
-deploy
+# deploy/ is NOT ignored: the case study quotes deploy.sh and compose.yaml at
+# build time. Those files hold no secrets; they only reach the builder stage.
 *.md
 .env*
 !.env.example

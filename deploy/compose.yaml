@@ -10,6 +10,13 @@ services:
     container_name: portfolio
     restart: unless-stopped
 
+    # Runtime secrets (contact form e-mail provider). The file lives only on the
+    # server: /opt/portfolio/.env, owned by deployer (who runs compose), mode 600.
+    # Optional: without it the site still starts and the form reports "unavailable".
+    env_file:
+      - path: .env
+        required: false
+
     # Only Nginx on the same machine can reach the app. Never exposed publicly.
     ports:
       - "127.0.0.1:3001:3000"
