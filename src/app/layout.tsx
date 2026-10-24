@@ -15,6 +15,12 @@ export const metadata: Metadata = {
   },
   description:
     "Portfolio de Siavash Izadi, développeur full-stack JavaScript basé en France : projets, méthode et contact.",
+  alternates: { canonical: "/" },
+  openGraph: {
+    type: "website",
+    locale: "fr_FR",
+    siteName: site.name,
+  },
 };
 
 export const viewport: Viewport = {
