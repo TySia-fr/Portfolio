@@ -15,7 +15,11 @@ export function ProseSection({
   children: ReactNode;
 }) {
   return (
-    <section aria-labelledby={id ? `${id}-title` : undefined}>
+    <section
+      id={id}
+      aria-labelledby={id ? `${id}-title` : undefined}
+      className="scroll-mt-24"
+    >
       <h2
         id={id ? `${id}-title` : undefined}
         className="font-mono text-xs font-medium tracking-[0.14em] text-muted uppercase"
