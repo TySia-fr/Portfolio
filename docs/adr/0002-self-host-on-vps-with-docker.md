@@ -6,13 +6,14 @@
 ## Context
 
 The owner runs a hardened Hetzner VPS ("TySia") with Nginx and wants several projects
-live on subdomains of `siavashizadi.com`. The portfolio is the first of them.
+live under `siavashizadi.com`: the portfolio on the root domain, other projects on subdomains.
 
 ## Decision
 
 - Build with `output: "standalone"` and ship a Docker image (Node 22).
 - Nginx on the VPS terminates HTTPS (Let's Encrypt) and reverse-proxies
-  `portfolio.siavashizadi.com` to the container on a localhost-only port.
+  `siavashizadi.com` (and redirects `www`) to the container on a localhost-only port.
+  Future projects get their own subdomain and their own container.
 - GitHub Actions builds, checks and deploys on every push to `main`.
 
 ## Alternatives considered

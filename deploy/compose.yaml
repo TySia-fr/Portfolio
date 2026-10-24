@@ -1,4 +1,4 @@
-# Production runtime for portfolio.siavashizadi.com on the VPS.
+# Production runtime for siavashizadi.com on the VPS.
 # Lives at /opt/portfolio/compose.yaml. Started by deploy.sh, never by hand
 # unless you set IMAGE_TAG yourself.
 

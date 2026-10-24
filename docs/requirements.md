@@ -1,4 +1,4 @@
-# Requirements — portfolio.siavashizadi.com
+# Requirements — siavashizadi.com
 
 Status: **v1 (MVP)** — agreed 2026-10-15
 
@@ -46,5 +46,5 @@ Primary audiences, in order:
 
 ## Definition of done (v1)
 
-Live at `https://portfolio.siavashizadi.com`, CI green, contact form proven end-to-end,
+Live at `https://siavashizadi.com`, CI green, contact form proven end-to-end,
 README explains architecture, known limitations listed.
