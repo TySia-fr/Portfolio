@@ -38,17 +38,17 @@ export default function ContactPage() {
 
   return (
     <Container className="py-16 sm:py-24">
-      <h1 className="motion-enter max-w-[20ch] font-mono text-display font-medium text-balance [font-stretch:76%]">
+      <h1 className="max-w-[20ch] font-mono text-display font-medium text-balance [font-stretch:76%]">
         {contact.heading}
       </h1>
-      <p className="motion-enter motion-delay-1 mt-8 max-w-[60ch] text-lg leading-relaxed text-muted">
+      <p className="mt-8 max-w-[60ch] text-lg leading-relaxed text-muted">
         {contact.intro}
       </p>
 
       <div className="mt-14 grid gap-14 lg:grid-cols-[minmax(0,1.5fr)_minmax(0,1fr)] lg:gap-16">
         <section
           aria-labelledby="form-title"
-          className="motion-enter motion-delay-2 relative border border-line bg-surface/40 p-6 sm:p-8"
+          className="motion-enter motion-delay-1 relative border border-line bg-surface/40 p-6 sm:p-8"
         >
           <h2
             id="form-title"
@@ -59,7 +59,7 @@ export default function ContactPage() {
           <ContactForm fallbackEmail={site.email} />
         </section>
 
-        <div className="motion-enter motion-delay-3">
+        <div className="motion-enter motion-delay-2">
           <section aria-labelledby="channels-title">
             <h2
               id="channels-title"

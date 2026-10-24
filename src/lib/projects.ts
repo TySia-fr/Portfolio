@@ -1,5 +1,8 @@
 import "server-only";
 
+import { existsSync } from "node:fs";
+import { join } from "node:path";
+
 import { projectSources } from "@/content/projects";
 import { type Project, projectSchema } from "@/content/projects/schema";
 
@@ -19,6 +22,27 @@ for (const project of projects) {
     throw new Error(`Duplicate project slug: "${project.slug}"`);
   }
   slugs.add(project.slug);
+}
+
+// Every screenshot file referenced by content must exist: a missing image
+// fails the build instead of shipping a broken <img>.
+for (const project of projects) {
+  const shots = project.media
+    ? [project.media.desktop, project.media.mobile, ...project.media.gallery]
+    : [];
+  for (const shot of shots) {
+    for (const width of shot?.widths ?? []) {
+      // Build-time check only: keep public/ out of the server file trace.
+      const file = join(
+        /*turbopackIgnore: true*/ process.cwd(),
+        "public",
+        `${shot?.base}-${width}.webp`,
+      );
+      if (!existsSync(file)) {
+        throw new Error(`Project "${project.slug}": missing screenshot ${file}`);
+      }
+    }
+  }
 }
 
 export function getAllProjects(): readonly Project[] {

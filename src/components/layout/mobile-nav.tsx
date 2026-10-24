@@ -49,7 +49,7 @@ export function MobileNav({ items, labels }: Props) {
         id={menuId}
         aria-label={labels.nav}
         hidden={!open}
-        className="absolute inset-x-0 top-full border-b border-line bg-ink"
+        className="menu-panel absolute inset-x-0 top-full border-b border-line bg-ink"
       >
         <NavLinks
           items={items}

@@ -168,3 +168,42 @@ test("contact page offers a working e-mail link", async ({ page }) => {
     /^mailto:[^@\s]+@[^@\s]+\.[a-z]+$/,
   );
 });
+
+test("every image has alt text, reserved dimensions and actually loads", async ({
+  page,
+}) => {
+  for (const path of PAGES) {
+    await page.goto(path);
+    // Visible ones only: e.g. the phone mock-up is display:none on small screens.
+    const images = page.locator("main img:visible");
+    for (const image of await images.all()) {
+      await image.scrollIntoViewIfNeeded(); // triggers loading="lazy"
+      await expect(image).toHaveAttribute("alt", /.{10,}/);
+      await expect(image).toHaveAttribute("width", /^\d+$/);
+      await expect(image).toHaveAttribute("height", /^\d+$/);
+      await expect
+        .poll(() =>
+          image.evaluate((img: HTMLImageElement) => img.complete && img.naturalWidth),
+        )
+        .toBeGreaterThan(0);
+    }
+  }
+});
+
+test.describe("reduced motion", () => {
+  test.use({ reducedMotion: "reduce" });
+
+  test("nothing animates and all content is visible", async ({ page }) => {
+    for (const path of ["/", "/projets/portfolio", "/a-propos"]) {
+      await page.goto(path);
+      const animated = await page.evaluate(
+        () =>
+          [...document.querySelectorAll(".reveal, .motion-enter, .logo-mark-stroke")]
+            .map((element) => getComputedStyle(element))
+            .filter((style) => style.animationName !== "none" || style.opacity !== "1")
+            .length,
+      );
+      expect(animated, `${path}: animated elements`).toBe(0);
+    }
+  });
+});

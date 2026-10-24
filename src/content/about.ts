@@ -33,6 +33,24 @@ export const about = {
     },
   ],
 
+  /** Dated facts only, as Siavash stated them. */
+  timeline: {
+    title: "Repères",
+    items: [
+      {
+        period: "Janv. 2021 – août 2023",
+        title: "Création et gestion de sites WordPress",
+        body: "Conception web, UI/UX, référencement naturel, publicité avec Google Ads, et coordination d’une équipe.",
+      },
+      {
+        period: "Aujourd’hui",
+        title: "Études d’informatique à l’Université de Montpellier",
+        body: "En parallèle, développement full-stack JavaScript, avec un intérêt pour l’infrastructure et la sécurité des applications.",
+        current: true,
+      },
+    ],
+  },
+
   interests: {
     title: "Domaines d’intérêt",
     items: [

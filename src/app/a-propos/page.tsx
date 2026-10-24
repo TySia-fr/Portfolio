@@ -46,24 +46,64 @@ export default function AboutPage() {
             </ProseSection>
           ))}
 
-          <ProseSection id="interets" title={about.interests.title}>
-            <div className="grid gap-px border border-line bg-line sm:grid-cols-2">
-              {about.interests.items.map((item) => (
-                <div key={item.title} className="bg-ink p-5">
-                  <h3 className="font-mono text-[0.9375rem] font-medium text-text">
-                    {item.title}
-                  </h3>
-                  <p className="mt-2 text-[0.9375rem]">{item.body}</p>
-                </div>
-              ))}
-            </div>
-          </ProseSection>
+          <div className="reveal">
+            <ProseSection id="reperes" title={about.timeline.title}>
+              <ol className="relative mt-2 grid gap-8 border-l border-line pl-7">
+                {about.timeline.items.map((item) => (
+                  <li key={item.period} className="relative">
+                    <span
+                      aria-hidden="true"
+                      className={`absolute top-1.5 -left-[calc(1.75rem+4.5px)] size-2 ${
+                        "current" in item ? "bg-signal" : "border border-muted bg-ink"
+                      }`}
+                    />
+                    <p className="font-mono text-xs tracking-[0.14em] text-muted uppercase">
+                      {item.period}
+                    </p>
+                    <h3 className="mt-2 font-mono text-base font-medium text-text">
+                      {item.title}
+                    </h3>
+                    <p className="mt-2">{item.body}</p>
+                  </li>
+                ))}
+              </ol>
+            </ProseSection>
+          </div>
 
-          <ProseSection id="methode" title={about.philosophy.title}>
-            {about.philosophy.paragraphs.map((paragraph) => (
-              <p key={paragraph}>{paragraph}</p>
-            ))}
-          </ProseSection>
+          <div className="reveal">
+            <ProseSection id="interets" title={about.interests.title}>
+              <div className="grid gap-px border border-line bg-line sm:grid-cols-2">
+                {about.interests.items.map((item) => (
+                  <div
+                    key={item.title}
+                    className="bg-ink p-5 transition-colors hover:bg-surface"
+                  >
+                    <h3 className="font-mono text-[0.9375rem] font-medium text-text">
+                      {item.title}
+                    </h3>
+                    <p className="mt-2 text-[0.9375rem]">{item.body}</p>
+                  </div>
+                ))}
+              </div>
+            </ProseSection>
+          </div>
+
+          <div className="reveal">
+            <ProseSection id="methode" title={about.philosophy.title}>
+              {about.philosophy.paragraphs.map((paragraph, index) => (
+                <p
+                  key={paragraph}
+                  className={
+                    index === 0
+                      ? "border-l-2 border-signal pl-5 font-mono text-lg leading-relaxed text-text [font-stretch:87.5%]"
+                      : undefined
+                  }
+                >
+                  {paragraph}
+                </p>
+              ))}
+            </ProseSection>
+          </div>
 
           <ProseSection id="suite" title={about.next.title}>
             {about.next.paragraphs.map((paragraph) => (
