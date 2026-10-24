@@ -234,12 +234,12 @@ ssh -o StrictHostKeyChecking=accept-new -i ~/portfolio_deploy deployer@localhost
 
 repo → **Settings** → **Secrets and variables** → **Actions**
 
-| تب        | نام                  | مقدار                                                                       |
-| --------- | -------------------- | --------------------------------------------------------------------------- |
-| Secrets   | `DEPLOY_SSH_KEY`     | کل خروجی `cat ~/portfolio_deploy` (از `-----BEGIN` تا `-----END` با خودشان) |
-| Secrets   | `DEPLOY_HOST`        | IP سرور                                                                     |
-| Secrets   | `DEPLOY_KNOWN_HOSTS` | خروجی `ssh-keyscan -t ed25519 <IP-سرور> 2>/dev/null`                        |
-| Variables | `DEPLOY_ENABLED`     | `true`                                                                      |
+| تب        | نام                  | مقدار                                                                                                  |
+| --------- | -------------------- | ------------------------------------------------------------------------------------------------------ |
+| Secrets   | `DEPLOY_SSH_KEY`     | خروجی `base64 -w0 ~/portfolio_deploy; echo` (**یک خط**؛ کپی چندخطی از ترمینال ویندوز کلید را خراب کرد) |
+| Secrets   | `DEPLOY_HOST`        | IP سرور                                                                                                |
+| Secrets   | `DEPLOY_KNOWN_HOSTS` | خروجی `ssh-keyscan -t ed25519 <IP-سرور> 2>/dev/null`                                                   |
+| Variables | `DEPLOY_ENABLED`     | `true`                                                                                                 |
 
 بعد از ذخیره در GitHub، **کلید خصوصی را از سرور پاک کن**. تنها جایی که باید باشد GitHub است:
 
