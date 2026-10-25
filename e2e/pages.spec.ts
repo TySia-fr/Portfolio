@@ -36,6 +36,10 @@ test.describe("public pages", () => {
     });
 
     test(`${path} has no serious accessibility violations`, async ({ page }) => {
+      // Entrance animations fade text in from opacity 0: measured mid-fade,
+      // contrast depends on timing and the test flaked in CI. Reduced motion
+      // shows the final colours immediately, which is what axe must judge.
+      await page.emulateMedia({ reducedMotion: "reduce" });
       await page.goto(path);
       const results = await new AxeBuilder({ page })
         .withTags(["wcag2a", "wcag2aa", "wcag21a", "wcag21aa"])
