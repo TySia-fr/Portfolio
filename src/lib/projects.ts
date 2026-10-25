@@ -25,8 +25,10 @@ for (const project of projects) {
 }
 
 // Every screenshot file referenced by content must exist: a missing image
-// fails the build instead of shipping a broken <img>.
-for (const project of projects) {
+// fails the build instead of shipping a broken <img>. Build only: at runtime
+// this module also loads (e.g. for crawlers) and must never throw on files.
+const isBuild = process.env.NEXT_PHASE === "phase-production-build";
+for (const project of isBuild ? projects : []) {
   const shots = project.media
     ? [project.media.desktop, project.media.mobile, ...project.media.gallery]
     : [];

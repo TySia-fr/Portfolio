@@ -59,6 +59,19 @@ const nextConfig: NextConfig = {
   poweredByHeader: false,
   reactStrictMode: true,
 
+  // Files the case study quotes at render time (lib/source-excerpt.ts).
+  // Search engine crawlers get a blocking, non-streamed render of this route,
+  // which runs on the server: without these the page answered 500 to Google.
+  // A test renders every page with a crawler user agent to keep this list honest.
+  outputFileTracingIncludes: {
+    // Brackets escaped: keys are picomatch globs, where [slug] is a character class.
+    "/projets/\\[slug\\]": [
+      "./deploy/deploy.sh",
+      "./deploy/compose.yaml",
+      "./src/content/projects/schema.ts",
+    ],
+  },
+
   cacheComponents: true,
   partialPrefetching: true,
 
