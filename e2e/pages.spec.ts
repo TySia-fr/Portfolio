@@ -258,3 +258,37 @@ test.describe("search engines", () => {
     expect(await (await request.get("/robots.txt")).text()).toContain("Disallow: /api/");
   });
 });
+
+/**
+ * Search engines get a blocking, non-streamed server render instead of the
+ * prerendered shell. Google reported "Server error (5xx)" on the case study
+ * once: that render needed files missing from the production image.
+ */
+test.describe("crawlers", () => {
+  test.skip(({ isMobile }) => isMobile, "user agent test, once is enough");
+  const CRAWLERS = {
+    googlebot:
+      "Mozilla/5.0 (Linux; Android 6.0.1; Nexus 5X Build/MMB29P) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Mobile Safari/537.36 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)",
+    inspectionTool:
+      "Mozilla/5.0 (Linux; Android 6.0.1; Nexus 5X Build/MMB29P) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Mobile Safari/537.36 (compatible; Google-InspectionTool/1.0;)",
+    bingbot: "Mozilla/5.0 (compatible; bingbot/2.0; +http://www.bing.com/bingbot.htm)",
+  };
+
+  for (const [name, userAgent] of Object.entries(CRAWLERS)) {
+    test(`${name} gets every page with status 200 and its content`, async ({
+      request,
+    }) => {
+      for (const path of PAGES) {
+        const response = await request.get(path, {
+          headers: { "user-agent": userAgent },
+        });
+        expect(response.status(), `${name} ${path}`).toBe(200);
+        expect(await response.text()).toContain("Siavash Izadi");
+      }
+      const missing = await request.get("/projets/inexistant", {
+        headers: { "user-agent": userAgent },
+      });
+      expect(missing.status()).toBe(404);
+    });
+  }
+});
