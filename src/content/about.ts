@@ -14,9 +14,13 @@ export const about = {
   facts: {
     title: "En bref",
     items: [
-      { label: "Formation", value: "Bachelor en génie informatique (Iran, 2024)" },
+      {
+        label: "Formation",
+        value:
+          "Licence en génie informatique, Iran (2024). Niveau 6 selon ENIC-NARIC France",
+      },
       { label: "Études", value: "Informatique, Université de Montpellier" },
-      { label: "Expérience", value: "Sites WordPress, 2021 – 2023" },
+      { label: "Expérience", value: "Développeur web full-stack, IRCODE (2020 – 2024)" },
       { label: "Basé en", value: "France" },
     ],
   },
@@ -26,8 +30,8 @@ export const about = {
       id: "parcours",
       title: "Mon parcours",
       paragraphs: [
-        "Titulaire d’un Bachelor en génie informatique obtenu en Iran, je poursuis actuellement mes études en informatique à l’Université de Montpellier. Mon parcours associe formation académique, expérience professionnelle et apprentissage continu.",
-        "De janvier 2021 à août 2023, j’ai créé et géré des sites web sous WordPress. Cette expérience m’a apporté des compétences en conception web, en UI/UX, en référencement naturel et en publicité digitale avec Google Ads. J’y ai aussi coordonné une équipe, ce qui a développé mon sens de l’organisation et ma capacité à mener des projets.",
+        "Titulaire d’une licence en génie informatique (logiciels) obtenue en Iran en 2024, reconnue de niveau 6 (équivalent licence) par ENIC-NARIC France, je poursuis actuellement mes études en informatique à l’Université de Montpellier. Mon parcours associe formation académique, expérience professionnelle et apprentissage continu.",
+        "D’octobre 2020 à mars 2024, j’ai travaillé comme développeur web full-stack chez IRCODE, à Téhéran : analyse des besoins, conception de fonctionnalités, applications web en JavaScript (Node.js, Express, React), interfaces d’administration, API REST et bases de données PostgreSQL. J’y ai aussi pratiqué la revue de code, Git et GitHub, et le travail en équipe.",
         "Aujourd’hui, je me concentre sur l’écosystème JavaScript et sur le développement d’applications web complètes : de la conception des interfaces à la logique serveur et à la gestion des données.",
       ],
     },
@@ -38,14 +42,14 @@ export const about = {
     title: "Repères",
     items: [
       {
-        period: "Sept. 2020 – juil. 2024",
-        title: "Bachelor en génie informatique",
-        body: "Université Mehralborz, Téhéran. Formation à temps plein : programmation, structures de données, systèmes d’exploitation, réseaux, bases de données.",
+        period: "Oct. 2020 – mars 2024",
+        title: "Développeur web full-stack, IRCODE (Téhéran)",
+        body: "Fonctionnalités de sites et d’applications web en JavaScript (Node.js, Express, React), interfaces et tableaux de bord d’administration, API REST, PostgreSQL, débogage et optimisation, revue de code avec Git et GitHub.",
       },
       {
-        period: "Janv. 2021 – août 2023",
-        title: "Création et gestion de sites WordPress",
-        body: "Conception web, UI/UX, référencement naturel, publicité avec Google Ads, et coordination d’une équipe.",
+        period: "Sept. 2024",
+        title: "Licence en génie informatique (logiciels)",
+        body: "Université Azad Islamique, Téhéran. Programmation avancée, algorithmes, bases de données, génie logiciel, conception orientée objet, ingénierie Internet, projet logiciel et stage. Niveau 6 (équivalent licence) selon l’attestation de comparabilité ENIC-NARIC France.",
       },
       {
         period: "Aujourd’hui",

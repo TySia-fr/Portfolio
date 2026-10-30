@@ -28,11 +28,25 @@ export function siteGraph() {
         homeLocation: { "@type": "Country", name: site.location },
         alumniOf: {
           "@type": "CollegeOrUniversity",
-          name: "Mehralborz University",
+          name: "Islamic Azad University",
+          alternateName: "Université Azad Islamique",
           address: {
             "@type": "PostalAddress",
             addressLocality: "Tehran",
             addressCountry: "IR",
+          },
+        },
+        // As stated on the ENIC-NARIC France attestation de comparabilité (2026).
+        hasCredential: {
+          "@type": "EducationalOccupationalCredential",
+          name: "Karshenasi (licence) en génie informatique – logiciels",
+          credentialCategory: "degree",
+          educationalLevel: "EQF level 6",
+          dateCreated: "2024-09-18",
+          recognizedBy: {
+            "@type": "Organization",
+            name: "ENIC-NARIC France (France Éducation international)",
+            url: "https://www.france-education-international.fr/enic-naric-france",
           },
         },
         affiliation: {
