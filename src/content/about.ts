@@ -20,7 +20,6 @@ export const about = {
           "Licence en génie informatique, Iran (2024). Niveau 6 selon ENIC-NARIC France",
       },
       { label: "Études", value: "Informatique, Université de Montpellier" },
-      { label: "Expérience", value: "Développeur web full-stack, IRCODE (2020 – 2024)" },
       { label: "Basé en", value: "France" },
     ],
   },
@@ -31,7 +30,6 @@ export const about = {
       title: "Mon parcours",
       paragraphs: [
         "Titulaire d’une licence en génie informatique (logiciels) obtenue en Iran en 2024, reconnue de niveau 6 (équivalent licence) par ENIC-NARIC France, je poursuis actuellement mes études en informatique à l’Université de Montpellier. Mon parcours associe formation académique, expérience professionnelle et apprentissage continu.",
-        "D’octobre 2020 à mars 2024, j’ai travaillé comme développeur web full-stack chez IRCODE, à Téhéran : analyse des besoins, conception de fonctionnalités, applications web en JavaScript (Node.js, Express, React), interfaces d’administration, API REST et bases de données PostgreSQL. J’y ai aussi pratiqué la revue de code, Git et GitHub, et le travail en équipe.",
         "Aujourd’hui, je me concentre sur l’écosystème JavaScript et sur le développement d’applications web complètes : de la conception des interfaces à la logique serveur et à la gestion des données.",
       ],
     },
@@ -41,11 +39,6 @@ export const about = {
   timeline: {
     title: "Repères",
     items: [
-      {
-        period: "Oct. 2020 – mars 2024",
-        title: "Développeur web full-stack, IRCODE (Téhéran)",
-        body: "Fonctionnalités de sites et d’applications web en JavaScript (Node.js, Express, React), interfaces et tableaux de bord d’administration, API REST, PostgreSQL, débogage et optimisation, revue de code avec Git et GitHub.",
-      },
       {
         period: "Sept. 2024",
         title: "Licence en génie informatique (logiciels)",
