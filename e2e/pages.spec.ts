@@ -328,3 +328,11 @@ test.describe("alternance", () => {
     }
   });
 });
+
+test("the phone number is on the printed CV only", async ({ page }) => {
+  await page.goto("/cv");
+  const phone = page.getByRole("link", { name: /\+33/ });
+  await expect(phone).toBeHidden();
+  await page.emulateMedia({ media: "print" });
+  await expect(phone).toBeVisible();
+});
