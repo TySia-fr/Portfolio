@@ -20,7 +20,7 @@ export const home = {
 
   about: {
     title: "En bref",
-    text: "Titulaire d’une licence en génie informatique (niveau 6, ENIC-NARIC) et fort de plus de trois ans comme développeur web full-stack à Téhéran (Node.js, React, PostgreSQL), j’étudie l’informatique à l’Université de Montpellier, avec un intérêt fort pour l’infrastructure et la sécurité.",
+    text: "Titulaire d’une licence en génie informatique (niveau 6, ENIC-NARIC), j’étudie l’informatique à l’Université de Montpellier. Je construis et déploie des applications web complètes, avec un intérêt fort pour l’infrastructure et la sécurité, et je recherche une alternance à Lyon ou à Montpellier.",
     link: "En savoir plus",
   },
 

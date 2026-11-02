@@ -26,6 +26,7 @@ export const site = {
 
   nav: [
     { href: "/projets", label: "Projets" },
+    { href: "/alternance", label: "Alternance" },
     { href: "/a-propos", label: "À propos" },
     { href: "/contact", label: "Contact" },
   ],
@@ -41,6 +42,7 @@ export const site = {
   footer: {
     sourceCode: "Code source",
     legal: "Mentions légales",
+    cv: "CV",
     builtFrom: "Version",
   },
 } as const satisfies {

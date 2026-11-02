@@ -5,7 +5,15 @@ import { getAllProjects } from "@/lib/projects";
 
 /** /sitemap.xml — every public page, generated from the same data as the pages. */
 export default function sitemap(): MetadataRoute.Sitemap {
-  const staticPages = ["", "/projets", "/a-propos", "/contact", "/mentions-legales"];
+  const staticPages = [
+    "",
+    "/projets",
+    "/alternance",
+    "/cv",
+    "/a-propos",
+    "/contact",
+    "/mentions-legales",
+  ];
   const projectPages = getAllProjects().map((project) => `/projets/${project.slug}`);
 
   // Build time = last time any page could have changed (the site is static).

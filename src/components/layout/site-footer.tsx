@@ -32,6 +32,11 @@ export function SiteFooter() {
             </a>
           </li>
           <li>
+            <Link href="/cv" className="hover:text-text">
+              {site.footer.cv}
+            </Link>
+          </li>
+          <li>
             <Link href="/mentions-legales" className="hover:text-text">
               {site.footer.legal}
             </Link>

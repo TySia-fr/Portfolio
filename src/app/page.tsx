@@ -5,6 +5,7 @@ import { Container } from "@/components/layout/container";
 import { PipelineDiagram } from "@/components/pipeline/pipeline-diagram";
 import { FeaturedProject } from "@/components/projects/featured-project";
 import { ButtonLink } from "@/components/ui/button-link";
+import { alternance } from "@/content/alternance";
 import { home } from "@/content/home";
 import { pipeline } from "@/content/pipeline";
 import { site } from "@/content/site";
@@ -21,7 +22,17 @@ export default function HomePage() {
       <div className="relative overflow-hidden">
         <div aria-hidden="true" className="bg-grid absolute inset-0 -top-16" />
         <Container className="relative py-16 sm:py-24 lg:py-28">
-          <p className={`motion-enter ${sectionLabel} font-normal`}>
+          <Link
+            href="/alternance"
+            className="group mb-8 inline-flex items-center gap-2 rounded-full border border-signal/40 px-3 py-1 font-mono text-xs text-signal transition-colors hover:border-signal"
+          >
+            <span aria-hidden="true" className="size-1.5 rounded-full bg-signal" />
+            {alternance.banner}
+            <span aria-hidden="true" className="nudge">
+              →
+            </span>
+          </Link>
+          <p className={`motion-enter block ${sectionLabel} font-normal`}>
             <span className="text-text">{site.name}</span> · {home.eyebrow}
           </p>
 

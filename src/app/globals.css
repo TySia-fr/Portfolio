@@ -332,6 +332,54 @@
   }
 }
 
+/*
+ * Print: a light, ink-friendly version of every page, used for the CV PDF.
+ * The tokens are redefined, so every component follows without print classes.
+ */
+@media print {
+  :root {
+    color-scheme: light;
+    --color-ink: #ffffff;
+    --color-surface: #ffffff;
+    --color-line: #d4d4d4;
+    --color-text: #111111;
+    --color-muted: #4a4a4a;
+    --color-signal: #7a4f00;
+  }
+  @page {
+    size: A4;
+    margin: 11mm 13mm;
+  }
+  /* Every size is in rem: a smaller root scales the whole CV to one A4 page. */
+  html {
+    font-size: 12.5px;
+  }
+  body > a[href="#contenu"],
+  header.sticky,
+  footer,
+  .print-hidden {
+    display: none !important;
+  }
+  .cv-page {
+    padding: 0 !important;
+    max-width: none !important;
+  }
+  .cv-sheet {
+    border: 0 !important;
+    padding: 0 !important;
+    max-width: none !important;
+  }
+  .cv-section {
+    margin-top: 4.5mm !important;
+  }
+  .cv-block {
+    break-inside: avoid;
+  }
+  a {
+    text-decoration: none !important;
+  }
+}
+
 /* Printed pages show everything, in its final state. */
 @media print {
   .reveal,
