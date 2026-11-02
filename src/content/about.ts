@@ -20,8 +20,8 @@ export const about = {
           "Licence en génie informatique, Iran (2024). Niveau 6 selon ENIC-NARIC France",
       },
       { label: "Études", value: "Informatique, Université de Montpellier" },
-      { label: "Expérience", value: "Développeur web full-stack, IRCODE (2020 – 2024)" },
-      { label: "Basé en", value: "France" },
+      { label: "Projets", value: "Deux applications en production, code public" },
+      { label: "Recherche", value: "Alternance à Lyon ou Montpellier" },
     ],
   },
 
@@ -31,7 +31,7 @@ export const about = {
       title: "Mon parcours",
       paragraphs: [
         "Titulaire d’une licence en génie informatique (logiciels) obtenue en Iran en 2024, reconnue de niveau 6 (équivalent licence) par ENIC-NARIC France, je poursuis actuellement mes études en informatique à l’Université de Montpellier. Mon parcours associe formation académique, expérience professionnelle et apprentissage continu.",
-        "D’octobre 2020 à mars 2024, j’ai travaillé comme développeur web full-stack chez IRCODE, à Téhéran : analyse des besoins, conception de fonctionnalités, applications web en JavaScript (Node.js, Express, React), interfaces d’administration, API REST et bases de données PostgreSQL. J’y ai aussi pratiqué la revue de code, Git et GitHub, et le travail en équipe.",
+        "Depuis, je conçois et déploie mes propres applications en production : ce portfolio, servi par mon propre serveur avec un déploiement continu, et NEXORA, une boutique e-commerce complète avec paiement, comptes, back-office et une suite de tests qui le prouve.",
         "Aujourd’hui, je me concentre sur l’écosystème JavaScript et sur le développement d’applications web complètes : de la conception des interfaces à la logique serveur et à la gestion des données.",
       ],
     },
@@ -42,11 +42,6 @@ export const about = {
     title: "Repères",
     items: [
       {
-        period: "Oct. 2020 – mars 2024",
-        title: "Développeur web full-stack, IRCODE (Téhéran)",
-        body: "Fonctionnalités de sites et d’applications web en JavaScript (Node.js, Express, React), interfaces et tableaux de bord d’administration, API REST, PostgreSQL, débogage et optimisation, revue de code avec Git et GitHub.",
-      },
-      {
         period: "Sept. 2024",
         title: "Licence en génie informatique (logiciels)",
         body: "Université Azad Islamique, Téhéran. Programmation avancée, algorithmes, bases de données, génie logiciel, conception orientée objet, ingénierie Internet, projet logiciel et stage. Niveau 6 (équivalent licence) selon l’attestation de comparabilité ENIC-NARIC France.",
@@ -54,7 +49,7 @@ export const about = {
       {
         period: "Aujourd’hui",
         title: "Études d’informatique à l’Université de Montpellier",
-        body: "En parallèle, développement full-stack JavaScript, avec un intérêt pour l’infrastructure et la sécurité des applications.",
+        body: "En parallèle, développement full-stack JavaScript (ce portfolio, NEXORA) et recherche d’une alternance pour poursuivre en Bac+3 ou en Master.",
         current: true,
       },
     ],
