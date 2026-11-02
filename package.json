@@ -12,7 +12,8 @@
     "format:check": "prettier --check .",
     "check": "pnpm lint && pnpm format:check && pnpm typecheck",
     "test:e2e": "playwright test",
-    "screenshots": "node scripts/capture-screenshots.mjs"
+    "screenshots": "node scripts/capture-screenshots.mjs",
+    "cv:pdf": "node scripts/build-cv-pdf.mjs"
   },
   "dependencies": {
     "geist": "^1.8.1",

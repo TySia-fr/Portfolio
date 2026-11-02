@@ -6,6 +6,9 @@ const PAGES = [
   "/",
   "/projets",
   "/projets/portfolio",
+  "/projets/nexora",
+  "/alternance",
+  "/cv",
   "/a-propos",
   "/contact",
   "/mentions-legales",
@@ -295,4 +298,33 @@ test.describe("crawlers", () => {
       expect(missing.status()).toBe(404);
     });
   }
+});
+
+test.describe("alternance", () => {
+  test("the home page links to the alternance page", async ({ page }) => {
+    await page.goto("/");
+    await page.getByRole("link", { name: /Recherche une alternance/ }).click();
+    await expect(page).toHaveURL(/\/alternance$/);
+    await expect(page.getByRole("heading", { level: 1 })).toContainText("alternance");
+  });
+
+  test("the CV PDF is served and linked from the CV page", async ({ page, request }) => {
+    await page.goto("/cv");
+    const link = page.getByRole("link", { name: /Télécharger le CV/ });
+    const href = await link.getAttribute("href");
+    expect(href).toBe("/cv/Siavash-Izadi-CV.pdf");
+    const pdf = await request.get(href!);
+    expect(pdf.status()).toBe(200);
+    expect(pdf.headers()["content-type"]).toContain("application/pdf");
+    expect((await pdf.body()).subarray(0, 5).toString()).toBe("%PDF-");
+  });
+
+  test("withdrawn experience appears nowhere on the site", async ({ request }) => {
+    for (const path of PAGES) {
+      const html = await (await request.get(path)).text();
+      for (const word of ["IRCODE", "Mehralborz", "WordPress"]) {
+        expect(html, `${word} on ${path}`).not.toContain(word);
+      }
+    }
+  });
 });
