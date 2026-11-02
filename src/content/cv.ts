@@ -12,6 +12,11 @@ export const cv = {
     label: "Télécharger le CV (PDF)",
   },
   location: "Montpellier, France",
+  /**
+   * Printed CV (PDF) only: hidden on the web page to keep it out of casual
+   * view. It is still in the HTML and in the public PDF, so not a secret.
+   */
+  phone: { display: "+33 6 66 71 24 78", href: "tel:+33666712478" },
 
   profileTitle: "Profil",
   profile:

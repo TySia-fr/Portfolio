@@ -50,6 +50,9 @@ export default function CvPage() {
           </p>
           <ul className="mt-4 flex flex-wrap gap-x-5 gap-y-1 font-mono text-[0.8125rem] text-muted">
             <li>{cv.location}</li>
+            <li className="hidden print:list-item">
+              <a href={cv.phone.href}>{cv.phone.display}</a>
+            </li>
             {contacts.map((contact) => (
               <li key={contact.href}>
                 <a href={contact.href} className="hover:text-text">
