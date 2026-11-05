@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import type { ReactNode } from "react";
 
 import { Container } from "@/components/layout/container";
+import { Portrait } from "@/components/portrait";
 import { alternance } from "@/content/alternance";
 import { cv } from "@/content/cv";
 import { site } from "@/content/site";
@@ -40,27 +41,34 @@ export default function CvPage() {
       </div>
 
       <article className="cv-sheet mx-auto max-w-[54rem] border border-line bg-surface/40 p-6 sm:p-10">
-        <header className="border-b border-line pb-6">
-          <h1 className="font-mono text-3xl font-medium tracking-tight [font-stretch:80%] sm:text-4xl">
-            {site.name}
-          </h1>
-          <p className="mt-2 font-mono text-[0.9375rem] text-text">{site.role}</p>
-          <p className="cv-accent mt-3 text-[0.9375rem] font-medium text-signal">
-            {alternance.short}
-          </p>
-          <ul className="mt-4 flex flex-wrap gap-x-5 gap-y-1 font-mono text-[0.8125rem] text-muted">
-            <li>{cv.location}</li>
-            <li className="hidden print:list-item">
-              <a href={cv.phone.href}>{cv.phone.display}</a>
-            </li>
-            {contacts.map((contact) => (
-              <li key={contact.href}>
-                <a href={contact.href} className="hover:text-text">
-                  {contact.label}
-                </a>
+        <header className="flex items-start gap-6 border-b border-line pb-6">
+          <div className="min-w-0 flex-1">
+            <h1 className="font-mono text-3xl font-medium tracking-tight [font-stretch:80%] sm:text-4xl">
+              {site.name}
+            </h1>
+            <p className="mt-2 font-mono text-[0.9375rem] text-text">{site.role}</p>
+            <p className="cv-accent mt-3 text-[0.9375rem] font-medium text-signal">
+              {alternance.short}
+            </p>
+            <ul className="mt-4 flex flex-wrap gap-x-5 gap-y-1 font-mono text-[0.8125rem] text-muted">
+              <li>{cv.location}</li>
+              <li className="hidden print:list-item">
+                <a href={cv.phone.href}>{cv.phone.display}</a>
               </li>
-            ))}
-          </ul>
+              {contacts.map((contact) => (
+                <li key={contact.href}>
+                  <a href={contact.href} className="hover:text-text">
+                    {contact.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <Portrait
+            sizes="7rem"
+            priority
+            className="cv-photo size-24 shrink-0 rounded-[4px] border border-line sm:size-28"
+          />
         </header>
 
         <CvSection title={cv.profileTitle}>

@@ -375,6 +375,10 @@
   .cv-block {
     break-inside: avoid;
   }
+  .cv-photo {
+    width: 27mm !important;
+    height: 27mm !important;
+  }
   a {
     text-decoration: none !important;
   }

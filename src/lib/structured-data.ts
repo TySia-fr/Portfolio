@@ -23,6 +23,7 @@ export function siteGraph() {
         givenName: site.givenName,
         familyName: site.familyName,
         url: site.url,
+        image: `${site.url}${site.portrait.base}-${site.portrait.size}.webp`,
         email: `mailto:${site.email}`,
         jobTitle: site.role,
         homeLocation: { "@type": "Country", name: site.location },
