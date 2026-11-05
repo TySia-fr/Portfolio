@@ -13,6 +13,13 @@ export const site = {
   /** The same name in Persian script, so the site can be found by it (SEO). */
   nameFa: "سیاوش ایزدی",
   givenName: "Siavash",
+  /** Square portrait in public/images/profile, exported at these widths. */
+  portrait: {
+    base: "/images/profile/siavash-izadi",
+    widths: [200, 400],
+    size: 400,
+    alt: "Portrait de Siavash Izadi",
+  },
   familyName: "Izadi",
   role: "Développeur full-stack JavaScript",
   location: "France",

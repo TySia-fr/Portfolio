@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 
 import { JsonLd } from "@/components/json-ld";
+import { Portrait } from "@/components/portrait";
 import { Container } from "@/components/layout/container";
 import { Fact, ProseSection } from "@/components/prose";
 import { ButtonLink } from "@/components/ui/button-link";
@@ -22,26 +23,33 @@ export default function AboutPage() {
   return (
     <Container className="py-16 sm:py-24">
       <JsonLd data={profilePageData()} />
-      <header className="border-b border-line pb-12">
-        <p className="flex flex-wrap items-baseline gap-x-3 gap-y-1 text-text">
-          <span className="font-mono text-sm font-medium">{site.name}</span>
-          <span aria-hidden="true" className="text-line">
-            /
-          </span>
-          {/* Persian script: its own language and direction for screen readers and search engines. */}
-          <span lang="fa" dir="rtl" className="text-base text-muted">
-            {site.nameFa}
-          </span>
-        </p>
-        <p className="mt-3 font-mono text-xs tracking-[0.14em] text-muted uppercase">
-          {about.eyebrow}
-        </p>
-        <h1 className="mt-6 max-w-[24ch] font-mono text-display font-medium text-balance [font-stretch:76%]">
-          {about.heading}
-        </h1>
-        <p className="mt-8 max-w-[60ch] text-lg leading-relaxed text-muted">
-          {about.intro}
-        </p>
+      <header className="grid gap-8 border-b border-line pb-12 sm:grid-cols-[minmax(0,1fr)_auto] sm:items-start sm:gap-12">
+        <Portrait
+          sizes="(min-width: 64rem) 13rem, (min-width: 40rem) 10rem, 7rem"
+          priority
+          className="size-28 rounded-[4px] border border-line sm:order-last sm:size-40 lg:size-52"
+        />
+        <div>
+          <p className="flex flex-wrap items-baseline gap-x-3 gap-y-1 text-text">
+            <span className="font-mono text-sm font-medium">{site.name}</span>
+            <span aria-hidden="true" className="text-line">
+              /
+            </span>
+            {/* Persian script: its own language and direction for screen readers and search engines. */}
+            <span lang="fa" dir="rtl" className="text-base text-muted">
+              {site.nameFa}
+            </span>
+          </p>
+          <p className="mt-3 font-mono text-xs tracking-[0.14em] text-muted uppercase">
+            {about.eyebrow}
+          </p>
+          <h1 className="mt-6 max-w-[24ch] font-mono text-display font-medium text-balance [font-stretch:76%]">
+            {about.heading}
+          </h1>
+          <p className="mt-8 max-w-[60ch] text-lg leading-relaxed text-muted">
+            {about.intro}
+          </p>
+        </div>
       </header>
 
       <div className="mt-12 grid gap-14 lg:grid-cols-[16rem_1fr] lg:gap-20">

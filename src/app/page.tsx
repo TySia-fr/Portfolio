@@ -1,6 +1,7 @@
 import Link from "next/link";
 
 import { SpecSheet } from "@/components/home/spec-sheet";
+import { Portrait } from "@/components/portrait";
 import { Container } from "@/components/layout/container";
 import { PipelineDiagram } from "@/components/pipeline/pipeline-diagram";
 import { FeaturedProject } from "@/components/projects/featured-project";
@@ -129,9 +130,15 @@ export default function HomePage() {
 
       <section aria-labelledby="about-preview" className="border-t border-line">
         <Container className="reveal grid gap-6 py-16 sm:py-20 lg:grid-cols-[16rem_1fr] lg:gap-20">
-          <h2 id="about-preview" className={sectionLabel}>
-            {home.about.title}
-          </h2>
+          <div className="flex items-center gap-5 lg:flex-col lg:items-start">
+            <Portrait
+              sizes="6rem"
+              className="size-20 rounded-[4px] border border-line lg:size-24"
+            />
+            <h2 id="about-preview" className={sectionLabel}>
+              {home.about.title}
+            </h2>
+          </div>
           <div className="max-w-[62ch]">
             <p className="text-lg leading-relaxed text-pretty text-text">
               {home.about.text}
