@@ -5,6 +5,8 @@
 node_modules
 coverage
 docs
+# Video sources for the logo animation: never part of the website image.
+motion
 # deploy/ is NOT ignored: the case study quotes deploy.sh and compose.yaml at
 # build time. Those files hold no secrets; they only reach the builder stage.
 *.md

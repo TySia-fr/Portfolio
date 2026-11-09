@@ -5,3 +5,6 @@ next-env.d.ts
 AGENTS.md
 test-results
 playwright-report
+motion/out
+motion/public
+motion/pnpm-lock.yaml

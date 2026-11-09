@@ -45,3 +45,8 @@ next-env.d.ts
 /test-results/
 /playwright-report/
 /blob-report/
+
+# Remotion renders (published copies live in docs/media/logo/)
+motion/node_modules/
+motion/out/
+motion/public/
