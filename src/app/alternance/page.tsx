@@ -8,7 +8,7 @@ import { alternance as t } from "@/content/alternance";
 import { pageMetadata } from "@/lib/metadata";
 
 export const metadata: Metadata = pageMetadata({
-  title: `${t.title} · Développeur full-stack à Lyon ou Montpellier`,
+  title: `${t.title} en informatique · Lyon ou Montpellier`,
   description: t.description,
   path: "/alternance",
 });
@@ -58,51 +58,87 @@ export default function AlternancePage() {
         </aside>
 
         <div className="grid min-w-0 gap-16">
-          <section aria-labelledby="bring-title" className="reveal">
-            <h2 id="bring-title" className={label}>
-              {t.bring.title}
+          <section aria-labelledby="domains-title" className="reveal">
+            <h2 id="domains-title" className={label}>
+              {t.domains.title}
             </h2>
-            <ul className="mt-6 grid gap-px border border-line bg-line sm:grid-cols-2">
-              {t.bring.items.map((item) => (
-                <li key={item.title} className="flex flex-col bg-ink p-6">
-                  <h3 className="font-mono text-base font-medium text-text">
-                    {item.title}
-                  </h3>
-                  <p className="mt-3 text-[0.9375rem] leading-relaxed text-pretty text-muted">
-                    {item.body}
-                  </p>
-                  {item.link ? (
-                    <Link
-                      href={item.link.href}
-                      className="mt-4 font-mono text-[0.8125rem] text-signal underline decoration-signal/40 underline-offset-4 hover:decoration-signal"
-                    >
-                      {item.link.label} <span className="nudge">→</span>
-                    </Link>
-                  ) : null}
+            <p className="mt-4 max-w-[62ch] text-[0.9375rem] leading-relaxed text-pretty text-muted">
+              {t.domains.intro}
+            </p>
+            <ul className="mt-6 grid gap-px border border-line bg-line">
+              {t.domains.items.map((item) => (
+                <li
+                  key={item.title}
+                  className="grid gap-4 bg-ink p-6 md:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] md:gap-8"
+                >
+                  <div>
+                    <h3 className="font-mono text-base font-medium text-text">
+                      {item.title}
+                    </h3>
+                    <p className="mt-3 text-[0.9375rem] leading-relaxed text-pretty text-muted">
+                      {item.body}
+                    </p>
+                  </div>
+                  <div>
+                    <p className="font-mono text-xs tracking-[0.14em] text-muted uppercase">
+                      Preuve
+                    </p>
+                    <ul className="mt-3 grid gap-3">
+                      {item.proofs.map((proof) => (
+                        <li key={proof.label}>
+                          <Link
+                            href={proof.href}
+                            className="text-[0.9375rem] leading-relaxed text-pretty text-signal underline decoration-signal/40 underline-offset-4 hover:decoration-signal"
+                          >
+                            {proof.label} <span className="nudge">→</span>
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
                 </li>
               ))}
             </ul>
           </section>
 
-          <section aria-labelledby="process-title" className="reveal">
-            <h2 id="process-title" className={label}>
-              {t.process.title}
+          <section aria-labelledby="learn-title" className="reveal">
+            <h2 id="learn-title" className={label}>
+              {t.learn.title}
             </h2>
-            <ol className="mt-6 grid gap-8 md:grid-cols-3">
-              {t.process.steps.map((step, index) => (
-                <li key={step.title} className="border-t border-line pt-5">
-                  <span aria-hidden="true" className="font-mono text-xs text-signal">
-                    {String(index + 1).padStart(2, "0")}
+            <p className="mt-6 max-w-[62ch] text-[0.9375rem] leading-relaxed text-pretty text-text">
+              {t.learn.body}
+            </p>
+            <ul className="mt-4 grid max-w-[62ch] gap-2">
+              {t.learn.items.map((item) => (
+                <li
+                  key={item}
+                  className="relative pl-5 text-[0.9375rem] leading-relaxed text-pretty text-muted"
+                >
+                  <span aria-hidden="true" className="absolute left-0 text-signal">
+                    –
                   </span>
-                  <h3 className="mt-2 font-mono text-base font-medium text-text">
-                    {step.title}
-                  </h3>
-                  <p className="mt-2 text-[0.9375rem] leading-relaxed text-pretty text-muted">
-                    {step.body}
-                  </p>
+                  {item}
                 </li>
               ))}
-            </ol>
+            </ul>
+          </section>
+
+          <section aria-labelledby="practical-title" className="reveal">
+            <h2 id="practical-title" className={label}>
+              {t.practical.title}
+            </h2>
+            <dl className="mt-6 grid gap-8 md:grid-cols-3">
+              {t.practical.items.map((item) => (
+                <div key={item.title} className="border-t border-line pt-5">
+                  <dt className="font-mono text-base font-medium text-text">
+                    {item.title}
+                  </dt>
+                  <dd className="mt-2 text-[0.9375rem] leading-relaxed text-pretty text-muted">
+                    {item.body}
+                  </dd>
+                </div>
+              ))}
+            </dl>
           </section>
 
           <section
