@@ -1,87 +1,114 @@
 /**
  * What Siavash is looking for, written for an employer reading it in a minute.
- * Facts as he stated them (2026-11-02). Language levels are deliberately not shown.
+ * Facts as he stated them (2026-11-02, scope widened to "informatique" on
+ * 2026-11-09). Every claim about his work links to the project that proves it;
+ * the test counts come from the case studies in src/content/projects.
+ * Language levels are deliberately not shown.
  */
 export const alternance = {
   title: "Alternance",
   description:
-    "Siavash Izadi recherche une alternance en développement full-stack JavaScript à Lyon ou Montpellier, en Bac+3 ou en Master, dès que possible.",
+    "Siavash Izadi recherche une alternance en informatique à Lyon ou Montpellier, en Bac+3 ou en Master, dès que possible : développement web, systèmes et déploiement.",
   eyebrow: "Disponible dès que possible",
-  heading: "Je recherche une alternance en développement full-stack.",
+  heading: "Je recherche une alternance en informatique.",
   intro:
-    "Je cherche une entreprise à Lyon ou à Montpellier pour un contrat d’alternance, et l’école qui va avec, en Bac+3 ou en Master. Je construis et déploie déjà des applications complètes : je veux maintenant le faire dans une équipe, sur un vrai produit.",
+    "Contrat d’apprentissage ou de professionnalisation, à Lyon ou à Montpellier, avec une école en Bac+3 ou en Master. Je développe des applications web, je les teste et je les déploie sur un serveur Linux que j’administre. Tout ce qui est écrit ici renvoie à du code que vous pouvez lire.",
 
   /** Short form, reused by the home banner and the CV. */
   banner: "Recherche une alternance · Lyon ou Montpellier",
   short:
-    "Recherche une alternance en développement full-stack (Bac+3 ou Master), à Lyon ou Montpellier, dès que possible.",
+    "Recherche une alternance en informatique (Bac+3 ou Master), à Lyon ou Montpellier, dès que possible.",
 
   facts: {
     title: "En résumé",
     items: [
       { label: "Contrat", value: "Apprentissage ou professionnalisation" },
-      {
-        label: "Formation",
-        value:
-          "Bac+3 ou Master (niveau 6 ou 7), en école, avec inscription liée au contrat",
-      },
+      { label: "Formation visée", value: "Bac+3 ou Master, en école, liée au contrat" },
       { label: "Lieu", value: "Lyon ou Montpellier, et alentours" },
       { label: "Démarrage", value: "Dès que possible" },
       {
-        label: "Diplôme actuel",
+        label: "Diplôme",
         value: "Licence en génie informatique, niveau 6 selon ENIC-NARIC France",
       },
-      { label: "Poste visé", value: "Développeur full-stack JavaScript / TypeScript" },
+      { label: "Études en cours", value: "Informatique, Université de Montpellier" },
     ],
   },
 
-  bring: {
-    title: "Ce que j’apporte dès le premier jour",
+  domains: {
+    title: "Ce que je peux faire dans votre équipe",
+    intro:
+      "Trois domaines où j’ai déjà livré quelque chose de vérifiable. Chaque preuve est un projet public.",
     items: [
       {
-        title: "Des applications complètes, en production",
-        body: "NEXORA (e-commerce avec paiement, comptes et back-office) et ce portfolio sont en ligne, avec leur code public.",
-        link: { href: "/projets", label: "Voir les projets" },
+        title: "Développement web",
+        body: "Applications complètes en TypeScript : interface React / Next.js, logique serveur, base PostgreSQL, comptes et droits d’accès.",
+        proofs: [
+          {
+            href: "/projets/nexora",
+            label:
+              "NEXORA, e-commerce en ligne : 79 tests unitaires et d’intégration, 20 de bout en bout",
+          },
+          {
+            href: "/projets/applyflow",
+            label:
+              "ApplyFlow, suivi de candidatures (en cours) : 37 tests, 9 de bout en bout",
+          },
+        ],
       },
       {
-        title: "Du code testé",
-        body: "Tests unitaires, d’intégration et de bout en bout (Vitest, Playwright), contrôles d’accessibilité, intégration continue sur chaque modification.",
-        link: { href: "/projets/nexora", label: "Les tests de NEXORA" },
+        title: "Systèmes et déploiement",
+        body: "Serveur Linux administré seul : Docker, Nginx, HTTPS, conteneurs sans privilèges, déploiement automatique avec retour arrière si le contrôle de santé échoue.",
+        proofs: [
+          {
+            href: "/projets/portfolio",
+            label: "Ce site, déployé par GitHub Actions à chaque modification",
+          },
+        ],
       },
       {
-        title: "Le déploiement, pas seulement le code",
-        body: "Docker, Nginx, HTTPS et déploiement automatique depuis GitHub Actions, sur un serveur que j’administre.",
-        link: { href: "/projets/portfolio", label: "Comment ce site est déployé" },
-      },
-      {
-        title: "Le réflexe sécurité",
-        body: "Validation côté serveur, politique de sécurité du contenu, moindre privilège, contrôle des droits dans chaque requête.",
-        link: null,
+        title: "Sécurité des applications",
+        body: "Droits vérifiés côté serveur dans chaque requête, validation de toutes les entrées, politique de sécurité du contenu, limites de débit.",
+        proofs: [
+          {
+            href: "/projets/nexora",
+            label: "Tests d’IDOR et de redirection ouverte dans NEXORA",
+          },
+        ],
       },
     ],
   },
 
-  process: {
-    title: "Comment ça se passe",
-    steps: [
+  learn: {
+    title: "Ce que je viens chercher",
+    body: "Mes projets, je les ai menés seul. Ce qui me manque, c’est ce qu’on n’apprend qu’en entreprise :",
+    items: [
+      "travailler en équipe, avec des revues de code et des décisions partagées ;",
+      "un produit avec de vrais utilisateurs, un historique et des contraintes réelles ;",
+      "un encadrement technique qui me fasse progresser plus vite que seul.",
+    ],
+  },
+
+  practical: {
+    title: "Côté entreprise",
+    items: [
       {
-        title: "On se parle",
-        body: "Un premier échange, puis un entretien technique si vous le souhaitez : je peux présenter mon code en direct.",
+        title: "Le rythme",
+        body: "Il dépend de l’école. On le choisit ensemble pour qu’il convienne à votre équipe.",
       },
       {
-        title: "On choisit l’école ensemble",
-        body: "Bac+3 ou Master, avec un rythme qui convient à votre équipe. Je m’inscris dans la formation liée au contrat.",
+        title: "La formation",
+        body: "En contrat d’apprentissage, son coût est financé par l’OPCO de l’entreprise, selon le niveau de prise en charge fixé pour le diplôme.",
       },
       {
-        title: "On signe et je commence",
-        body: "En contrat d’apprentissage dans une entreprise privée, le coût de la formation est pris en charge par son OPCO.",
+        title: "L’entretien",
+        body: "Je peux présenter mon code en direct et répondre à vos questions techniques sur chaque choix.",
       },
     ],
   },
 
   cta: {
     title: "Une offre, une question ?",
-    body: "Écrivez-moi : je réponds rapidement.",
+    body: "Envoyez-moi l’offre ou un simple message : je réponds rapidement.",
     contact: { href: "/contact", label: "Me contacter" },
     cv: { href: "/cv", label: "Voir mon CV" },
   },
