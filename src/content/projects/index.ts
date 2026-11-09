@@ -1,3 +1,4 @@
+import { applyflow } from "./applyflow";
 import { nexora } from "./nexora";
 import { portfolio } from "./portfolio";
 
@@ -7,4 +8,4 @@ import { portfolio } from "./portfolio";
  * reads the slugs from this same list, so there is one registry, not two.
  * Order = display order among projects of the same year.
  */
-export const projectSources = [nexora, portfolio] as const;
+export const projectSources = [nexora, portfolio, applyflow] as const;

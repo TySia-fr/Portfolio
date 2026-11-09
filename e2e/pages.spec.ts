@@ -7,6 +7,7 @@ const PAGES = [
   "/projets",
   "/projets/portfolio",
   "/projets/nexora",
+  "/projets/applyflow",
   "/alternance",
   "/cv",
   "/a-propos",
