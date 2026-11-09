@@ -1,0 +1,26 @@
+{
+  "name": "portfolio-motion",
+  "private": true,
+  "description": "Logo animation videos for siavashizadi.com (Remotion). Not part of the website build.",
+  "type": "module",
+  "scripts": {
+    "tokens": "node scripts/sync-tokens.mjs",
+    "studio": "pnpm tokens && remotion studio",
+    "typecheck": "tsc --noEmit",
+    "render": "pnpm tokens && node scripts/render-all.mjs"
+  },
+  "packageManager": "pnpm@10.28.0",
+  "engines": {
+    "node": ">=22 <23"
+  },
+  "dependencies": {
+    "@remotion/cli": "4.0.542",
+    "react": "19.3.1",
+    "react-dom": "19.3.1",
+    "remotion": "4.0.542"
+  },
+  "devDependencies": {
+    "@types/react": "^19.3.0",
+    "typescript": "^6.0.3"
+  }
+}

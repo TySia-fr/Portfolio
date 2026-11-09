@@ -295,33 +295,293 @@
   }
 }
 
-/* Logo: strokes draw once, then the signal dot appears. */
-.logo-mark-stroke {
-  stroke-dasharray: 1;
-  animation: draw var(--duration-slow) var(--ease-out) both;
-}
-.logo-mark-stroke-2 {
-  animation-delay: 250ms;
-}
-.logo-mark-dot {
-  transform-box: fill-box;
-  transform-origin: center;
-  animation: pop var(--duration-base) var(--ease-out) 650ms both;
+/*
+ * Animated logo, concept "signal trace" (see motion/README.md for the video).
+ * The signal square travels the S at constant speed, is routed to the foot of
+ * the i, climbs the stem and decelerates into the dot. One timeline
+ * (--logo-duration) is shared by every part so they cannot drift apart;
+ * percentages below are the S's vertices by arc length (pnpm check:logo
+ * verifies them against src/components/brand/logo-geometry.ts).
+ *
+ * Plays only inside the intro layers, and only when motion is allowed: the
+ * full intro (.logo-intro) once per browser session, the short trace
+ * (.logo-route) on every later page. Elsewhere the logo is its static markup.
+ */
+.animated-logo-signal {
+  opacity: 0;
 }
 
-@keyframes draw {
+/*
+ * Intro: a full-screen layer over the page, once per session. It hides
+ * nothing from the browser: the page underneath is parsed, rendered and
+ * painted as usual (no effect on LCP), and screen readers never see the layer
+ * (aria-hidden). Any click, key, scroll or touch dismisses it at once.
+ *
+ *  0.00 s  signal traces the S          1.70 s  the mark makes room for the name
+ *  1.20 s  climbs the i                 1.85 s  letters come into focus, one by one
+ *  1.40 s  settles into the dot         3.20 s  the layer fades out (gone at 3.6 s)
+ *
+ * Everything moves with transform, opacity and filter only: no layout work,
+ * so no layout shift and nothing for the main thread to recompute.
+ */
+.logo-intro,
+.logo-route {
+  display: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html:not([data-logo-played]) .logo-intro {
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--color-ink);
+    animation: intro-out 400ms var(--ease-out) 3200ms both;
+  }
+
+  /* No delay: the signal is on screen from the first frame, so the intro
+     never postpones First Contentful Paint. */
+  .logo-intro .animated-logo {
+    --logo-duration: 1750ms;
+    --logo-delay: 0ms;
+  }
+
+  /* Short version on every later page: the trace alone, 0.65 s, then a fade. */
+  html[data-logo-route] .logo-route {
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--color-ink);
+    animation: intro-out 250ms var(--ease-out) 650ms both;
+  }
+  .logo-route .animated-logo {
+    --logo-duration: 650ms;
+    --logo-delay: 0ms;
+  }
+  html:not([data-logo-played]) .logo-intro .animated-logo-s,
+  html[data-logo-route] .logo-route .animated-logo-s {
+    stroke-dasharray: 1 1;
+    animation: logo-s var(--logo-duration) linear var(--logo-delay) both;
+  }
+  html:not([data-logo-played]) .logo-intro .animated-logo-stem,
+  html[data-logo-route] .logo-route .animated-logo-stem {
+    stroke-dasharray: 1 1;
+    animation: logo-stem var(--logo-duration) linear var(--logo-delay) both;
+  }
+  html:not([data-logo-played]) .logo-intro .animated-logo-signal,
+  html[data-logo-route] .logo-route .animated-logo-signal {
+    animation: logo-signal var(--logo-duration) linear var(--logo-delay) both;
+  }
+  html:not([data-logo-played]) .logo-intro .animated-logo-dot,
+  html[data-logo-route] .logo-route .animated-logo-dot {
+    animation: logo-dot var(--logo-duration) step-end var(--logo-delay) both;
+  }
+
+  /* The mark starts centred, then glides aside to make room for the name.
+     Transform only (no layout work, no layout shift): the offset is half the
+     name's width, which in a monospace font is exactly 13ch + the gap. */
+  html:not([data-logo-played]) .logo-intro-lockup {
+    animation: intro-slide 1000ms cubic-bezier(0.6, 0, 0.15, 1) 1700ms both;
+  }
+  html:not([data-logo-played]) .logo-intro-name > span {
+    /* Each letter comes into focus while drifting back from a loose spacing
+       (0.32em per letter) to its place: the name gathers towards the mark. */
+    animation: intro-letter 1250ms var(--ease-out) var(--letter-delay) both;
+  }
+  .logo-intro-name > span:nth-child(2) {
+    --letter-delay: 1895ms;
+    --letter-offset: 0.32em;
+  }
+  .logo-intro-name > span:nth-child(3) {
+    --letter-delay: 1940ms;
+    --letter-offset: 0.64em;
+  }
+  .logo-intro-name > span:nth-child(4) {
+    --letter-delay: 1985ms;
+    --letter-offset: 0.96em;
+  }
+  .logo-intro-name > span:nth-child(5) {
+    --letter-delay: 2030ms;
+    --letter-offset: 1.28em;
+  }
+  .logo-intro-name > span:nth-child(6) {
+    --letter-delay: 2075ms;
+    --letter-offset: 1.6em;
+  }
+  .logo-intro-name > span:nth-child(7) {
+    --letter-delay: 2120ms;
+    --letter-offset: 1.92em;
+  }
+  .logo-intro-name > span:nth-child(8) {
+    --letter-delay: 2165ms;
+    --letter-offset: 2.24em;
+  }
+  .logo-intro-name > span:nth-child(9) {
+    --letter-delay: 2210ms;
+    --letter-offset: 2.56em;
+  }
+  .logo-intro-name > span:nth-child(10) {
+    --letter-delay: 2255ms;
+    --letter-offset: 2.88em;
+  }
+  .logo-intro-name > span:nth-child(11) {
+    --letter-delay: 2300ms;
+    --letter-offset: 3.2em;
+  }
+  .logo-intro-name > span:nth-child(12) {
+    --letter-delay: 2345ms;
+    --letter-offset: 3.52em;
+  }
+  .logo-intro-name > span:nth-child(13) {
+    --letter-delay: 2390ms;
+    --letter-offset: 3.84em;
+  }
+  .logo-intro-name > span:first-child {
+    --letter-delay: 1850ms;
+    --letter-offset: 0em;
+  }
+}
+
+/* The name is lowercase "siavash izadi": 13 characters, one rule per letter
+   above. Font settings sit on the lockup so that ch is the name's own ch. */
+.logo-intro-lockup {
+  --intro-gap: 2.25rem;
+  display: flex;
+  align-items: center;
+}
+@media (width >= 40rem) {
+  .logo-intro-lockup {
+    --intro-gap: 3rem;
+  }
+}
+.logo-intro-name {
+  padding-left: var(--intro-gap);
+}
+.logo-intro-name > span {
+  display: inline-block;
+  white-space: pre; /* keeps the space between the two words */
+}
+
+@keyframes intro-out {
+  to {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+
+@keyframes intro-slide {
   from {
+    transform: translateX(calc((13ch + var(--intro-gap)) / 2));
+  }
+}
+
+@keyframes intro-letter {
+  from {
+    opacity: 0;
+    filter: blur(0.14em);
+    transform: translateX(var(--letter-offset));
+  }
+  55% {
+    opacity: 1;
+    filter: blur(0);
+  }
+}
+
+@keyframes logo-s {
+  0% {
     stroke-dashoffset: 1;
   }
-  to {
+  56.36%,
+  100% {
     stroke-dashoffset: 0;
   }
 }
 
-@keyframes pop {
-  from {
+/* Drawn from the foot up: a negative offset reveals the path from its end. */
+@keyframes logo-stem {
+  0%,
+  61.9% {
     opacity: 0;
-    transform: scale(0.3);
+    stroke-dashoffset: -1;
+  }
+  62% {
+    opacity: 1;
+    stroke-dashoffset: -1;
+  }
+  74%,
+  100% {
+    opacity: 1;
+    stroke-dashoffset: 0;
+  }
+}
+
+/* The rect is 3×3 centred on 0,0; translate() moves it in viewBox units. */
+@keyframes logo-signal {
+  0% {
+    opacity: 1;
+    transform: translate(13px, 8px);
+  }
+  3.84% {
+    transform: translate(13px, 5px);
+  }
+  14.09% {
+    transform: translate(5px, 5px);
+  }
+  23.06% {
+    transform: translate(5px, 12px);
+  }
+  33.3% {
+    transform: translate(13px, 12px);
+  }
+  42.27% {
+    transform: translate(13px, 19px);
+  }
+  52.52% {
+    transform: translate(5px, 19px);
+  }
+  56.36% {
+    opacity: 1;
+    transform: translate(5px, 16px);
+  }
+  /* Routed to the foot of the i: it leaves, then arrives. */
+  59% {
+    opacity: 0;
+    transform: translate(5px, 16px);
+  }
+  59.01% {
+    opacity: 0;
+    transform: translate(18px, 19px);
+  }
+  62% {
+    opacity: 1;
+    transform: translate(18px, 19px);
+  }
+  74% {
+    transform: translate(18px, 10px);
+    animation-timing-function: var(--ease-out);
+  }
+  99.9% {
+    opacity: 1;
+    transform: translate(18px, 5px);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(18px, 5px);
+  }
+}
+
+/* The real dot takes over on the last frame, at the exact same pixels. */
+@keyframes logo-dot {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
   }
 }
 
@@ -405,8 +665,6 @@
   }
   .reveal,
   .motion-enter,
-  .logo-mark-stroke,
-  .logo-mark-dot,
   .pipeline-progress,
   .menu-panel {
     animation: none !important;

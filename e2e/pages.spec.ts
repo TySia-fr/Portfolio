@@ -1,6 +1,10 @@
 import AxeBuilder from "@axe-core/playwright";
 import { expect, test } from "@playwright/test";
 
+import { skipLogoIntro } from "./support/skip-logo-intro";
+
+test.beforeEach(skipLogoIntro);
+
 /** Every public page. The sitemap test below checks this list stays complete. */
 const PAGES = [
   "/",
@@ -206,7 +210,7 @@ test.describe("reduced motion", () => {
       await page.goto(path);
       const animated = await page.evaluate(
         () =>
-          [...document.querySelectorAll(".reveal, .motion-enter, .logo-mark-stroke")]
+          [...document.querySelectorAll(".reveal, .motion-enter")]
             .map((element) => getComputedStyle(element))
             .filter((style) => style.animationName !== "none" || style.opacity !== "1")
             .length,

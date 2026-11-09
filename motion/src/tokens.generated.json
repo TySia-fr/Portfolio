@@ -1,0 +1,14 @@
+{
+  "color": {
+    "ink": "#111416",
+    "text": "#e8e6e0",
+    "muted": "#9aa0a4",
+    "signal": "#e9b44c"
+  },
+  "easeOut": [0.22, 1, 0.36, 1],
+  "duration": {
+    "fast": 150,
+    "base": 280,
+    "slow": 700
+  }
+}

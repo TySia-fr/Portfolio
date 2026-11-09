@@ -10,7 +10,8 @@
     "typecheck": "next typegen && tsc --noEmit",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "check": "pnpm lint && pnpm format:check && pnpm typecheck",
+    "check:logo": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/check-logo-keyframes.mjs",
+    "check": "pnpm lint && pnpm format:check && pnpm typecheck && pnpm check:logo",
     "test:e2e": "playwright test",
     "screenshots": "node scripts/capture-screenshots.mjs",
     "cv:pdf": "node scripts/build-cv-pdf.mjs"

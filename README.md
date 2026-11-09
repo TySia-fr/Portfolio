@@ -28,6 +28,7 @@ Every non-obvious choice is recorded with its trade-offs:
 - [ADR-0004](docs/adr/0004-pnpm-and-pinned-toolchain.md) — pnpm and pinned toolchain
 - [ADR-0005](docs/adr/0005-dark-only-visual-identity.md) — dark-only visual identity
 - [ADR-0006](docs/adr/0006-content-security-policy.md) — static CSP, inline scripts allowed
+- [ADR-0007](docs/adr/0007-logo-intro.md) — logo intro: once per session, short trace on every page
 
 ## Getting started
 
@@ -45,12 +46,32 @@ pnpm dev            # http://localhost:3000
 | Command            | What it does                                               |
 | ------------------ | ---------------------------------------------------------- |
 | `pnpm dev`         | Development server                                         |
-| `pnpm check`       | Lint + format check + type check (run before pushing)      |
+| `pnpm check`       | Lint + format + type check + logo check (run before push)  |
 | `pnpm build`       | Production build (`.next/standalone`)                      |
 | `pnpm start`       | Run the production build locally                           |
 | `pnpm test:e2e`    | End-to-end tests against a running server (`E2E_BASE_URL`) |
 | `pnpm format`      | Format all files with Prettier                             |
 | `pnpm screenshots` | Capture the case-study screenshots from a running build    |
+
+## Logo animation
+
+![Logo reveal](docs/media/logo/logo-reveal-preview.gif)
+
+The "si" monogram is drawn by its own signal: the amber square travels the S like a
+signal on a circuit, climbs the i and settles as its dot.
+
+- **On the site:** a full intro on the first visit of a session (3.6 s), then a
+  0.9 s trace of the mark on every page. Skipped by any click, key, scroll or touch,
+  never shown with reduced motion, drawn over the page so it delays nothing
+  ([ADR-0007](docs/adr/0007-logo-intro.md)). CSS only:
+  `src/components/brand/` and `.logo-intro` / `.logo-route` in `globals.css`.
+- **As video:** [`motion/`](motion/README.md) (Remotion) renders MP4 and transparent
+  WebM in 16:9, 1:1 and 9:16; ready-made files in [`docs/media/logo/`](docs/media/logo/).
+- **One geometry:** both read `src/components/brand/logo-geometry.ts`;
+  `pnpm check:logo` fails if the CSS keyframes drift from it.
+- **Change it:** colours and easing are the tokens in `globals.css`; site durations
+  are `--logo-duration` and the `intro-*` animations there; video timing is
+  `motion/src/timeline.ts`.
 
 ## Deployment
 

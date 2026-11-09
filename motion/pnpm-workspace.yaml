@@ -1,0 +1,2 @@
+# Separate pnpm root: /motion is never installed or built with the website.
+packages: []

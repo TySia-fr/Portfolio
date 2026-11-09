@@ -15,7 +15,8 @@ const eslintConfig = defineConfig([
   },
   // Must stay last: turns off stylistic rules that would fight Prettier.
   prettier,
-  globalIgnores([".next/**", "out/**", "build/**", "next-env.d.ts"]),
+  // motion/ is a separate Remotion workspace with its own toolchain (motion/README.md).
+  globalIgnores([".next/**", "out/**", "build/**", "next-env.d.ts", "motion/**"]),
 ]);
 
 export default eslintConfig;

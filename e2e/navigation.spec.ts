@@ -1,4 +1,7 @@
 import { expect, test } from "@playwright/test";
+import { skipLogoIntro } from "./support/skip-logo-intro";
+
+test.beforeEach(skipLogoIntro);
 
 test("first Tab focuses the skip link, which moves focus to the content", async ({
   page,
