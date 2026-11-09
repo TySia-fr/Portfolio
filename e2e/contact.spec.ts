@@ -3,6 +3,9 @@ import { randomUUID } from "node:crypto";
 import { expect, type APIRequestContext, test } from "@playwright/test";
 
 import { FAILURE_MARKER } from "./support/mock-email-provider";
+import { skipLogoIntro } from "./support/skip-logo-intro";
+
+test.beforeEach(skipLogoIntro);
 
 /**
  * Contact form and POST /api/contact.

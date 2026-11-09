@@ -1,5 +1,8 @@
 import type { Metadata, Viewport } from "next";
 
+import { LogoIntro, LogoRouteIntro } from "@/components/brand/logo-intro";
+import { LogoRouteReplay } from "@/components/brand/logo-route-replay";
+import { LogoSessionGate } from "@/components/brand/logo-session-gate";
 import { JsonLd } from "@/components/json-ld";
 import { SiteFooter } from "@/components/layout/site-footer";
 import { SiteHeader } from "@/components/layout/site-header";
@@ -34,8 +37,18 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="fr" className={`${geistSans.variable} ${martianMono.variable} h-full`}>
+    // suppressHydrationWarning: LogoSessionGate may add data-logo-* attributes to <html>
+    // before hydration. It only affects this element's own attributes.
+    <html
+      lang="fr"
+      className={`${geistSans.variable} ${martianMono.variable} h-full`}
+      suppressHydrationWarning
+    >
       <body className="flex min-h-full flex-col">
+        <LogoSessionGate />
+        <LogoIntro />
+        <LogoRouteIntro />
+        <LogoRouteReplay />
         {/* First focusable element: lets keyboard users jump past the header. */}
         <a
           href="#contenu"
