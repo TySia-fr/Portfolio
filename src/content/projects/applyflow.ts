@@ -12,7 +12,7 @@ export const applyflow = {
   title: "ApplyFlow",
   summary:
     "Suivi de recherche d’emploi : candidatures, entretiens et relances au même endroit, offres d’alternance découvertes chaque jour et bot Telegram pour tout gérer depuis un téléphone.",
-  status: "in-progress",
+  status: "live",
   year: 2026,
   featured: false,
   stack: [
@@ -29,6 +29,7 @@ export const applyflow = {
   ],
 
   links: {
+    live: "https://applyflow.siavashizadi.com",
     repository: "https://github.com/TySia-fr/ApplyFlow",
   },
 
@@ -58,7 +59,7 @@ export const applyflow = {
       "Pendant une recherche d’emploi, les candidatures se perdent entre un tableur, des e-mails et des notes : on ne sait plus qui relancer, ni ce qui fonctionne. Je voulais un outil qui garde tout l’historique et calcule des taux honnêtes, sans tirer de tendance d’un échantillon trop petit.",
     audience:
       "Toute personne qui postule sérieusement ; et, pour ce portfolio, les responsables techniques qui veulent voir une application multi-utilisateur correctement isolée.",
-    role: "Conception, développement, tests et documentation. Projet réalisé seul.",
+    role: "Conception, développement, tests, déploiement et documentation. Projet réalisé seul.",
 
     architecture: [
       "Monolithe modulaire à dépendances en sens unique : interface → Server Actions (authentification et validation) → services métier → base de données.",
@@ -113,12 +114,10 @@ export const applyflow = {
     ],
 
     nextSteps: [
-      "Mise en ligne sur applyflow.siavashizadi.com (images prêtes, déploiement en attente).",
       "Envoi d’e-mails (vérification d’adresse, réinitialisation du mot de passe) et double authentification.",
     ],
 
     limitations: [
-      "Pas encore en ligne : le code et les tests sont publics, l’application n’est pas déployée.",
       "La CSP autorise les scripts inline, pour la même raison que sur ce site (ADR-0006).",
       "Les liens de sites qui bloquent les robots (LinkedIn) ne peuvent pas être lus : le bot demande alors le poste et l’entreprise.",
       "L’API La Bonne Alternance est réservée à un usage non commercial : adapté à ce projet, bloquant pour un produit payant.",
