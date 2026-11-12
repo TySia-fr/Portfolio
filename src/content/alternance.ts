@@ -49,7 +49,7 @@ export const alternance = {
           {
             href: "/projets/applyflow",
             label:
-              "ApplyFlow, suivi de candidatures (en cours) : 37 tests, 9 de bout en bout",
+              "ApplyFlow, suivi de candidatures et bot Telegram (en cours) : 68 tests, 12 de bout en bout",
           },
         ],
       },

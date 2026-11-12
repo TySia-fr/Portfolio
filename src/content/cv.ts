@@ -22,7 +22,7 @@ export const cv = {
   profile:
     "Développeur full-stack JavaScript / TypeScript. Je conçois, teste et déploie des applications web complètes : interface, logique serveur, base de données, conteneurs et intégration continue. Intérêt marqué pour l’infrastructure et la sécurité des applications.",
 
-  projectsTitle: "Projets en production",
+  projectsTitle: "Projets",
   projects: [
     {
       slug: "nexora",
@@ -46,6 +46,17 @@ export const cv = {
         "Formulaire de contact validé côté serveur, avec limite de débit et protection anti-spam.",
       ],
     },
+    {
+      slug: "applyflow",
+      name: "ApplyFlow — suivi de recherche d’emploi (en cours)",
+      url: "github.com/TySia-fr/ApplyFlow",
+      stack:
+        "Next.js 16, TypeScript, PostgreSQL, Drizzle, better-auth, Telegram Bot API, Docker",
+      bullets: [
+        "Candidatures, entretiens et relances ; offres d’alternance découvertes chaque jour (API La Bonne Alternance) ; bot Telegram pour ajouter une offre depuis son téléphone.",
+        "Isolation entre utilisateurs garantie par la base (clés étrangères composées) ; 68 tests unitaires et d’intégration, 12 de bout en bout.",
+      ],
+    },
   ],
 
   skillsTitle: "Compétences",
@@ -59,7 +70,7 @@ export const cv = {
       label: "Back-end",
       value: "Node.js, Next.js (Server Actions, Route Handlers), API REST, Zod",
     },
-    { label: "Données", value: "PostgreSQL, Prisma" },
+    { label: "Données", value: "PostgreSQL, Prisma, Drizzle" },
     { label: "Tests", value: "Vitest, Playwright, axe" },
     {
       label: "DevOps",
