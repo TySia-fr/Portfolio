@@ -6,12 +6,12 @@
 export const cv = {
   title: "CV",
   description:
-    "CV de Siavash Izadi, développeur full-stack JavaScript : projets en production, compétences, formation. Recherche une alternance à Lyon ou Montpellier.",
+    "CV de Siavash Izadi, développeur full-stack JavaScript : projets en production, compétences, formation. Recherche une alternance en informatique.",
   pdf: {
     href: "/cv/Siavash-Izadi-CV.pdf",
     label: "Télécharger le CV (PDF)",
   },
-  location: "Montpellier, France",
+  location: "France",
   /**
    * Printed CV (PDF) only: hidden on the web page to keep it out of casual
    * view. It is still in the HTML and in the public PDF, so not a secret.
