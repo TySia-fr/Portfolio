@@ -8,7 +8,7 @@ import { alternance as t } from "@/content/alternance";
 import { pageMetadata } from "@/lib/metadata";
 
 export const metadata: Metadata = pageMetadata({
-  title: `${t.title} en informatique · Lyon ou Montpellier`,
+  title: `${t.title} en informatique`,
   description: t.description,
   path: "/alternance",
 });

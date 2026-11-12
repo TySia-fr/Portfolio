@@ -21,7 +21,7 @@ export const about = {
       },
       { label: "Études", value: "Informatique, Université de Montpellier" },
       { label: "Projets", value: "Deux applications en production, code public" },
-      { label: "Recherche", value: "Alternance à Lyon ou Montpellier" },
+      { label: "Recherche", value: "Alternance en informatique" },
     ],
   },
 

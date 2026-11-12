@@ -20,7 +20,7 @@ export const home = {
 
   about: {
     title: "En bref",
-    text: "Titulaire d’une licence en génie informatique (niveau 6, ENIC-NARIC), j’étudie l’informatique à l’Université de Montpellier. Je construis et déploie des applications web complètes, avec un intérêt fort pour l’infrastructure et la sécurité, et je recherche une alternance à Lyon ou à Montpellier.",
+    text: "Titulaire d’une licence en génie informatique (niveau 6, ENIC-NARIC), j’étudie l’informatique à l’Université de Montpellier. Je construis et déploie des applications web complètes, avec un intérêt fort pour l’infrastructure et la sécurité, et je recherche une alternance en informatique.",
     link: "En savoir plus",
   },
 

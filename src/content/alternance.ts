@@ -8,23 +8,21 @@
 export const alternance = {
   title: "Alternance",
   description:
-    "Siavash Izadi recherche une alternance en informatique à Lyon ou Montpellier, en Bac+3 ou en Master, dès que possible : développement web, systèmes et déploiement.",
+    "Siavash Izadi recherche une alternance en informatique, en Bac+3 ou en Master, dès que possible : développement web, systèmes et déploiement.",
   eyebrow: "Disponible dès que possible",
   heading: "Je recherche une alternance en informatique.",
   intro:
-    "Contrat d’apprentissage ou de professionnalisation, à Lyon ou à Montpellier, avec une école en Bac+3 ou en Master. Je développe des applications web, je les teste et je les déploie sur un serveur Linux que j’administre. Tout ce qui est écrit ici renvoie à du code que vous pouvez lire.",
+    "Contrat d’apprentissage ou de professionnalisation, avec une école en Bac+3 ou en Master. Je développe des applications web, je les teste et je les déploie sur un serveur Linux que j’administre. Tout ce qui est écrit ici renvoie à du code que vous pouvez lire.",
 
   /** Short form, reused by the home banner and the CV. */
-  banner: "Recherche une alternance · Lyon ou Montpellier",
-  short:
-    "Recherche une alternance en informatique (Bac+3 ou Master), à Lyon ou Montpellier, dès que possible.",
+  banner: "Recherche une alternance en informatique",
+  short: "Recherche une alternance en informatique (Bac+3 ou Master), dès que possible.",
 
   facts: {
     title: "En résumé",
     items: [
       { label: "Contrat", value: "Apprentissage ou professionnalisation" },
       { label: "Formation visée", value: "Bac+3 ou Master, en école, liée au contrat" },
-      { label: "Lieu", value: "Lyon ou Montpellier, et alentours" },
       { label: "Démarrage", value: "Dès que possible" },
       {
         label: "Diplôme",
