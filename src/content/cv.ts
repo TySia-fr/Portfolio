@@ -22,7 +22,7 @@ export const cv = {
   profile:
     "Développeur full-stack JavaScript / TypeScript. Je conçois, teste et déploie des applications web complètes : interface, logique serveur, base de données, conteneurs et intégration continue. Intérêt marqué pour l’infrastructure et la sécurité des applications.",
 
-  projectsTitle: "Projets",
+  projectsTitle: "Projets en production",
   projects: [
     {
       slug: "nexora",
@@ -48,8 +48,8 @@ export const cv = {
     },
     {
       slug: "applyflow",
-      name: "ApplyFlow — suivi de recherche d’emploi (en cours)",
-      url: "github.com/TySia-fr/ApplyFlow",
+      name: "ApplyFlow — suivi de recherche d’emploi",
+      url: "applyflow.siavashizadi.com",
       stack:
         "Next.js 16, TypeScript, PostgreSQL, Drizzle, better-auth, Telegram Bot API, Docker",
       bullets: [
