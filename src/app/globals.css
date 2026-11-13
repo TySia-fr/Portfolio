@@ -285,6 +285,46 @@
 }
 
 /* Mobile menu slides in when it opens (it is display:none while closed). */
+/*
+ * Floating header (src/components/layout/site-header.tsx). One surface style
+ * shared by the pill and the mobile menu panel under it.
+ */
+.header-pill {
+  border: 1px solid color-mix(in srgb, var(--color-text) 9%, transparent);
+  background: color-mix(in srgb, var(--color-surface) 82%, transparent);
+  -webkit-backdrop-filter: blur(16px) saturate(140%);
+  backdrop-filter: blur(16px) saturate(140%);
+  box-shadow:
+    0 12px 32px -12px rgb(0 0 0 / 0.65),
+    inset 0 1px 0 color-mix(in srgb, var(--color-text) 6%, transparent);
+}
+/* The menu panel covers text: it must stay readable, so it is opaque. */
+.menu-panel.header-pill {
+  background: var(--color-surface);
+  /* A backdrop filter nested in the pill's own does not hide what is behind. */
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+}
+/* Capsule behind the current link; slides when the page changes. */
+.nav-indicator {
+  position: absolute;
+  pointer-events: none;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  border-radius: 9999px;
+  background: color-mix(in srgb, var(--color-signal) 12%, transparent);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--color-signal) 35%, transparent);
+  opacity: 0;
+  transition:
+    transform var(--duration-base) var(--ease-out),
+    width var(--duration-base) var(--ease-out),
+    opacity var(--duration-fast) var(--ease-out);
+}
+.nav-indicator[data-visible] {
+  opacity: 1;
+}
+
 .menu-panel:not([hidden]) {
   animation: menu-in var(--duration-base) var(--ease-out);
 }
@@ -615,7 +655,7 @@
     font-size: 12.5px;
   }
   body > a[href="#contenu"],
-  header.sticky,
+  header.site-header,
   footer,
   .print-hidden {
     display: none !important;
@@ -668,5 +708,8 @@
   .pipeline-progress,
   .menu-panel {
     animation: none !important;
+  }
+  .nav-indicator {
+    transition: none !important;
   }
 }

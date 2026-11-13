@@ -30,14 +30,14 @@ export function MobileNav({ items, labels }: Props) {
   }, [open]);
 
   return (
-    <div className="md:hidden">
+    <div className="lg:hidden">
       <button
         ref={buttonRef}
         type="button"
         aria-expanded={open}
         aria-controls={menuId}
         onClick={() => setOpen((value) => !value)}
-        className="-mr-2 flex h-11 w-11 items-center justify-center text-muted hover:text-text"
+        className="flex size-10 items-center justify-center rounded-full text-muted transition-colors hover:bg-line/50 hover:text-text aria-expanded:bg-line/50 aria-expanded:text-text"
       >
         <span className="sr-only">{open ? labels.close : labels.open}</span>
         <MenuIcon open={open} />
@@ -49,13 +49,14 @@ export function MobileNav({ items, labels }: Props) {
         id={menuId}
         aria-label={labels.nav}
         hidden={!open}
-        className="menu-panel absolute inset-x-0 top-full border-b border-line bg-ink"
+        className="menu-panel header-pill absolute inset-x-0 top-full mt-2 rounded-2xl p-2"
       >
         <NavLinks
           items={items}
           onNavigate={() => setOpen(false)}
-          className="flex flex-col px-5 py-2 font-mono text-sm sm:px-8"
-          linkClassName="block py-3 text-muted"
+          numbered
+          className="flex flex-col font-mono text-lg font-medium [font-stretch:87.5%] sm:text-xl"
+          linkClassName="flex items-baseline rounded-xl px-4 py-3.5 text-text hover:bg-line/50"
         />
       </nav>
     </div>
