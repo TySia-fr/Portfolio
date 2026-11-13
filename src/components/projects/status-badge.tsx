@@ -1,8 +1,15 @@
 import type { Project } from "@/content/projects/schema";
-import { projectsPage } from "@/content/projects-page";
+import { getContent } from "@/content";
+import type { Locale } from "@/i18n/config";
 
 /** "live" is the only use of the green token: it reports a real, reachable site. */
-export function StatusBadge({ status }: { status: Project["status"] }) {
+export function StatusBadge({
+  locale,
+  status,
+}: {
+  locale: Locale;
+  status: Project["status"];
+}) {
   const isLive = status === "live";
   return (
     <span
@@ -14,7 +21,7 @@ export function StatusBadge({ status }: { status: Project["status"] }) {
         aria-hidden="true"
         className={`size-1.5 rounded-full ${isLive ? "bg-live" : "border border-muted"}`}
       />
-      {projectsPage.status[status]}
+      {getContent(locale).projectsPage.status[status]}
     </span>
   );
 }

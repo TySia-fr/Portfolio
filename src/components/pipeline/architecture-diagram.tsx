@@ -1,10 +1,12 @@
-import { infrastructure } from "@/content/infrastructure";
+import { getContent } from "@/content";
+import type { Locale } from "@/i18n/config";
 
 /**
  * Request path from the browser to the container, as an ordered list. The two
  * last hops are grouped inside a dashed box: they run on the same server.
  */
-export function ArchitectureDiagram() {
+export function ArchitectureDiagram({ locale }: { locale: Locale }) {
+  const { infrastructure } = getContent(locale);
   const offHost = infrastructure.nodes.filter((node) => !("onHost" in node));
   const onHost = infrastructure.nodes.filter((node) => "onHost" in node);
 

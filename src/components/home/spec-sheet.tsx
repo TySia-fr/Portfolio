@@ -1,22 +1,22 @@
 import type { ReactNode } from "react";
 
-import { home } from "@/content/home";
-import { site } from "@/content/site";
+import { getContent } from "@/content";
+import { type Locale, localeInfo } from "@/i18n/config";
 import { getBuildInfo } from "@/lib/build-info";
-
-const dateFormat = new Intl.DateTimeFormat("fr-FR", {
-  dateStyle: "long",
-  timeStyle: "short",
-  timeZone: "Europe/Paris",
-});
 
 /**
  * The site's signature element: a spec sheet of the build that is serving the
  * page. Every value comes from the build itself, so it cannot drift from reality.
  */
-export function SpecSheet() {
+export function SpecSheet({ locale }: { locale: Locale }) {
   const build = getBuildInfo();
+  const { home, site } = getContent(locale);
   const t = home.specSheet;
+  const dateFormat = new Intl.DateTimeFormat(localeInfo[locale].bcp47, {
+    dateStyle: "long",
+    timeStyle: "short",
+    timeZone: "Europe/Paris",
+  });
 
   const rows: { label: string; value: ReactNode }[] = [
     { label: t.rows.framework, value: `Next.js ${build.nextVersion}` },

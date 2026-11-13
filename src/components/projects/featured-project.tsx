@@ -4,7 +4,9 @@ import { BrowserFrame, PhoneFrame, Screenshot } from "@/components/projects/scre
 import { StatusBadge } from "@/components/projects/status-badge";
 import { TechList } from "@/components/projects/tech-list";
 import type { Project } from "@/content/projects/schema";
-import { projectsPage } from "@/content/projects-page";
+import { getContent } from "@/content";
+import type { Locale } from "@/i18n/config";
+import { projectHref } from "@/i18n/routes";
 
 /**
  * A featured project, full width: text on one side, real screenshots on the
@@ -12,29 +14,31 @@ import { projectsPage } from "@/content/projects-page";
  * above it (relative z-10) so they stay independently clickable.
  */
 export function FeaturedProject({
+  locale,
   project,
   headingLevel = 2,
   priority = false,
 }: {
+  locale: Locale;
   project: Project;
   headingLevel?: 2 | 3;
   priority?: boolean;
 }) {
   const Heading = `h${headingLevel}` as const;
-  const t = projectsPage;
+  const t = getContent(locale).projectsPage;
 
   return (
     <article className="card-lift group relative grid overflow-hidden border border-line bg-surface has-[a.card-link:focus-visible]:outline-2 has-[a.card-link:focus-visible]:outline-offset-4 has-[a.card-link:focus-visible]:outline-signal lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)]">
       <div className="flex flex-col gap-6 p-6 sm:p-8 lg:p-10">
         <div className="flex items-center justify-between gap-4">
-          <StatusBadge status={project.status} />
+          <StatusBadge locale={locale} status={project.status} />
           <span className="font-mono text-xs text-muted">{project.year}</span>
         </div>
 
         <div>
           <Heading className="font-mono text-2xl font-medium tracking-tight [font-stretch:80%] sm:text-3xl">
             <Link
-              href={`/projets/${project.slug}`}
+              href={projectHref(locale, project.slug)}
               className="card-link after:absolute after:inset-0 focus-visible:outline-none"
             >
               {project.title}

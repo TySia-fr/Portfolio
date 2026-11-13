@@ -1,4 +1,5 @@
-import { site } from "@/content/site";
+import { getContent } from "@/content";
+import type { Locale } from "@/i18n/config";
 
 /**
  * Siavash's portrait, pre-cropped to a square and exported to WebP at the
@@ -6,16 +7,18 @@ import { site } from "@/content/site";
  * runtime optimiser, intrinsic size set so the layout never shifts.
  */
 export function Portrait({
+  locale,
   sizes,
   priority = false,
   className = "",
 }: {
+  locale: Locale;
   /** Rendered width, e.g. "10rem". */
   sizes: string;
   priority?: boolean;
   className?: string;
 }) {
-  const p = site.portrait;
+  const p = getContent(locale).site.portrait;
   return (
     // eslint-disable-next-line @next/next/no-img-element -- pre-optimised static files
     <img

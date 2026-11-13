@@ -65,7 +65,13 @@ const nextConfig: NextConfig = {
   // A test renders every page with a crawler user agent to keep this list honest.
   outputFileTracingIncludes: {
     // Brackets escaped: keys are picomatch globs, where [slug] is a character class.
-    "/projets/\\[slug\\]": [
+    // "**" also matches the route group folder, e.g. /(fr)/projets/[slug].
+    "/**/projets/\\[slug\\]": [
+      "./deploy/deploy.sh",
+      "./deploy/compose.yaml",
+      "./src/content/projects/schema.ts",
+    ],
+    "/**/en/projects/\\[slug\\]": [
       "./deploy/deploy.sh",
       "./deploy/compose.yaml",
       "./src/content/projects/schema.ts",
@@ -73,6 +79,9 @@ const nextConfig: NextConfig = {
   },
 
   cacheComponents: true,
+  // One root layout per language (ADR-0008): unmatched URLs need a 404 page
+  // that does not depend on either layout (app/global-not-found.tsx).
+  experimental: { globalNotFound: true },
   partialPrefetching: true,
 
   // Build metadata, inlined at build time and shown on the site's spec sheet.

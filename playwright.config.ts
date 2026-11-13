@@ -20,6 +20,9 @@ export default defineConfig({
   reporter: process.env.CI ? [["list"], ["github"]] : "list",
   use: {
     baseURL,
+    // A French browser: "/" redirects English-first browsers to /en (src/proxy.ts),
+    // which e2e/i18n.spec.ts tests on purpose. Everywhere else, pages load as asked.
+    locale: "fr-FR",
     trace: "retain-on-failure",
     launchOptions: { executablePath },
   },

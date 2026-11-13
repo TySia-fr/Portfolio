@@ -4,7 +4,7 @@
  */
 
 export type NavItem = {
-  href: `/${string}`;
+  href: string;
   label: string;
 };
 
@@ -44,9 +44,27 @@ export const site = {
     closeMenu: "Fermer le menu",
     mainNavigation: "Navigation principale",
     home: "Accueil",
+    /** Header tag next to the name. */
+    tagline: "full-stack",
+    language: "Langue",
+  },
+
+  notFound: {
+    eyebrow: "Erreur 404",
+    title: "Cette page n’existe pas.",
+    body: "L’adresse est peut-être mal saisie, ou la page a été déplacée.",
+    back: "Retour à l’accueil",
+  },
+
+  /** Home page <title> and description (the layout's defaults). */
+  meta: {
+    description:
+      "Siavash Izadi (سیاوش ایزدی), développeur full-stack JavaScript basé en France : projets, méthode et contact.",
   },
 
   footer: {
+    cvHref: "/cv",
+    legalHref: "/mentions-legales",
     sourceCode: "Code source",
     legal: "Mentions légales",
     cv: "CV",

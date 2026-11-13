@@ -1,6 +1,6 @@
 # ADR-0003 — French-first, ready for English
 
-- Status: Accepted
+- Status: Superseded by ADR-0008 (English version added 2026-11-13)
 - Date: 2026-10-15
 
 ## Context

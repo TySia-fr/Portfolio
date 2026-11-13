@@ -71,8 +71,8 @@ export const portfolio = {
     role: "Conception, développement, infrastructure et documentation. Projet réalisé seul.",
 
     architecture: [
-      "Pages générées statiquement au build avec le App Router de Next.js ; JavaScript côté client limité au menu mobile et au formulaire de contact.",
-      "Contenu typé dans le dépôt et validé avec Zod au build, sans base de données.",
+      "Pages générées statiquement au build avec le App Router de Next.js ; JavaScript côté client limité au menu mobile, au sélecteur de langue et au formulaire de contact.",
+      "Contenu typé dans le dépôt et validé avec Zod au build, en français et en anglais, sans base de données.",
       "Image Docker multi-étapes, exécutée sans privilèges root et en lecture seule.",
       "Nginx en reverse proxy avec HTTPS (Let’s Encrypt, renouvellement automatique) sur un serveur Hetzner que j’administre.",
       "Chaque push déclenche lint, vérification des types, build, puis des tests de bout en bout (Playwright, ordinateur et mobile, accessibilité avec axe) exécutés contre l’image Docker qui sera déployée.",
@@ -126,6 +126,7 @@ export const portfolio = {
       "Politique de sécurité du contenu (CSP) et en-têtes de sécurité, vérifiés par les tests.",
       "Code HTTP 404 réel pour les pages de projet inexistantes.",
       "Formulaire de contact validé côté serveur, avec limite de débit et piège anti-spam.",
+      "Version française et version anglaise de chaque page, avec liens hreflang et un test qui vérifie que chaque page française a son équivalent anglais.",
     ],
 
     nextSteps: [

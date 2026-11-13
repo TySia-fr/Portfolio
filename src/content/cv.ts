@@ -3,8 +3,12 @@
  * site. The PDF is generated from the /cv page (scripts/build-cv-pdf.mjs):
  * regenerate it in the same commit as any change here.
  */
+import { alternance } from "./alternance";
+
 export const cv = {
   title: "CV",
+  /** The accent line under the name: what Siavash is looking for. */
+  headline: alternance.short,
   description:
     "CV de Siavash Izadi, développeur full-stack JavaScript : projets en production, compétences, formation. Recherche une alternance en informatique.",
   pdf: {

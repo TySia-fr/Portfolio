@@ -1,5 +1,9 @@
 /** Home page copy (ADR-0003). Every statement here must stay verifiable. */
+import { alternance } from "./alternance";
+
 export const home = {
+  /** The pill above the headline: what Siavash is looking for. */
+  banner: { href: "/alternance", label: alternance.banner },
   eyebrow: "Développeur full-stack JavaScript · France",
   title:
     "Je construis des applications web, de la base de données à la mise en production.",
@@ -19,6 +23,7 @@ export const home = {
   secondaryCta: { href: "/contact", label: "Me contacter" },
 
   about: {
+    href: "/a-propos",
     title: "En bref",
     text: "Titulaire d’une licence en génie informatique (niveau 6, ENIC-NARIC), j’étudie l’informatique à l’Université de Montpellier. Je construis et déploie des applications web complètes, avec un intérêt fort pour l’infrastructure et la sécurité, et je recherche une alternance en informatique.",
     link: "En savoir plus",
@@ -29,6 +34,7 @@ export const home = {
   },
 
   selectedProjects: {
+    href: "/projets",
     title: "Projets sélectionnés",
     all: "Tous les projets",
   },
