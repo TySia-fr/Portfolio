@@ -1,17 +1,20 @@
 import "server-only";
 
-import { about } from "@/content/about";
-import { site } from "@/content/site";
+import { getContent } from "@/content";
+import { site as baseSite } from "@/content/site";
+import { type Locale, localeInfo } from "@/i18n/config";
+import { href } from "@/i18n/routes";
 
 /**
  * schema.org data for search engines (JSON-LD). It tells Google that this site
  * belongs to one person, what their name is in both scripts, and which other
  * profiles are theirs (sameAs). Only facts stated elsewhere on the site.
  */
-const personId = `${site.url}/#person`;
-const websiteId = `${site.url}/#website`;
+const personId = `${baseSite.url}/#person`;
+const websiteId = `${baseSite.url}/#website`;
 
-export function siteGraph() {
+export function siteGraph(locale: Locale) {
+  const { about, site } = getContent(locale);
   return {
     "@context": "https://schema.org",
     "@graph": [
@@ -68,7 +71,7 @@ export function siteGraph() {
         url: site.url,
         name: site.name,
         alternateName: [site.nameFa, "siavashizadi.com"],
-        inLanguage: "fr-FR",
+        inLanguage: ["fr-FR", "en-US"],
         publisher: { "@id": personId },
       },
     ],
@@ -76,12 +79,13 @@ export function siteGraph() {
 }
 
 /** The About page is the person's profile page. */
-export function profilePageData() {
+export function profilePageData(locale: Locale) {
+  const { site } = getContent(locale);
   return {
     "@context": "https://schema.org",
     "@type": "ProfilePage",
-    url: `${site.url}/a-propos`,
-    inLanguage: "fr-FR",
+    url: `${site.url}${href(locale, "about")}`,
+    inLanguage: localeInfo[locale].bcp47,
     isPartOf: { "@id": websiteId },
     // Repeats the name next to the reference, so the page stands on its own
     // even for parsers that do not join @id references across script blocks.

@@ -7,6 +7,7 @@
  */
 export const alternance = {
   title: "Alternance",
+  metaTitle: "Alternance en informatique",
   description:
     "Siavash Izadi recherche une alternance en informatique, en Bac+3 ou en Master, dès que possible : développement web, systèmes et déploiement.",
   eyebrow: "Disponible dès que possible",
@@ -34,6 +35,7 @@ export const alternance = {
 
   domains: {
     title: "Ce que je peux faire dans votre équipe",
+    proofLabel: "Preuve",
     intro:
       "Trois domaines où j’ai déjà livré quelque chose de vérifiable. Chaque preuve est un projet public.",
     items: [

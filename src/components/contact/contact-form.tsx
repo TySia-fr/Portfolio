@@ -2,15 +2,14 @@
 
 import { type FormEvent, useId, useRef, useState } from "react";
 
-import { contact } from "@/content/contact";
+import { getContent } from "@/content";
+import type { Locale } from "@/i18n/config";
 import {
   CONTACT_LIMITS as L,
   type ContactField,
   type ContactResponse,
   HONEYPOT_FIELD,
 } from "@/lib/contact/limits";
-
-const t = contact.form;
 
 type State =
   | { status: "idle" }
@@ -19,11 +18,20 @@ type State =
   | { status: "error"; message: string };
 
 type FieldErrors = Partial<Record<ContactField, string>>;
+type Form = ReturnType<typeof getContent>["contact"]["form"];
+
+/** Server field messages are French; other languages show their own wording. */
+const serverFieldMessage = (t: Form, field: ContactField) =>
+  field === "name"
+    ? t.client.name
+    : field === "email"
+      ? t.client.email
+      : t.client.messageShort;
 
 const EMAIL_SHAPE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 /** Fast feedback only. The API validates again and has the final word. */
-function validate(values: Record<ContactField, string>): FieldErrors {
+function validate(t: Form, values: Record<ContactField, string>): FieldErrors {
   const errors: FieldErrors = {};
   const name = values.name.trim();
   const email = values.email.trim();
@@ -37,7 +45,14 @@ function validate(values: Record<ContactField, string>): FieldErrors {
   return errors;
 }
 
-export function ContactForm({ fallbackEmail }: { fallbackEmail: string }) {
+export function ContactForm({
+  locale,
+  fallbackEmail,
+}: {
+  locale: Locale;
+  fallbackEmail: string;
+}) {
+  const t = getContent(locale).contact.form;
   const [state, setState] = useState<State>({ status: "idle" });
   const [errors, setErrors] = useState<FieldErrors>({});
   const [messageLength, setMessageLength] = useState(0);
@@ -57,7 +72,7 @@ export function ContactForm({ fallbackEmail }: { fallbackEmail: string }) {
       message: String(data.get("message") ?? ""),
     };
 
-    const clientErrors = validate(values);
+    const clientErrors = validate(t, values);
     setErrors(clientErrors);
     if (Object.keys(clientErrors).length > 0) {
       setState({ status: "error", message: t.errors.invalid });
@@ -93,7 +108,16 @@ export function ContactForm({ fallbackEmail }: { fallbackEmail: string }) {
       return;
     }
 
-    const serverErrors = result.fields ?? {};
+    const fields = result.fields ?? {};
+    const serverErrors: FieldErrors =
+      locale === "fr"
+        ? fields
+        : Object.fromEntries(
+            Object.keys(fields).map((field) => [
+              field,
+              serverFieldMessage(t, field as ContactField),
+            ]),
+          );
     setErrors(serverErrors);
     const message =
       result.error in t.errors

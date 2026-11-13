@@ -9,7 +9,7 @@ export const legal = {
   title: "Mentions légales",
   description:
     "Mentions légales et politique de confidentialité du site siavashizadi.com : éditeur, hébergeur et données personnelles.",
-  updated: "2026-10-24",
+  updated: "2026-11-13",
   updatedLabel: "Dernière mise à jour",
   contactTitle: "Contact",
 
@@ -34,7 +34,7 @@ export const legal = {
       id: "donnees",
       title: "Données personnelles",
       paragraphs: [
-        "Ce site n’utilise aucun cookie, aucun outil de mesure d’audience et aucun traceur publicitaire. Les polices de caractères sont servies par le site lui-même : aucune requête n’est envoyée à un service tiers pendant votre visite.",
+        "Ce site n’utilise aucun outil de mesure d’audience et aucun traceur publicitaire. Un seul cookie peut être déposé, et seulement si vous changez de langue avec le sélecteur FR / EN : il retient votre choix (« lang », un an) et n’est utilisé à aucune autre fin. Les polices de caractères sont servies par le site lui-même : aucune requête n’est envoyée à un service tiers pendant votre visite.",
         "Comme tout serveur web, le serveur enregistre des journaux techniques (adresse IP, date, page demandée, navigateur). Ils servent uniquement à la sécurité et au bon fonctionnement du site, ne sont jamais partagés et sont supprimés automatiquement après une durée limitée.",
         "Si vous m’écrivez par e-mail, votre adresse et votre message sont utilisés uniquement pour vous répondre. Les e-mails adressés à l’adresse de contact sont transférés via le service de routage d’e-mails de Cloudflare.",
         "Formulaire de contact : votre nom, votre adresse e-mail et votre message me sont transmis par e-mail via le service d’envoi Resend (Resend, Inc., États-Unis), qui agit comme sous-traitant pour l’acheminement. Le site ne les enregistre pas : ils sont conservés uniquement dans ma boîte de réception, le temps de notre échange. Pour limiter les abus, l’adresse IP de l’expéditeur est gardée en mémoire au plus une heure, sans être écrite sur disque.",

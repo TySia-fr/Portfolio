@@ -52,4 +52,5 @@ export const contact = {
   privacy:
     "Votre message est uniquement utilisé pour vous répondre. Il n’est pas stocké sur ce site, ni revendu, ni utilisé à des fins publicitaires.",
   privacyLink: "Confidentialité et mentions légales",
+  privacyHref: "/mentions-legales#donnees",
 } as const;

@@ -20,7 +20,7 @@ export const about = {
           "Licence en génie informatique, Iran (2024). Niveau 6 selon ENIC-NARIC France",
       },
       { label: "Études", value: "Informatique, Université de Montpellier" },
-      { label: "Projets", value: "Deux applications en production, code public" },
+      { label: "Projets", value: "Trois applications en production, code public" },
       { label: "Recherche", value: "Alternance en informatique" },
     ],
   },

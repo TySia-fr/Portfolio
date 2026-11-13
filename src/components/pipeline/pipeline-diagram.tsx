@@ -1,4 +1,5 @@
-import { pipeline } from "@/content/pipeline";
+import { getContent } from "@/content";
+import type { Locale } from "@/i18n/config";
 
 /**
  * Delivery pipeline as an ordered list: read by screen readers as five steps
@@ -8,8 +9,15 @@ import { pipeline } from "@/content/pipeline";
  * scroll-driven, no JavaScript). Without support for scroll-driven animations,
  * or with reduced motion, it is simply drawn in full.
  */
-export function PipelineDiagram({ headingLevel = 3 }: { headingLevel?: 3 | 4 }) {
+export function PipelineDiagram({
+  locale,
+  headingLevel = 3,
+}: {
+  locale: Locale;
+  headingLevel?: 3 | 4;
+}) {
   const Heading = `h${headingLevel}` as const;
+  const { pipeline } = getContent(locale);
 
   return (
     <figure className="m-0">

@@ -6,7 +6,7 @@ import { skipLogoIntro } from "./support/skip-logo-intro";
 test.beforeEach(skipLogoIntro);
 
 /** Every public page. The sitemap test below checks this list stays complete. */
-const PAGES = [
+const FR_PAGES = [
   "/",
   "/projets",
   "/projets/portfolio",
@@ -18,6 +18,21 @@ const PAGES = [
   "/contact",
   "/mentions-legales",
 ];
+const EN_PAGES = [
+  "/en",
+  "/en/projects",
+  "/en/projects/portfolio",
+  "/en/projects/nexora",
+  "/en/projects/applyflow",
+  "/en/open-to-roles",
+  "/en/cv",
+  "/en/about",
+  "/en/contact",
+  "/en/legal",
+];
+const PAGES = [...FR_PAGES, ...EN_PAGES];
+const langOf = (path: string) =>
+  path === "/en" || path.startsWith("/en/") ? "en" : "fr";
 
 test.describe("public pages", () => {
   for (const path of PAGES) {
@@ -31,7 +46,7 @@ test.describe("public pages", () => {
       const response = await page.goto(path);
       expect(response?.status()).toBe(200);
 
-      await expect(page.locator("html")).toHaveAttribute("lang", "fr");
+      await expect(page.locator("html")).toHaveAttribute("lang", langOf(path));
       await expect(page.locator("h1")).toHaveCount(1);
       await expect(page).toHaveTitle(/Siavash Izadi/);
       await expect(page.locator('meta[name="description"]')).toHaveAttribute(
@@ -93,10 +108,15 @@ test("robots.txt allows indexing and points to the sitemap", async ({ request })
   expect(body).toMatch(/Sitemap: .+\/sitemap\.xml/);
 });
 
-test("social preview image is a PNG", async ({ request }) => {
-  const response = await request.get("/opengraph-image");
-  expect(response.status()).toBe(200);
-  expect(response.headers()["content-type"]).toContain("image/png");
+test("social preview image is a PNG, in each language", async ({ page, request }) => {
+  for (const path of ["/", "/en"]) {
+    await page.goto(path);
+    const image = await page.locator('meta[property="og:image"]').getAttribute("content");
+    expect(image, `${path} og:image`).toBeTruthy();
+    const response = await request.get(new URL(image!).pathname);
+    expect(response.status()).toBe(200);
+    expect(response.headers()["content-type"]).toContain("image/png");
+  }
 });
 
 test("security headers are sent", async ({ request }) => {
@@ -126,7 +146,7 @@ test("the content security policy blocks nothing the site needs", async ({ page 
     });
   });
   const violations: string[] = [];
-  for (const path of [...PAGES, "/projets/inexistant"]) {
+  for (const path of [...PAGES, "/projets/inexistant", "/en/projects/missing"]) {
     await page.goto(path);
     await page.waitForLoadState("networkidle");
     violations.push(
@@ -139,10 +159,22 @@ test("the content security policy blocks nothing the site needs", async ({ page 
 });
 
 test.describe("not found", () => {
-  test("unknown route returns 404 with the French page", async ({ page }) => {
+  test("unknown route returns 404 with a page in both languages", async ({ page }) => {
     const response = await page.goto("/cette-page-n-existe-pas");
     expect(response?.status()).toBe(404);
     await expect(page.locator("h1")).toHaveText("Cette page n’existe pas.");
+    await expect(
+      page.locator('[lang="en"]', { hasText: "This page does not exist." }),
+    ).toBeVisible();
+    expect((await page.request.get("/en/nothing-here")).status()).toBe(404);
+  });
+
+  test("unknown English project returns 404 on the very first request", async ({
+    request,
+  }) => {
+    const slug = `missing-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
+    expect((await request.get(`/en/projects/${slug}`)).status()).toBe(404);
+    expect((await request.get("/en/projects/nexora/extra")).status()).toBe(404);
   });
 
   // A slug never requested before is the case that used to return 200: the
@@ -296,6 +328,12 @@ test.describe("crawlers", () => {
         });
         expect(response.status(), `${name} ${path}`).toBe(200);
         expect(await response.text()).toContain("Siavash Izadi");
+      }
+      for (const missingPath of ["/en/projects/missing"]) {
+        const response = await request.get(missingPath, {
+          headers: { "user-agent": userAgent },
+        });
+        expect(response.status(), `${name} ${missingPath}`).toBe(404);
       }
       const missing = await request.get("/projets/inexistant", {
         headers: { "user-agent": userAgent },

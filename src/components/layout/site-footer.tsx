@@ -1,10 +1,12 @@
 import Link from "next/link";
 
 import { Container } from "@/components/layout/container";
-import { site } from "@/content/site";
+import { getContent } from "@/content";
+import type { Locale } from "@/i18n/config";
 import { getBuildInfo } from "@/lib/build-info";
 
-export function SiteFooter() {
+export function SiteFooter({ locale }: { locale: Locale }) {
+  const { site } = getContent(locale);
   const build = getBuildInfo();
   const year = build.builtAt.getUTCFullYear();
 
@@ -32,12 +34,12 @@ export function SiteFooter() {
             </a>
           </li>
           <li>
-            <Link href="/cv" className="hover:text-text">
+            <Link href={site.footer.cvHref} className="hover:text-text">
               {site.footer.cv}
             </Link>
           </li>
           <li>
-            <Link href="/mentions-legales" className="hover:text-text">
+            <Link href={site.footer.legalHref} className="hover:text-text">
               {site.footer.legal}
             </Link>
           </li>
