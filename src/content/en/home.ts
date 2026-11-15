@@ -17,6 +17,10 @@ export const home = {
       { label: "Application security", detail: "Headers, validation, least privilege" },
     ],
   },
+  terminal: {
+    command: "git push origin main",
+    result: "✓ tests · Docker image · deployed to my server",
+  },
   primaryCta: { href: "/en/projects", label: "See the projects" },
   secondaryCta: { href: "/en/contact", label: "Get in touch" },
 

@@ -19,7 +19,7 @@ export function StatusBadge({
     >
       <span
         aria-hidden="true"
-        className={`size-1.5 rounded-full ${isLive ? "bg-live" : "border border-muted"}`}
+        className={`size-1.5 rounded-full ${isLive ? "live-dot bg-live" : "border border-muted"}`}
       />
       {getContent(locale).projectsPage.status[status]}
     </span>

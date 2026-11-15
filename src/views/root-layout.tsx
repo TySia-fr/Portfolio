@@ -4,6 +4,7 @@ import type { ReactNode } from "react";
 import { LogoIntro, LogoRouteIntro } from "@/components/brand/logo-intro";
 import { LogoRouteReplay } from "@/components/brand/logo-route-replay";
 import { LogoSessionGate } from "@/components/brand/logo-session-gate";
+import { PointerFx } from "@/components/fx/pointer-fx";
 import { JsonLd } from "@/components/json-ld";
 import { SiteFooter } from "@/components/layout/site-footer";
 import { SiteHeader } from "@/components/layout/site-header";
@@ -78,6 +79,7 @@ export function RootDocument({
         </main>
         <SiteFooter locale={locale} />
         <JsonLd data={siteGraph(locale)} />
+        <PointerFx />
       </body>
     </html>
   );
