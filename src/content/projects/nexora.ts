@@ -35,7 +35,7 @@ export const nexora = {
   media: {
     desktop: {
       base: `${shots}/home`,
-      widths: [960, 1440],
+      widths: [640, 960, 1440],
       width: 1440,
       height: 900,
       alt: "Page d’accueil de NEXORA : casque Halo One rendu en 3D, prix et caractéristiques.",

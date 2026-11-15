@@ -25,7 +25,7 @@ const shots = [
     name: "home-desktop",
     path: "/",
     viewport: { width: 1440, height: 900 },
-    widths: [960, 1600],
+    widths: [640, 960, 1600],
   },
   {
     name: "home-mobile",
