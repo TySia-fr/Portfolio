@@ -17,7 +17,10 @@ export function ProjectCard({ locale, project }: { locale: Locale; project: Proj
   return (
     // The keyboard focus ring is drawn on the whole card (has-[a:focus-visible]),
     // because the focused link itself is visually the entire card.
-    <article className="card-lift group relative flex flex-col gap-5 border border-line bg-surface p-6 has-[a:focus-visible]:outline-2 has-[a:focus-visible]:outline-offset-4 has-[a:focus-visible]:outline-signal">
+    <article
+      data-fx="card"
+      className="card-lift group relative flex flex-col gap-5 border border-line bg-surface p-6 has-[a:focus-visible]:outline-2 has-[a:focus-visible]:outline-offset-4 has-[a:focus-visible]:outline-signal"
+    >
       <div className="flex items-center justify-between gap-4">
         <StatusBadge locale={locale} status={project.status} />
         <span className="font-mono text-xs text-muted">{project.year}</span>

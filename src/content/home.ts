@@ -19,6 +19,11 @@ export const home = {
       },
     ],
   },
+  /** Typed under the lead: what a push to main does (see pipeline.ts). */
+  terminal: {
+    command: "git push origin main",
+    result: "✓ tests · image Docker · déployé sur mon serveur",
+  },
   primaryCta: { href: "/projets", label: "Voir les projets" },
   secondaryCta: { href: "/contact", label: "Me contacter" },
 

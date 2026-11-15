@@ -28,7 +28,10 @@ export function FeaturedProject({
   const t = getContent(locale).projectsPage;
 
   return (
-    <article className="card-lift group relative grid overflow-hidden border border-line bg-surface has-[a.card-link:focus-visible]:outline-2 has-[a.card-link:focus-visible]:outline-offset-4 has-[a.card-link:focus-visible]:outline-signal lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)]">
+    <article
+      data-fx="card"
+      className="card-lift group relative grid overflow-hidden border border-line bg-surface has-[a.card-link:focus-visible]:outline-2 has-[a.card-link:focus-visible]:outline-offset-4 has-[a.card-link:focus-visible]:outline-signal lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)]"
+    >
       <div className="flex flex-col gap-6 p-6 sm:p-8 lg:p-10">
         <div className="flex items-center justify-between gap-4">
           <StatusBadge locale={locale} status={project.status} />

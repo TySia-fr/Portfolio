@@ -158,6 +158,125 @@
 }
 
 /*
+ * Pointer effects (src/components/fx/pointer-fx.tsx sets the variables).
+ * Gradients and transforms only; without the variables, nothing shows.
+ */
+.hero-spot {
+  pointer-events: none;
+  opacity: 0;
+  background-image:
+    linear-gradient(
+      to right,
+      color-mix(in srgb, var(--color-signal) 30%, transparent) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      to bottom,
+      color-mix(in srgb, var(--color-signal) 30%, transparent) 1px,
+      transparent 1px
+    );
+  background-size: 32px 32px;
+  mask-image: radial-gradient(
+    circle 190px at var(--mx, -999px) calc(var(--my, -999px) + 4rem),
+    black,
+    transparent
+  );
+  transition: opacity var(--duration-base) var(--ease-out);
+}
+[data-fx-on] > .hero-spot {
+  opacity: 1;
+}
+.card-lift::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0;
+  background: radial-gradient(
+    420px circle at var(--mx, 50%) var(--my, 50%),
+    color-mix(in srgb, var(--color-signal) 9%, transparent),
+    transparent 70%
+  );
+  transition: opacity var(--duration-base) var(--ease-out);
+}
+.card-lift[data-fx-on]::after {
+  opacity: 1;
+}
+.card-lift[data-fx-on] {
+  border-color: color-mix(in srgb, var(--color-signal) 45%, var(--color-line));
+}
+.card-lift[data-fx-on] .card-media {
+  transform: perspective(1000px) rotateX(var(--ry, 0deg)) rotateY(var(--rx, 0deg))
+    translateY(-6px);
+  transition-duration: var(--duration-base);
+}
+[data-fx="magnet"] {
+  translate: var(--tx, 0) var(--ty, 0);
+  transition:
+    translate var(--duration-base) var(--ease-out),
+    background-color var(--duration-fast) var(--ease-out),
+    color var(--duration-fast) var(--ease-out);
+}
+
+/* "Live" status: the dot sends a slow pulse, like a heartbeat. */
+.live-dot {
+  position: relative;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .live-dot::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: inherit;
+    animation: live-pulse 2.4s var(--ease-out) infinite;
+  }
+}
+@keyframes live-pulse {
+  0% {
+    transform: scale(1);
+    opacity: 0.7;
+  }
+  70%,
+  100% {
+    transform: scale(3.2);
+    opacity: 0;
+  }
+}
+
+/* Typed terminal line on the home page (src/components/fx/terminal-line.tsx). */
+.terminal-caret {
+  display: inline-block;
+  width: 0.6em;
+  height: 1.05em;
+  margin-inline-start: 0.15em;
+  vertical-align: -0.2em;
+  background: var(--color-signal);
+}
+@media (prefers-reduced-motion: no-preference) {
+  .terminal-caret {
+    animation: caret-blink 1s steps(1) infinite;
+  }
+}
+@keyframes caret-blink {
+  50% {
+    opacity: 0;
+  }
+}
+.terminal-result {
+  transition: opacity var(--duration-slow) var(--ease-out);
+}
+@media (scripting: enabled) and (prefers-reduced-motion: no-preference) {
+  .terminal-line:not([data-done]) [data-typed] {
+    clip-path: inset(0 100% 0 0);
+  }
+  .terminal-line:not([data-done]) .terminal-result {
+    opacity: 0;
+  }
+}
+
+/*
  * Pipeline diagram. The rail runs through the step numbers: down the left
  * edge on mobile, across the top from md. Its amber copy fills with scroll.
  */

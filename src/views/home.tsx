@@ -1,5 +1,6 @@
 import Link from "next/link";
 
+import { TerminalLine } from "@/components/fx/terminal-line";
 import { SpecSheet } from "@/components/home/spec-sheet";
 import { Portrait } from "@/components/portrait";
 import { Container } from "@/components/layout/container";
@@ -19,8 +20,9 @@ export function HomeView({ locale }: { locale: Locale }) {
 
   return (
     <>
-      <div className="relative overflow-hidden">
+      <div data-fx="spot" className="relative overflow-hidden">
         <div aria-hidden="true" className="bg-grid absolute inset-0 -top-16" />
+        <div aria-hidden="true" className="hero-spot absolute inset-0 -top-16" />
         <Container className="relative py-16 sm:py-24 lg:py-28">
           <Link
             href={home.banner.href}
@@ -47,6 +49,12 @@ export function HomeView({ locale }: { locale: Locale }) {
               <p className="max-w-[52ch] text-lg leading-relaxed text-muted">
                 {home.lead}
               </p>
+              <div className="mt-6">
+                <TerminalLine
+                  command={home.terminal.command}
+                  result={home.terminal.result}
+                />
+              </div>
               <div className="mt-10 flex flex-wrap gap-3">
                 <ButtonLink href={home.primaryCta.href}>
                   {home.primaryCta.label}{" "}
