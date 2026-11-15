@@ -88,7 +88,7 @@ export function FeaturedProject({
             >
               <Screenshot
                 shot={project.media.desktop}
-                sizes="(min-width: 80rem) 40rem, (min-width: 64rem) 55vw, 90vw"
+                sizes="(min-width: 80rem) 40rem, (min-width: 64rem) 55vw, calc(100vw - 6rem)"
                 priority={priority}
               />
             </BrowserFrame>

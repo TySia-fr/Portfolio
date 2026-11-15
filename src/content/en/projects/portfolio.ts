@@ -31,7 +31,7 @@ export const portfolio = {
   media: {
     desktop: {
       base: "/images/projects/portfolio/home-desktop",
-      widths: [960, 1600],
+      widths: [640, 960, 1600],
       width: 1600,
       height: 1000,
       alt: "Home page of siavashizadi.com on desktop (French version): headline, build spec sheet and areas of work.",

@@ -34,7 +34,7 @@ export const nexora = {
   media: {
     desktop: {
       base: `${shots}/home`,
-      widths: [960, 1440],
+      widths: [640, 960, 1440],
       width: 1440,
       height: 900,
       alt: "NEXORA home page: the Halo One headphones rendered in 3D, price and features.",

@@ -36,7 +36,7 @@ export const applyflow = {
   media: {
     desktop: {
       base: `${shots}/dashboard-light`,
-      widths: [960, 1440],
+      widths: [640, 960, 1440],
       width: 1440,
       height: 720,
       alt: "Tableau de bord ApplyFlow : nombre de candidatures, taux de réponse, d’entretien et d’offre, et candidatures par semaine.",
