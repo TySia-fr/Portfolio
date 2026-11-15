@@ -286,6 +286,40 @@
 
 /* Mobile menu slides in when it opens (it is display:none while closed). */
 /*
+ * 404 (src/views/not-found.tsx). The global 404 holds both languages; the
+ * inline script in app/global-not-found.tsx sets <html lang>, CSS keeps one.
+ */
+html[lang="fr"] [data-lang="en"],
+html[lang="en"] [data-lang="fr"] {
+  display: none;
+}
+/* The request trace replays once, line by line. */
+.nf-trace .nf-line {
+  animation: nf-line 0.35s var(--ease-out) both;
+}
+.nf-trace li:nth-child(2) {
+  animation-delay: 0.35s;
+}
+.nf-trace li:nth-child(3) {
+  animation-delay: 0.7s;
+}
+.nf-trace li:nth-child(4) {
+  animation-delay: 1.05s;
+}
+.nf-trace li:nth-child(5) {
+  animation-delay: 1.6s;
+}
+@keyframes nf-line {
+  from {
+    opacity: 0;
+    transform: translateX(-6px);
+  }
+}
+.nf-canvas {
+  touch-action: pan-y;
+}
+
+/*
  * Floating header (src/components/layout/site-header.tsx). One surface style
  * shared by the pill and the mobile menu panel under it.
  */
@@ -711,5 +745,8 @@
   }
   .nav-indicator {
     transition: none !important;
+  }
+  .nf-trace .nf-line {
+    animation: none !important;
   }
 }

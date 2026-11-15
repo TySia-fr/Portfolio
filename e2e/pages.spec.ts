@@ -159,14 +159,38 @@ test("the content security policy blocks nothing the site needs", async ({ page 
 });
 
 test.describe("not found", () => {
-  test("unknown route returns 404 with a page in both languages", async ({ page }) => {
+  test("unknown route returns 404 in the language of the URL", async ({ page }) => {
     const response = await page.goto("/cette-page-n-existe-pas");
     expect(response?.status()).toBe(404);
-    await expect(page.locator("h1")).toHaveText("Cette page n’existe pas.");
-    await expect(
-      page.locator('[lang="en"]', { hasText: "This page does not exist." }),
-    ).toBeVisible();
-    expect((await page.request.get("/en/nothing-here")).status()).toBe(404);
+    await expect(page.locator("html")).toHaveAttribute("lang", "fr");
+    await expect(page.getByRole("heading", { level: 1 })).toHaveText(
+      "Cette page n’existe pas.",
+    );
+    await expect(page.getByText("This page does not exist.")).toBeHidden();
+
+    const english = await page.goto("/en/nothing-here");
+    expect(english?.status()).toBe(404);
+    await expect(page.locator("html")).toHaveAttribute("lang", "en");
+    await expect(page.getByRole("heading", { level: 1 })).toHaveText(
+      "This page does not exist.",
+    );
+    await expect(page.getByText("Cette page n’existe pas.")).toBeHidden();
+  });
+
+  test("the 404 page suggests the page that was probably meant", async ({ page }) => {
+    await page.goto("/projet/nexora");
+    await expect(page.getByRole("link", { name: "/projets/nexora" })).toBeVisible();
+    await page.goto("/en/abuot");
+    await expect(page.getByRole("link", { name: "/en/about" })).toBeVisible();
+    // Nothing close enough: no suggestion rather than a random one.
+    await page.goto("/qwertyuiopasdfghjkl");
+    await expect(page.getByText("Vous cherchiez peut-être")).toHaveCount(0);
+  });
+
+  test("the 404 trace shows the address that was requested", async ({ page }) => {
+    await page.goto("/en/projects/missing-one");
+    await expect(page.getByRole("figure")).toContainText("GET /en/projects/missing-one");
+    await expect(page.getByRole("figure")).toContainText("no page at this address");
   });
 
   test("unknown English project returns 404 on the very first request", async ({

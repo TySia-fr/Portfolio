@@ -31,6 +31,17 @@ export const site = {
     title: "This page does not exist.",
     body: "The address may be mistyped, or the page has moved.",
     back: "Back to home",
+    trace: {
+      label: "What your request did",
+      hops: [
+        { name: "DNS", detail: "siavashizadi.com found" },
+        { name: "Nginx", detail: "HTTPS connection accepted" },
+        { name: "Next.js", detail: "looking for the page" },
+      ],
+      missing: "no page at this address",
+    },
+    suggestion: "You may be looking for",
+    elsewhere: "Pages on this site",
   },
 
   meta: {
