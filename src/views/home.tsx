@@ -21,6 +21,11 @@ export function HomeView({ locale }: { locale: Locale }) {
     <>
       <div className="relative overflow-hidden">
         <div aria-hidden="true" className="bg-grid absolute inset-0 -top-16" />
+        <div aria-hidden="true" className="hero-signal -top-16">
+          <span />
+          <span />
+          <span />
+        </div>
         <Container className="relative py-16 sm:py-24 lg:py-28">
           <Link
             href={home.banner.href}
@@ -38,7 +43,7 @@ export function HomeView({ locale }: { locale: Locale }) {
 
           {/* The headline is the largest element on the page (LCP): it is never
               hidden or delayed by an animation. */}
-          <h1 className="mt-6 max-w-[28ch] font-mono text-display font-medium text-balance [font-stretch:76%]">
+          <h1 className="caret mt-6 max-w-[28ch] font-mono text-display font-medium text-balance [font-stretch:76%]">
             {home.title}
           </h1>
 
@@ -63,7 +68,7 @@ export function HomeView({ locale }: { locale: Locale }) {
                 <h2 id="focus-title" className={sectionLabel}>
                   {home.focus.title}
                 </h2>
-                <ul className="mt-5 grid gap-px border border-line bg-line sm:grid-cols-3">
+                <ul className="reveal-items mt-5 grid gap-px border border-line bg-line sm:grid-cols-3">
                   {home.focus.items.map((item) => (
                     <li key={item.label} className="bg-ink p-4">
                       <p className="font-mono text-[0.8125rem] font-medium text-text">
@@ -116,7 +121,7 @@ export function HomeView({ locale }: { locale: Locale }) {
               </Link>
             </div>
 
-            <ul className="mt-8 grid gap-6">
+            <ul className="reveal-items mt-8 grid gap-6">
               {featured.map((project) => (
                 <li key={project.slug}>
                   <FeaturedProject locale={locale} project={project} headingLevel={3} />

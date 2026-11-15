@@ -19,33 +19,33 @@ export function SiteFooter({ locale }: { locale: Locale }) {
 
         <ul className="flex flex-wrap gap-x-6 gap-y-2">
           <li>
-            <a href={site.githubUrl} className="hover:text-text" rel="me">
+            <a href={site.githubUrl} className="link-draw hover:text-text" rel="me">
               GitHub
             </a>
           </li>
           <li>
-            <a href={site.linkedinUrl} className="hover:text-text" rel="me">
+            <a href={site.linkedinUrl} className="link-draw hover:text-text" rel="me">
               LinkedIn
             </a>
           </li>
           <li>
-            <a href={site.repositoryUrl} className="hover:text-text">
+            <a href={site.repositoryUrl} className="link-draw hover:text-text">
               {site.footer.sourceCode}
             </a>
           </li>
           <li>
-            <Link href={site.footer.cvHref} className="hover:text-text">
+            <Link href={site.footer.cvHref} className="link-draw hover:text-text">
               {site.footer.cv}
             </Link>
           </li>
           <li>
-            <Link href={site.footer.legalHref} className="hover:text-text">
+            <Link href={site.footer.legalHref} className="link-draw hover:text-text">
               {site.footer.legal}
             </Link>
           </li>
           {build.commit && build.commitUrl ? (
             <li>
-              <a href={build.commitUrl} className="hover:text-text">
+              <a href={build.commitUrl} className="link-draw hover:text-text">
                 {site.footer.builtFrom} {build.commit.slice(0, 7)}
               </a>
             </li>

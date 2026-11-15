@@ -105,7 +105,7 @@ export function AboutView({ locale }: { locale: Locale }) {
 
           <div className="reveal">
             <ProseSection id="interets" title={about.interests.title}>
-              <div className="grid gap-px border border-line bg-line sm:grid-cols-2">
+              <div className="reveal-items grid gap-px border border-line bg-line sm:grid-cols-2">
                 {about.interests.items.map((item) => (
                   <div
                     key={item.title}

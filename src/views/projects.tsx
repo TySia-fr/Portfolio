@@ -57,9 +57,9 @@ export function ProjectsView({ locale }: { locale: Locale }) {
             ))}
           </ul>
           {others.length > 0 ? (
-            <ul className="mt-6 grid gap-6 md:grid-cols-2">
+            <ul className="reveal-items mt-6 grid gap-6 md:grid-cols-2">
               {others.map((project) => (
-                <li key={project.slug} className="reveal flex">
+                <li key={project.slug} className="flex">
                   <ProjectCard locale={locale} project={project} />
                 </li>
               ))}

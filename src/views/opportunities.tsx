@@ -76,7 +76,7 @@ export function OpportunitiesView({ locale }: { locale: Locale }) {
             <p className="mt-4 max-w-[62ch] text-[0.9375rem] leading-relaxed text-pretty text-muted">
               {t.domains.intro}
             </p>
-            <ul className="mt-6 grid gap-px border border-line bg-line">
+            <ul className="reveal-items mt-6 grid gap-px border border-line bg-line">
               {t.domains.items.map((item) => (
                 <li
                   key={item.title}
@@ -138,7 +138,7 @@ export function OpportunitiesView({ locale }: { locale: Locale }) {
             <h2 id="practical-title" className={label}>
               {t.practical.title}
             </h2>
-            <dl className="mt-6 grid gap-8 md:grid-cols-3">
+            <dl className="reveal-items mt-6 grid gap-8 md:grid-cols-3">
               {t.practical.items.map((item) => (
                 <div key={item.title} className="border-t border-line pt-5">
                   <dt className="font-mono text-base font-medium text-text">
