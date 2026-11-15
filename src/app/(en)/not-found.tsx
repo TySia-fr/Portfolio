@@ -1,5 +1,5 @@
 import { NotFoundView } from "@/views/not-found";
 
 export default function NotFound() {
-  return <NotFoundView locale="en" />;
+  return <NotFoundView locales={["en"]} />;
 }

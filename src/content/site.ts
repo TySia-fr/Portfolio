@@ -54,6 +54,18 @@ export const site = {
     title: "Cette page n’existe pas.",
     body: "L’adresse est peut-être mal saisie, ou la page a été déplacée.",
     back: "Retour à l’accueil",
+    /** The request's real path through the stack (see infrastructure.ts). */
+    trace: {
+      label: "Ce qu’a fait votre requête",
+      hops: [
+        { name: "DNS", detail: "siavashizadi.com trouvé" },
+        { name: "Nginx", detail: "connexion HTTPS acceptée" },
+        { name: "Next.js", detail: "recherche de la page" },
+      ],
+      missing: "aucune page à cette adresse",
+    },
+    suggestion: "Vous cherchiez peut-être",
+    elsewhere: "Les pages du site",
   },
 
   /** Home page <title> and description (the layout's defaults). */
