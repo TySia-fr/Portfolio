@@ -81,12 +81,12 @@ export function AboutView({ locale }: { locale: Locale }) {
 
           <div className="reveal">
             <ProseSection id="reperes" title={about.timeline.title}>
-              <ol className="relative mt-2 grid gap-8 border-l border-line pl-7">
+              <ol className="relative mt-2 grid gap-8 border-s border-line ps-7">
                 {about.timeline.items.map((item) => (
                   <li key={item.period} className="relative">
                     <span
                       aria-hidden="true"
-                      className={`absolute top-1.5 -left-[calc(1.75rem+4.5px)] size-2 ${
+                      className={`absolute -start-[calc(1.75rem+4.5px)] top-1.5 size-2 ${
                         "current" in item ? "bg-signal" : "border border-muted bg-ink"
                       }`}
                     />
@@ -128,7 +128,7 @@ export function AboutView({ locale }: { locale: Locale }) {
                   key={paragraph}
                   className={
                     index === 0
-                      ? "border-l-2 border-signal pl-5 font-mono text-lg leading-relaxed text-text [font-stretch:87.5%]"
+                      ? "border-s-2 border-signal ps-5 font-mono text-lg leading-relaxed text-text [font-stretch:87.5%]"
                       : undefined
                   }
                 >

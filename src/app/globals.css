@@ -405,11 +405,12 @@
 
 /* Mobile menu slides in when it opens (it is display:none while closed). */
 /*
- * 404 (src/views/not-found.tsx). The global 404 holds both languages; the
+ * 404 (src/views/not-found.tsx). The global 404 holds every language; the
  * inline script in app/global-not-found.tsx sets <html lang>, CSS keeps one.
  */
-html[lang="fr"] [data-lang="en"],
-html[lang="en"] [data-lang="fr"] {
+html:not([lang="fr"]) [data-lang="fr"],
+html:not([lang="en"]) [data-lang="en"],
+html:not([lang="fa"]) [data-lang="fa"] {
   display: none;
 }
 /* The request trace replays once, line by line. */
@@ -867,5 +868,96 @@ html[lang="en"] [data-lang="fr"] {
   }
   .nf-trace .nf-line {
     animation: none !important;
+  }
+}
+
+/*
+ * Persian (ADR-0009). Right to left: layout uses logical properties
+ * (ps/pe/ms/me, start/end) everywhere; what remains physical is mirrored here.
+ * Persian letters and spaces come from Vazirmatn (its unicode-range covers
+ * nothing else), so code, product names and Latin numbers keep the site's
+ * own typefaces.
+ */
+html[lang="fa"] {
+  --font-sans:
+    var(--font-vazir), var(--font-vazir-punct), var(--font-geist-sans), ui-sans-serif,
+    system-ui, sans-serif;
+  --font-mono:
+    var(--font-vazir), var(--font-vazir-punct), var(--font-martian), ui-monospace,
+    monospace;
+}
+/* Letter-spacing breaks the joins between Persian letters. */
+html[lang="fa"] body * {
+  letter-spacing: normal !important;
+}
+/* Persian needs more room between lines than Latin text. */
+html[lang="fa"] :is(p, li, dd, figcaption) {
+  line-height: 1.95;
+}
+html[lang="fa"] :is(h1, h2, h3) {
+  line-height: 1.45;
+}
+/* Arrows point the way the text reads. */
+[dir="rtl"] :is(.nudge, .arch-arrow, .dir-arrow) {
+  scale: -1 1;
+}
+[dir="rtl"] :is(a, button, .group):is(:hover, :focus-visible) .nudge {
+  transform: translateX(-3px);
+}
+[dir="rtl"] .pipeline-rail {
+  left: auto;
+  right: 0.875rem;
+}
+[dir="rtl"] .pipeline-node {
+  left: auto;
+  right: 0;
+}
+[dir="rtl"] :is(.nav-link::after, .pipeline-progress) {
+  transform-origin: right;
+}
+@media (width >= 48rem) {
+  [dir="rtl"] .pipeline-rail {
+    left: 0;
+    right: 0;
+  }
+  [dir="rtl"] .pipeline-progress {
+    transform-origin: right;
+  }
+}
+@media (width >= 40rem) {
+  [dir="rtl"] ol ol > .arch-node > .arch-arrow {
+    right: auto;
+    left: -0.95rem;
+  }
+}
+@media (width >= 64rem) {
+  [dir="rtl"] .arch-arrow {
+    right: auto;
+    left: -0.95rem;
+  }
+}
+/* The logo and its intro are a Latin wordmark: always left to right. */
+[dir="rtl"] :is(.logo-intro, .logo-route) {
+  direction: ltr;
+}
+/* Code, addresses and numbers keep their own direction inside Persian text. */
+[dir="rtl"] :is(pre, code, kbd, samp) {
+  direction: ltr;
+  unicode-bidi: isolate;
+  /* Code keeps its fixed-width spaces. */
+  font-family: var(--font-martian), ui-monospace, monospace;
+}
+[dir="rtl"] pre {
+  text-align: left;
+}
+/* A phone number starts with "+", which right-to-left text would move to its end. */
+[dir="rtl"] a[href^="tel:"] {
+  direction: ltr;
+  unicode-bidi: isolate;
+}
+/* The printed Persian résumé must fit on one A4 page, like the others. */
+@media print {
+  html[lang="fa"] :is(p, li, dd, figcaption) {
+    line-height: 1.55;
   }
 }

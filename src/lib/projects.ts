@@ -4,9 +4,10 @@ import { existsSync } from "node:fs";
 import { join } from "node:path";
 
 import { projectSourcesEn } from "@/content/en/projects";
+import { projectSourcesFa } from "@/content/fa/projects";
 import { projectSources } from "@/content/projects";
 import { type Project, projectSchema } from "@/content/projects/schema";
-import type { Locale } from "@/i18n/config";
+import { type Locale, locales } from "@/i18n/config";
 
 /**
  * Parsed once when the module loads, i.e. during the build.
@@ -29,25 +30,27 @@ function parse(sources: readonly unknown[]): readonly Project[] {
 const byLocale: Record<Locale, readonly Project[]> = {
   fr: parse(projectSources),
   en: parse(projectSourcesEn),
+  fa: parse(projectSourcesFa),
 };
 
 // Both languages must describe the same projects with the same facts that a
 // reader can compare: slug, status, links, year, featured. Words may differ.
 const fingerprint = (p: Project) =>
   JSON.stringify([p.slug, p.status, p.year, p.featured, p.links, p.stack]);
-const frPrints = byLocale.fr.map(fingerprint).sort().join("\n");
-const enPrints = byLocale.en.map(fingerprint).sort().join("\n");
-if (frPrints !== enPrints) {
-  throw new Error(
-    "French and English projects differ (slug, status, links, year or stack)",
-  );
+const prints = (locale: Locale) => byLocale[locale].map(fingerprint).sort().join("\n");
+for (const locale of locales) {
+  if (prints(locale) !== prints("fr")) {
+    throw new Error(
+      `French and ${locale} projects differ (slug, status, links, year or stack)`,
+    );
+  }
 }
 
 // Every screenshot file referenced by content must exist: a missing image
 // fails the build instead of shipping a broken <img>. Build only: at runtime
 // this module also loads (e.g. for crawlers) and must never throw on files.
 const isBuild = process.env.NEXT_PHASE === "phase-production-build";
-for (const project of isBuild ? [...byLocale.fr, ...byLocale.en] : []) {
+for (const project of isBuild ? locales.flatMap((locale) => byLocale[locale]) : []) {
   const shots = project.media
     ? [project.media.desktop, project.media.mobile, ...project.media.gallery]
     : [];

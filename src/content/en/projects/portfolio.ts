@@ -72,8 +72,8 @@ export const portfolio = {
     role: "Design, development, infrastructure and documentation. Built alone.",
 
     architecture: [
-      "Pages generated statically at build time with the Next.js App Router; client-side JavaScript limited to the mobile menu, the language switcher and the contact form.",
-      "Typed content in the repository, validated with Zod at build time, in French and English, without a database.",
+      "Pages generated statically at build time with the Next.js App Router; client-side JavaScript limited to the mobile menu, the language switcher, the pointer effects and the contact form.",
+      "Typed content in the repository, validated with Zod at build time, in French, English and Persian, without a database.",
       "Multi-stage Docker image, run without root privileges and read-only.",
       "Nginx as a reverse proxy with HTTPS (Let’s Encrypt, automatic renewal) on a Hetzner server I administer.",
       "Every push triggers lint, type checking, the build, then end-to-end tests (Playwright, desktop and mobile, accessibility with axe) run against the Docker image that will be deployed.",
@@ -127,7 +127,7 @@ export const portfolio = {
       "Content security policy (CSP) and security headers, checked by the tests.",
       "A real HTTP 404 status for project pages that do not exist.",
       "Contact form validated on the server, with rate limiting and a spam trap.",
-      "French and English versions of every page, with hreflang links and a test that every French page has its English counterpart.",
+      "Every page in French, English and Persian (right to left), with hreflang links and a test that every page exists in all three languages.",
     ],
 
     nextSteps: [

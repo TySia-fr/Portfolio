@@ -79,7 +79,7 @@ export function NavLinks({
               className={`${indicator ? "relative" : ""} transition-colors hover:text-text aria-[current=page]:text-signal ${linkClassName}`}
             >
               {numbered && (
-                <span aria-hidden="true" className="mr-4 font-mono text-xs text-signal">
+                <span aria-hidden="true" className="me-4 font-mono text-xs text-signal">
                   {String(index + 1).padStart(2, "0")}
                 </span>
               )}

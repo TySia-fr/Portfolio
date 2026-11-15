@@ -27,7 +27,7 @@ export function PipelineDiagram({
         <span aria-hidden="true" className="pipeline-rail pipeline-progress" />
 
         {pipeline.steps.map((step, index) => (
-          <li key={step.id} className="relative pb-8 pl-11 md:pt-12 md:pb-0 md:pl-0">
+          <li key={step.id} className="relative ps-11 pb-8 md:ps-0 md:pt-12 md:pb-0">
             <span aria-hidden="true" className="pipeline-node">
               {String(index + 1).padStart(2, "0")}
             </span>

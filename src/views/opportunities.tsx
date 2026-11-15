@@ -123,9 +123,9 @@ export function OpportunitiesView({ locale }: { locale: Locale }) {
               {t.learn.items.map((item) => (
                 <li
                   key={item}
-                  className="relative pl-5 text-[0.9375rem] leading-relaxed text-pretty text-muted"
+                  className="relative ps-5 text-[0.9375rem] leading-relaxed text-pretty text-muted"
                 >
-                  <span aria-hidden="true" className="absolute left-0 text-signal">
+                  <span aria-hidden="true" className="absolute start-0 text-signal">
                     –
                   </span>
                   {item}

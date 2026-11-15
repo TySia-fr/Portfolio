@@ -4,7 +4,7 @@ import { StatusBadge } from "@/components/projects/status-badge";
 import { TechList } from "@/components/projects/tech-list";
 import type { Project } from "@/content/projects/schema";
 import { getContent } from "@/content";
-import type { Locale } from "@/i18n/config";
+import { type Locale, formatNumber } from "@/i18n/config";
 import { projectHref } from "@/i18n/routes";
 
 /**
@@ -23,7 +23,9 @@ export function ProjectCard({ locale, project }: { locale: Locale; project: Proj
     >
       <div className="flex items-center justify-between gap-4">
         <StatusBadge locale={locale} status={project.status} />
-        <span className="font-mono text-xs text-muted">{project.year}</span>
+        <span className="font-mono text-xs text-muted">
+          {formatNumber(locale, project.year)}
+        </span>
       </div>
 
       <div>

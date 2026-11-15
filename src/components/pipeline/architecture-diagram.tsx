@@ -17,7 +17,7 @@ export function ArchitectureDiagram({ locale }: { locale: Locale }) {
           <Node key={node.id} name={node.name} facts={node.facts} arrow />
         ))}
         <li className="relative border border-dashed border-muted/50 p-3 pt-8">
-          <span className="absolute top-2.5 left-3 text-[0.6875rem] tracking-[0.14em] text-muted uppercase">
+          <span className="absolute start-3 top-2.5 text-[0.6875rem] tracking-[0.14em] text-muted uppercase">
             {infrastructure.host}
           </span>
           <ol className="grid gap-3 sm:grid-cols-2">

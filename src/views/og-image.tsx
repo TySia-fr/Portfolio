@@ -23,7 +23,11 @@ const geistMono = await readFile(
 );
 
 export function ogImage(locale: Locale) {
-  const { site } = getContent(locale);
+  const { site } = getContent(
+    // The image renderer (Satori) does not join or reorder Persian letters, so
+    // the Persian card is drawn with the English text; its alt text is Persian.
+    locale === "fa" ? "en" : locale,
+  );
   return new ImageResponse(
     <div
       style={{

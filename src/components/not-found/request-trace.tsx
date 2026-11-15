@@ -35,7 +35,7 @@ export function RequestTrace({
         {label}
       </figcaption>
       <ol className="px-4 py-3">
-        <li className="nf-line truncate text-text">
+        <li dir="ltr" className="nf-line truncate text-start text-text">
           <span className="text-muted">GET </span>
           {path ?? "…"}
         </li>

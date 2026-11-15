@@ -5,7 +5,7 @@ import { StatusBadge } from "@/components/projects/status-badge";
 import { TechList } from "@/components/projects/tech-list";
 import type { Project } from "@/content/projects/schema";
 import { getContent } from "@/content";
-import type { Locale } from "@/i18n/config";
+import { type Locale, formatNumber } from "@/i18n/config";
 import { projectHref } from "@/i18n/routes";
 
 /**
@@ -35,7 +35,9 @@ export function FeaturedProject({
       <div className="flex flex-col gap-6 p-6 sm:p-8 lg:p-10">
         <div className="flex items-center justify-between gap-4">
           <StatusBadge locale={locale} status={project.status} />
-          <span className="font-mono text-xs text-muted">{project.year}</span>
+          <span className="font-mono text-xs text-muted">
+            {formatNumber(locale, project.year)}
+          </span>
         </div>
 
         <div>
@@ -80,7 +82,7 @@ export function FeaturedProject({
       {project.media ? (
         // Fixed height, screenshots cropped at the bottom: the card reads as a
         // window onto the site. From lg the height follows the text column.
-        <div className="relative h-72 overflow-hidden border-t border-line bg-ink sm:h-96 lg:h-auto lg:min-h-80 lg:border-t-0 lg:border-l">
+        <div className="relative h-72 overflow-hidden border-t border-line bg-ink sm:h-96 lg:h-auto lg:min-h-80 lg:border-s lg:border-t-0">
           <div aria-hidden="true" className="bg-grid absolute inset-0" />
           <div className="card-media absolute inset-x-6 top-8 sm:inset-x-10 sm:top-10">
             <BrowserFrame
@@ -93,7 +95,7 @@ export function FeaturedProject({
               />
             </BrowserFrame>
             {project.media.mobile ? (
-              <div className="absolute top-14 -right-2 hidden w-[24%] sm:block">
+              <div className="absolute -end-2 top-14 hidden w-[24%] sm:block">
                 <PhoneFrame>
                   <Screenshot shot={project.media.mobile} sizes="9rem" />
                 </PhoneFrame>

@@ -45,13 +45,18 @@ export function proxy(request: NextRequest) {
   if (pathname === "/") {
     const choice = request.cookies.get(LOCALE_COOKIE)?.value;
     const userAgent = request.headers.get("user-agent") ?? "";
-    const toEnglish =
-      choice === "en" ||
-      (choice !== "fr" &&
-        !BOTS.test(userAgent) &&
-        prefersEnglish(request.headers.get("accept-language")));
-    const response = toEnglish
-      ? NextResponse.redirect(new URL("/en", request.url), 307)
+    // Persian only on an explicit choice (ADR-0009); English also from the browser.
+    const target =
+      choice === "fa"
+        ? "/fa"
+        : choice === "en" ||
+            (choice !== "fr" &&
+              !BOTS.test(userAgent) &&
+              prefersEnglish(request.headers.get("accept-language")))
+          ? "/en"
+          : null;
+    const response = target
+      ? NextResponse.redirect(new URL(target, request.url), 307)
       : NextResponse.next();
     // The answer depends on these headers: no cache may reuse it for everyone.
     response.headers.set("Vary", "Accept-Language, Cookie");
@@ -68,5 +73,5 @@ export function proxy(request: NextRequest) {
 
 export const config = {
   // The home page, and exactly one segment under each projects list.
-  matcher: ["/", "/projets/:slug", "/en/projects/:slug"],
+  matcher: ["/", "/projets/:slug", "/en/projects/:slug", "/fa/projects/:slug"],
 };

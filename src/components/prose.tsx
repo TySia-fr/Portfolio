@@ -46,8 +46,8 @@ export function DashList({ items }: { items: readonly string[] }) {
   return (
     <ul className="grid gap-3">
       {items.map((item) => (
-        <li key={item} className="relative pl-5">
-          <span aria-hidden="true" className="absolute left-0 text-muted">
+        <li key={item} className="relative ps-5">
+          <span aria-hidden="true" className="absolute start-0 text-muted">
             –
           </span>
           {item}

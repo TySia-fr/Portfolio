@@ -4,36 +4,42 @@ import { skipLogoIntro } from "./support/skip-logo-intro";
 
 test.beforeEach(skipLogoIntro);
 
-/** Every French page and its English counterpart (src/i18n/routes.ts). */
-const PAIRS = [
-  ["/", "/en"],
-  ["/projets", "/en/projects"],
-  ["/projets/nexora", "/en/projects/nexora"],
-  ["/projets/portfolio", "/en/projects/portfolio"],
-  ["/projets/applyflow", "/en/projects/applyflow"],
-  ["/alternance", "/en/open-to-roles"],
-  ["/cv", "/en/cv"],
-  ["/a-propos", "/en/about"],
-  ["/contact", "/en/contact"],
-  ["/mentions-legales", "/en/legal"],
+/** Every page in its three languages (src/i18n/routes.ts): French, English, Persian. */
+const TRIPLES = [
+  ["/", "/en", "/fa"],
+  ["/projets", "/en/projects", "/fa/projects"],
+  ["/projets/nexora", "/en/projects/nexora", "/fa/projects/nexora"],
+  ["/projets/portfolio", "/en/projects/portfolio", "/fa/projects/portfolio"],
+  ["/projets/applyflow", "/en/projects/applyflow", "/fa/projects/applyflow"],
+  ["/alternance", "/en/open-to-roles", "/fa/open-to-roles"],
+  ["/cv", "/en/cv", "/fa/cv"],
+  ["/a-propos", "/en/about", "/fa/about"],
+  ["/contact", "/en/contact", "/fa/contact"],
+  ["/mentions-legales", "/en/legal", "/fa/legal"],
 ] as const;
+const PAIRS = TRIPLES.map(([fr, en]) => [fr, en] as const);
 
-test.describe("every French page has its English counterpart", () => {
-  test("the sitemap holds both languages and nothing unpaired", async ({ request }) => {
+test.describe("every page exists in French, English and Persian", () => {
+  test("the sitemap holds the three languages and nothing unpaired", async ({
+    request,
+  }) => {
     const xml = await (await request.get("/sitemap.xml")).text();
     const locs = [...xml.matchAll(/<loc>([^<]+)<\/loc>/g)].map(
       (match) => new URL(match[1]!).pathname,
     );
-    const known = PAIRS.flat();
+    const known: string[] = TRIPLES.flat();
     for (const path of locs) expect(known, `${path} is paired`).toContain(path);
     for (const path of known) expect(locs, `${path} in sitemap`).toContain(path);
     expect(xml).toContain('hreflang="en-US"');
+    expect(xml).toContain('hreflang="fa-IR"');
     expect(xml).toContain('hreflang="x-default"');
   });
 
-  for (const [fr, en] of PAIRS) {
-    test(`${fr} ⇄ ${en}: hreflang links point at each other`, async ({ page }) => {
-      for (const path of [fr, en]) {
+  for (const [fr, en, fa] of TRIPLES) {
+    test(`${fr} ⇄ ${en} ⇄ ${fa}: hreflang links point at each other`, async ({
+      page,
+    }) => {
+      for (const path of [fr, en, fa]) {
         const response = await page.goto(path);
         expect(response?.status(), path).toBe(200);
         const hreflang = async (lang: string) =>
@@ -44,10 +50,43 @@ test.describe("every French page has its English counterpart", () => {
           ).pathname.replace(/(.)\/$/, "$1");
         expect(await hreflang("fr-FR")).toBe(fr);
         expect(await hreflang("en-US")).toBe(en);
+        expect(await hreflang("fa-IR")).toBe(fa);
         expect(await hreflang("x-default")).toBe(fr);
       }
     });
   }
+});
+
+test.describe("Persian pages read right to left", () => {
+  for (const width of [320, 390, 820]) {
+    test(`no sideways scrolling at ${width} px`, async ({ browser }) => {
+      const context = await browser.newContext({ viewport: { width, height: 800 } });
+      const page = await context.newPage();
+      for (const [, , fa] of TRIPLES) {
+        await page.goto(fa);
+        const overflow = await page.evaluate(
+          () => document.documentElement.scrollWidth - window.innerWidth,
+        );
+        expect(overflow, `${fa} at ${width}px`).toBeLessThanOrEqual(0);
+      }
+      await context.close();
+    });
+  }
+
+  test("Persian text uses Persian letters, punctuation and no Arabic look-alikes", async ({
+    request,
+  }) => {
+    for (const [, , fa] of TRIPLES) {
+      const html = await (await request.get(fa)).text();
+      const text = html
+        .replace(/<script[\s\S]*?<\/script>/g, "")
+        .replace(/<[^>]+>/g, " ");
+      // Arabic yeh and kaf instead of the Persian ی and ک.
+      expect(text, fa).not.toMatch(/[\u064A\u0643]/);
+      // A Latin comma or question mark right after a Persian letter.
+      expect(text, fa).not.toMatch(/[\u0600-\u06FF][,?;]/);
+    }
+  });
 });
 
 test.describe("language switcher", () => {
@@ -61,6 +100,14 @@ test.describe("language switcher", () => {
     await page.getByRole("link", { name: /^FR/ }).click();
     await expect(page).toHaveURL(/\/projets\/nexora$/);
     await expect(page.locator("html")).toHaveAttribute("lang", "fr");
+  });
+
+  test("Persian is one tap away and right to left", async ({ page }) => {
+    await page.goto("/projets/nexora");
+    await page.getByRole("link", { name: /^FA/ }).click();
+    await expect(page).toHaveURL(/\/fa\/projects\/nexora$/);
+    await expect(page.locator("html")).toHaveAttribute("lang", "fa");
+    await expect(page.locator("html")).toHaveAttribute("dir", "rtl");
   });
 
   test("the choice is remembered over the browser language", async ({ browser }) => {
@@ -123,6 +170,16 @@ test.describe("home page redirect", () => {
     ).toBe(307);
   });
 
+  test("Persian only on an explicit choice", async ({ request }) => {
+    const chosen = await get(request, { "accept-language": "fr-FR", cookie: "lang=fa" });
+    expect(chosen.status()).toBe(307);
+    expect(new URL(chosen.headers()["location"]!, "http://x").pathname).toBe("/fa");
+    // A Persian browser without a choice is not redirected (ADR-0009).
+    expect((await get(request, { "accept-language": "fa-IR,fa;q=0.9" })).status()).toBe(
+      200,
+    );
+  });
+
   test("only the home page redirects", async ({ request }) => {
     const response = await request.get("/projets", {
       headers: { "accept-language": "en-US" },
@@ -149,4 +206,15 @@ test("the English pages say nothing about an alternance", async ({ request }) =>
     expect(html, en).not.toContain("alternance en informatique");
     expect(html, en).not.toContain("apprenticeship");
   }
+});
+
+test("the Persian résumé PDF is served and linked", async ({ page, request }) => {
+  await page.goto("/fa/cv");
+  const href = await page
+    .getByRole("link", { name: /دانلود رزومه/ })
+    .getAttribute("href");
+  expect(href).toBe("/cv/Siavash-Izadi-CV-fa.pdf");
+  const pdf = await request.get(href!);
+  expect(pdf.status()).toBe(200);
+  expect((await pdf.body()).subarray(0, 5).toString()).toBe("%PDF-");
 });

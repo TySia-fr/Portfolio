@@ -11,7 +11,7 @@ export const legal = {
   title: "Legal notice",
   description:
     "Legal notice and privacy policy of siavashizadi.com: publisher, host and personal data.",
-  updated: "2026-11-13",
+  updated: "2026-11-16",
   updatedLabel: "Last updated",
   contactTitle: "Contact",
 
@@ -36,7 +36,7 @@ export const legal = {
       id: "donnees",
       title: "Personal data",
       paragraphs: [
-        "This site uses no audience measurement and no advertising tracker. A single cookie may be set, and only if you change language with the FR / EN switcher: it remembers your choice (“lang”, one year) and is used for nothing else. Fonts are served by the site itself: no request is sent to a third-party service during your visit.",
+        "This site uses no audience measurement and no advertising tracker. A single cookie may be set, and only if you change language with the FR / EN / FA switcher: it remembers your choice (“lang”, one year) and is used for nothing else. Fonts are served by the site itself: no request is sent to a third-party service during your visit.",
         "Like any web server, the server keeps technical logs (IP address, date, requested page, browser). They are used only for security and to keep the site running, are never shared, and are deleted automatically after a limited time.",
         "If you email me, your address and your message are used only to reply to you. Emails sent to the contact address are forwarded by Cloudflare’s email routing service.",
         "Contact form: your name, email address and message are sent to me by email through the Resend delivery service (Resend, Inc., United States), which acts as a processor for delivery. The site does not store them: they are kept only in my inbox, for as long as our conversation lasts. To limit abuse, the sender’s IP address is kept in memory for at most one hour, never written to disk.",

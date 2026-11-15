@@ -188,10 +188,11 @@ export function ContactForm({
         />
       </div>
 
-      {/* Honeypot: off-screen, skipped by keyboard and screen readers. */}
+      {/* Honeypot: invisible (clipped, not pushed off-screen, which would make
+          right-to-left pages scroll sideways), skipped by keyboard and screen readers. */}
       <div
         aria-hidden="true"
-        className="absolute -left-[9999px] h-px w-px overflow-hidden"
+        className="absolute h-px w-px overflow-hidden whitespace-nowrap [clip-path:inset(50%)]"
       >
         <label htmlFor={`${id}-hp`}>{t.honeypot}</label>
         <input
@@ -211,7 +212,7 @@ export function ContactForm({
         className="mt-6 min-h-6 text-sm outline-none"
       >
         {state.status === "error" ? (
-          <p className="border-l-2 border-signal pl-4 text-text">
+          <p className="border-s-2 border-signal ps-4 text-text">
             {state.message}{" "}
             {state.message !== t.errors.invalid ? (
               <a

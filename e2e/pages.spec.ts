@@ -30,9 +30,9 @@ const EN_PAGES = [
   "/en/contact",
   "/en/legal",
 ];
-const PAGES = [...FR_PAGES, ...EN_PAGES];
-const langOf = (path: string) =>
-  path === "/en" || path.startsWith("/en/") ? "en" : "fr";
+const FA_PAGES = EN_PAGES.map((path) => path.replace(/^\/en/, "/fa"));
+const PAGES = [...FR_PAGES, ...EN_PAGES, ...FA_PAGES];
+const langOf = (path: string) => /^\/(en|fa)(\/|$)/.exec(path)?.[1] ?? "fr";
 
 test.describe("public pages", () => {
   for (const path of PAGES) {
@@ -47,6 +47,10 @@ test.describe("public pages", () => {
       expect(response?.status()).toBe(200);
 
       await expect(page.locator("html")).toHaveAttribute("lang", langOf(path));
+      await expect(page.locator("html")).toHaveAttribute(
+        "dir",
+        langOf(path) === "fa" ? "rtl" : "ltr",
+      );
       await expect(page.locator("h1")).toHaveCount(1);
       await expect(page).toHaveTitle(/Siavash Izadi/);
       await expect(page.locator('meta[name="description"]')).toHaveAttribute(
