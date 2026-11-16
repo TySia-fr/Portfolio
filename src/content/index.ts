@@ -13,6 +13,15 @@ import { legal as legalEn } from "./en/legal";
 import { pipeline as pipelineEn } from "./en/pipeline";
 import { projectsPage as projectsPageEn } from "./en/projects-page";
 import { site as siteEn } from "./en/site";
+import { about as aboutFa } from "./fa/about";
+import { contact as contactFa } from "./fa/contact";
+import { cv as cvFa } from "./fa/cv";
+import { home as homeFa } from "./fa/home";
+import { infrastructure as infrastructureFa } from "./fa/infrastructure";
+import { legal as legalFa } from "./fa/legal";
+import { pipeline as pipelineFa } from "./fa/pipeline";
+import { projectsPage as projectsPageFa } from "./fa/projects-page";
+import { site as siteFa } from "./fa/site";
 import { home } from "./home";
 import { infrastructure } from "./infrastructure";
 import { legal } from "./legal";
@@ -47,6 +56,17 @@ const dictionaries: Record<Locale, Dictionary> = {
     pipeline: pipelineEn,
     infrastructure: infrastructureEn,
     projectsPage: projectsPageEn,
+  },
+  fa: {
+    site: siteFa,
+    home: homeFa,
+    about: aboutFa,
+    contact: contactFa,
+    cv: cvFa,
+    legal: legalFa,
+    pipeline: pipelineFa,
+    infrastructure: infrastructureFa,
+    projectsPage: projectsPageFa,
   },
 };
 

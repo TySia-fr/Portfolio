@@ -7,13 +7,13 @@ import { type Locale, locales } from "./config";
  * speaks to a different audience (ADR-0008).
  */
 export const routes = {
-  home: { fr: "/", en: "/en" },
-  projects: { fr: "/projets", en: "/en/projects" },
-  opportunities: { fr: "/alternance", en: "/en/open-to-roles" },
-  cv: { fr: "/cv", en: "/en/cv" },
-  about: { fr: "/a-propos", en: "/en/about" },
-  contact: { fr: "/contact", en: "/en/contact" },
-  legal: { fr: "/mentions-legales", en: "/en/legal" },
+  home: { fr: "/", en: "/en", fa: "/fa" },
+  projects: { fr: "/projets", en: "/en/projects", fa: "/fa/projects" },
+  opportunities: { fr: "/alternance", en: "/en/open-to-roles", fa: "/fa/open-to-roles" },
+  cv: { fr: "/cv", en: "/en/cv", fa: "/fa/cv" },
+  about: { fr: "/a-propos", en: "/en/about", fa: "/fa/about" },
+  contact: { fr: "/contact", en: "/en/contact", fa: "/fa/contact" },
+  legal: { fr: "/mentions-legales", en: "/en/legal", fa: "/fa/legal" },
 } as const satisfies Record<string, Record<Locale, `/${string}`>>;
 
 export type RouteKey = keyof typeof routes;
@@ -47,9 +47,4 @@ export function alternates(pathname: string): Record<Locale, `/${string}`> | nul
     }
   }
   return null;
-}
-
-/** The locale a path belongs to. */
-export function localeOf(pathname: string): Locale {
-  return pathname === "/en" || pathname.startsWith("/en/") ? "en" : "fr";
 }

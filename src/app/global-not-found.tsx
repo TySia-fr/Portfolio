@@ -4,14 +4,14 @@ import type { Metadata } from "next";
 import Link from "next/link";
 
 import { AnimatedLogo } from "@/components/brand/animated-logo";
-import { geistSans, martianMono } from "@/fonts";
+import { geistSans, martianMono, vazirmatn, vazirmatnPunctuation } from "@/fonts";
 import { getContent } from "@/content";
 import { NotFoundView } from "@/views/not-found";
 
 /**
  * 404 for any URL that matches no route. With one root layout per language
  * (ADR-0008) there is no layout to render it in, so this page is a document of
- * its own. The URL tells the language (/en/… is English): the inline script
+ * its own. The URL tells the language (/en/… is English, /fa/… Persian): the inline script
  * below sets <html lang> before the first paint, and CSS shows that block.
  */
 export const metadata: Metadata = {
@@ -19,11 +19,14 @@ export const metadata: Metadata = {
   robots: { index: false },
 };
 
-const pickLanguage = `document.documentElement.lang=/^\\/en(\\/|$)/.test(location.pathname)?"en":"fr"`;
+const pickLanguage = `var m=/^\\/(en|fa)(\\/|$)/.exec(location.pathname),l=m?m[1]:"fr",d=document.documentElement;d.lang=l;d.dir=l==="fa"?"rtl":"ltr"`;
 
 export default function GlobalNotFound() {
   return (
-    <html lang="fr" className={`${geistSans.variable} ${martianMono.variable} h-full`}>
+    <html
+      lang="fr"
+      className={`${geistSans.variable} ${martianMono.variable} ${vazirmatn.variable} ${vazirmatnPunctuation.variable} h-full`}
+    >
       <head>
         <script dangerouslySetInnerHTML={{ __html: pickLanguage }} />
       </head>
@@ -38,7 +41,7 @@ export default function GlobalNotFound() {
           </Link>
         </header>
         <main id="contenu" className="flex-1">
-          <NotFoundView locales={["fr", "en"]} />
+          <NotFoundView locales={["fr", "en", "fa"]} />
         </main>
       </body>
     </html>

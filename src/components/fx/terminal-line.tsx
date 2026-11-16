@@ -42,7 +42,7 @@ export function TerminalLine({ command, result }: { command: string; result: str
   }, [command]);
 
   return (
-    <p ref={ref} className="terminal-line font-mono text-[0.8125rem] leading-6">
+    <p ref={ref} dir="ltr" className="terminal-line font-mono text-[0.8125rem] leading-6">
       <span aria-hidden="true" className="text-signal">
         ${" "}
       </span>

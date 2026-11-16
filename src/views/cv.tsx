@@ -118,8 +118,8 @@ export function CvView({ locale }: { locale: Locale }) {
                 <p className="mt-1 font-mono text-xs text-muted">{project.stack}</p>
                 <ul className="mt-2 grid gap-1">
                   {project.bullets.map((bullet) => (
-                    <li key={bullet} className="relative pl-4 leading-snug text-pretty">
-                      <span aria-hidden="true" className="absolute left-0 text-muted">
+                    <li key={bullet} className="relative ps-4 leading-snug text-pretty">
+                      <span aria-hidden="true" className="absolute start-0 text-muted">
                         –
                       </span>
                       {bullet}

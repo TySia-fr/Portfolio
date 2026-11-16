@@ -2,11 +2,11 @@
 /**
  * Prints the CV pages of a running production build to PDF (A4, print styles
  * from globals.css): /cv → public/cv/Siavash-Izadi-CV.pdf and
- * /en/cv → public/cv/Siavash-Izadi-CV-en.pdf.
+ * /en/cv → public/cv/Siavash-Izadi-CV-en.pdf, /fa/cv → public/cv/Siavash-Izadi-CV-fa.pdf.
  *
  * Usage: pnpm build && pnpm start, then in another terminal: pnpm cv:pdf
  * Regenerate and commit the PDFs together with any change to the CV content
- * (src/content/cv.ts, src/content/en/cv.ts). Fails if a CV no longer fits on
+ * (src/content/cv.ts, src/content/en/cv.ts, src/content/fa/cv.ts). Fails if a CV no longer fits on
  * one page.
  */
 import { mkdir, writeFile } from "node:fs/promises";
@@ -18,6 +18,7 @@ const BASE_URL = process.env.BASE_URL ?? "http://127.0.0.1:3000";
 const CVS = [
   { path: "/cv", file: "Siavash-Izadi-CV.pdf" },
   { path: "/en/cv", file: "Siavash-Izadi-CV-en.pdf" },
+  { path: "/fa/cv", file: "Siavash-Izadi-CV-fa.pdf" },
 ];
 
 const browser = await chromium.launch({

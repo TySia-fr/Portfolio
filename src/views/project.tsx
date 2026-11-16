@@ -13,7 +13,7 @@ import { TechList } from "@/components/projects/tech-list";
 import type { Project } from "@/content/projects/schema";
 import { getContent } from "@/content";
 import { site } from "@/content/site";
-import type { Locale } from "@/i18n/config";
+import { type Locale, formatNumber } from "@/i18n/config";
 import { href, projectHref } from "@/i18n/routes";
 import { pageMetadata } from "@/lib/metadata";
 import { getAllProjects, getProjectBySlug } from "@/lib/projects";
@@ -57,7 +57,10 @@ export function ProjectView({ locale, slug }: { locale: Locale; slug: string }) 
           href={href(locale, "projects")}
           className="group font-mono text-[0.8125rem] text-muted transition-colors hover:text-text"
         >
-          <span aria-hidden="true">←</span> {t.back}
+          <span aria-hidden="true" className="dir-arrow inline-block">
+            ←
+          </span>{" "}
+          {t.back}
         </Link>
 
         <header className="mt-10">
@@ -87,7 +90,7 @@ export function ProjectView({ locale, slug }: { locale: Locale; slug: string }) 
               <dt className="text-xs tracking-[0.14em] text-muted uppercase">
                 {t.facts.year}
               </dt>
-              <dd className="mt-2 text-text">{project.year}</dd>
+              <dd className="mt-2 text-text">{formatNumber(locale, project.year)}</dd>
             </div>
             <div>
               <dt className="text-xs tracking-[0.14em] text-muted uppercase">
@@ -111,7 +114,7 @@ export function ProjectView({ locale, slug }: { locale: Locale; slug: string }) 
 
       {project.media ? (
         <Container className="mt-12">
-          <div className="relative pb-10 sm:pr-[12%]">
+          <div className="relative pb-10 sm:pe-[12%]">
             <BrowserFrame
               address={project.links.live?.replace("https://", "") ?? project.slug}
             >
@@ -122,7 +125,7 @@ export function ProjectView({ locale, slug }: { locale: Locale; slug: string }) 
               />
             </BrowserFrame>
             {project.media.mobile ? (
-              <div className="absolute right-0 bottom-0 hidden w-[19%] sm:block">
+              <div className="absolute end-0 bottom-0 hidden w-[19%] sm:block">
                 <PhoneFrame>
                   <Screenshot shot={project.media.mobile} sizes="12rem" />
                 </PhoneFrame>
@@ -139,12 +142,12 @@ export function ProjectView({ locale, slug }: { locale: Locale; slug: string }) 
               <p className="font-mono text-xs tracking-[0.14em] text-muted uppercase">
                 {t.toc}
               </p>
-              <ol className="mt-4 grid gap-2.5 border-l border-line font-mono text-[0.8125rem]">
+              <ol className="mt-4 grid gap-2.5 border-s border-line font-mono text-[0.8125rem]">
                 {sections.map((section) => (
                   <li key={section.id}>
                     <a
                       href={`#${section.id}`}
-                      className="-ml-px block border-l border-transparent pl-4 text-muted transition-colors hover:border-signal hover:text-text"
+                      className="-ms-px block border-s border-transparent ps-4 text-muted transition-colors hover:border-signal hover:text-text"
                     >
                       {section.title}
                     </a>
@@ -275,7 +278,7 @@ function buildSections(locale: Locale, t: Detail, project: Project): Section[] {
           {caseStudy.challenges.map((challenge) => (
             <dl
               key={challenge.problem}
-              className="grid gap-3 border-l-2 border-line pl-5 text-[1.0625rem] leading-relaxed"
+              className="grid gap-3 border-s-2 border-line ps-5 text-[1.0625rem] leading-relaxed"
             >
               <dt className="sr-only">{t.sections.challengeProblem}</dt>
               <dd className="text-muted">{challenge.problem}</dd>
@@ -382,10 +385,10 @@ function StatusList({
       </h3>
       <ul className="mt-4 grid gap-3 text-[0.9375rem] leading-relaxed">
         {items.map((item) => (
-          <li key={item} className="relative pl-6 text-pretty">
+          <li key={item} className="relative ps-6 text-pretty">
             <span
               aria-hidden="true"
-              className={`absolute top-[0.55em] left-0 size-2 ${done ? "bg-live" : "border border-muted"}`}
+              className={`absolute start-0 top-[0.55em] size-2 ${done ? "bg-live" : "border border-muted"}`}
             />
             <span className={done ? "text-text" : "text-muted"}>{item}</span>
           </li>

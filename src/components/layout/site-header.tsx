@@ -19,7 +19,7 @@ export function SiteHeader({ locale }: { locale: Locale }) {
   const { site } = getContent(locale);
   return (
     <header className="site-header pointer-events-none sticky top-0 z-40 px-3 pt-3 sm:px-5 sm:pt-4">
-      <div className="header-pill pointer-events-auto relative mx-auto flex h-14 max-w-6xl items-center justify-between gap-3 rounded-full py-2 pr-2 pl-4 sm:pl-5">
+      <div className="header-pill pointer-events-auto relative mx-auto flex h-14 max-w-6xl items-center justify-between gap-3 rounded-full py-2 ps-4 pe-2 sm:ps-5">
         {/* No aria-label: the accessible name must contain the visible text
             (WCAG 2.5.3). The hidden suffix tells screen readers where it goes. */}
         <Link
