@@ -49,7 +49,7 @@ export const about = {
       {
         period: "Today",
         title: "Computer science studies at the University of Montpellier",
-        body: "Alongside, full-stack JavaScript development (this portfolio, NEXORA, ApplyFlow) and a search for my first role in software development.",
+        body: "Alongside, full-stack JavaScript development (this portfolio, NEXORA, ApplyFlow, Prix au mètre) and a search for my first role in software development.",
         current: true,
       },
     ],

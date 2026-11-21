@@ -40,6 +40,17 @@ export const cv = {
       ],
     },
     {
+      slug: "prix-au-metre",
+      name: "Prix au mètre — carte des prix immobiliers",
+      url: "prixaumeter.siavashizadi.com",
+      stack:
+        "Next.js 16, TypeScript, PostgreSQL, Prisma, MapLibre GL, better-auth, Docker",
+      bullets: [
+        "Prix médian au m² rue par rue, depuis les données publiques DVF : 104 883 ventes réelles nettoyées, aucun chiffre sous 10 ventes.",
+        "Requêtes clés sous 50 ms avec 5 millions de ventes, mesurées (recherche : de 380 ms à 3 ms).",
+      ],
+    },
+    {
       slug: "portfolio",
       name: "siavashizadi.com — portfolio auto-hébergé",
       url: "siavashizadi.com",
@@ -47,7 +58,6 @@ export const cv = {
       bullets: [
         "Déploiement automatique à chaque push : tests, image Docker, mise en ligne sur mon serveur, retour arrière si échec.",
         "Conteneur sans privilèges root, en lecture seule ; CSP et en-têtes de sécurité vérifiés par les tests.",
-        "Formulaire de contact validé côté serveur, avec limite de débit et protection anti-spam.",
       ],
     },
     {
@@ -74,7 +84,10 @@ export const cv = {
       label: "Back-end",
       value: "Node.js, Next.js (Server Actions, Route Handlers), API REST, Zod",
     },
-    { label: "Données", value: "PostgreSQL, Prisma, Drizzle" },
+    {
+      label: "Données",
+      value: "PostgreSQL (optimisation de requêtes, vues matérialisées), Prisma, Drizzle",
+    },
     { label: "Tests", value: "Vitest, Playwright, axe" },
     {
       label: "DevOps",

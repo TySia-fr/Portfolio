@@ -49,7 +49,7 @@ export const about = {
       {
         period: "Aujourd’hui",
         title: "Études d’informatique à l’Université de Montpellier",
-        body: "En parallèle, développement full-stack JavaScript (ce portfolio, NEXORA) et recherche d’une alternance pour poursuivre en Bac+3 ou en Master.",
+        body: "En parallèle, développement full-stack JavaScript (ce portfolio, NEXORA, ApplyFlow, Prix au mètre) et recherche d’une alternance pour poursuivre en Bac+3 ou en Master.",
         current: true,
       },
     ],
