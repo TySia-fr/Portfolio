@@ -59,6 +59,11 @@ export const openToRoles = {
             label:
               "ApplyFlow, live job-search tracker with a Telegram bot: 68 tests, 12 end-to-end",
           },
+          {
+            href: "/en/projects/prix-au-metre",
+            label:
+              "Prix au mètre, live property price map: key queries under 50 ms with 5 million sales",
+          },
         ],
       },
       {

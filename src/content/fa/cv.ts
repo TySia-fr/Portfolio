@@ -39,6 +39,17 @@ export const cv = {
       ],
     },
     {
+      slug: "prix-au-metre",
+      name: "Prix au mètre — نقشهٔ قیمت مسکن",
+      url: "prixaumeter.siavashizadi.com",
+      stack:
+        "Next.js 16, TypeScript, PostgreSQL, Prisma, MapLibre GL, better-auth, Docker",
+      bullets: [
+        "قیمت میانهٔ هر متر مربع، خیابان به خیابان، از داده‌های عمومی DVF: ۱۰۴٬۸۸۳ فروش واقعی پاک‌سازی‌شده، بدون هیچ عددی زیر ۱۰ فروش.",
+        "کوئری‌های اصلی زیر ۵۰ میلی‌ثانیه با ۵ میلیون فروش، اندازه‌گیری‌شده (جست‌وجو: از ۳۸۰ به ۳ میلی‌ثانیه).",
+      ],
+    },
+    {
       slug: "portfolio",
       name: "siavashizadi.com — پورتفولیو روی سرور شخصی",
       url: "siavashizadi.com",
@@ -46,7 +57,6 @@ export const cv = {
       bullets: [
         "استقرار خودکار با هر push: تست‌ها، ایمیج Docker، انتشار روی سرور خودم و بازگشت به نسخهٔ قبل در صورت خطا.",
         "کانتینر بدون دسترسی root و فقط‌خواندنی؛ CSP و هدرهای امنیتی با تست بررسی می‌شوند.",
-        "فرم تماس با اعتبارسنجی سمت سرور، محدودیت تعداد درخواست و محافظت در برابر اسپم.",
       ],
     },
     {
@@ -56,7 +66,7 @@ export const cv = {
       stack:
         "Next.js 16, TypeScript, PostgreSQL, Drizzle, better-auth, Telegram Bot API, Docker",
       bullets: [
-        "درخواست‌ها، مصاحبه‌ها و پیگیری‌ها؛ آگهی‌های تازه هر روز پیدا می‌شوند (API سایت La Bonne Alternance)؛ بات تلگرام برای ذخیرهٔ آگهی از روی گوشی.",
+        "درخواست‌ها، مصاحبه‌ها و پیگیری‌ها؛ آگهی‌های تازه هر روز (API سایت La Bonne Alternance)؛ بات تلگرام برای ذخیرهٔ آگهی از روی گوشی.",
         "جداسازی کاربران از هم در خود پایگاه‌داده (کلیدهای خارجی ترکیبی)؛ ۶۸ تست واحد و یکپارچگی، ۱۲ تست سرتاسری.",
       ],
     },
@@ -73,7 +83,10 @@ export const cv = {
       label: "بک‌اند",
       value: "Node.js, Next.js (Server Actions, Route Handlers), REST APIs, Zod",
     },
-    { label: "داده", value: "PostgreSQL, Prisma, Drizzle" },
+    {
+      label: "داده",
+      value: "PostgreSQL (بهینه‌سازی کوئری، materialized view)، Prisma, Drizzle",
+    },
     { label: "تست", value: "Vitest, Playwright, axe" },
     {
       label: "DevOps",

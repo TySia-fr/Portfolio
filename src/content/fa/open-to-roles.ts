@@ -54,6 +54,11 @@ export const openToRoles = {
             label:
               "ApplyFlow، ابزار آنلاین پیگیری جست‌وجوی کار با بات تلگرام: ۶۸ تست، ۱۲ تست سرتاسری",
           },
+          {
+            href: "/fa/projects/prix-au-metre",
+            label:
+              "Prix au mètre، نقشهٔ آنلاین قیمت مسکن: کوئری‌های اصلی زیر ۵۰ میلی‌ثانیه با ۵ میلیون فروش",
+          },
         ],
       },
       {

@@ -11,6 +11,7 @@ const TRIPLES = [
   ["/projets/nexora", "/en/projects/nexora", "/fa/projects/nexora"],
   ["/projets/portfolio", "/en/projects/portfolio", "/fa/projects/portfolio"],
   ["/projets/applyflow", "/en/projects/applyflow", "/fa/projects/applyflow"],
+  ["/projets/prix-au-metre", "/en/projects/prix-au-metre", "/fa/projects/prix-au-metre"],
   ["/alternance", "/en/open-to-roles", "/fa/open-to-roles"],
   ["/cv", "/en/cv", "/fa/cv"],
   ["/a-propos", "/en/about", "/fa/about"],

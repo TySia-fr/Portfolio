@@ -53,6 +53,11 @@ export const alternance = {
             label:
               "ApplyFlow, suivi de candidatures et bot Telegram, en ligne : 68 tests, 12 de bout en bout",
           },
+          {
+            href: "/projets/prix-au-metre",
+            label:
+              "Prix au mètre, carte des prix immobiliers en ligne : requêtes clés sous 50 ms avec 5 millions de ventes",
+          },
         ],
       },
       {
